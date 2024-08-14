@@ -22,7 +22,12 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  fonts:
+    - family: Gilroy
+      fonts:
+        - asset: assets\fonts\Gilroy-Medium.ttf  
   generate: true
   assets:
     - assets\images\login_background.svg
+    - assets\images\carrot.svg
 

@@ -27,3 +27,22 @@ class LoginPageRoute extends PageRouteInfo<void> {
     },
   );
 }
+
+/// generated route for
+/// [SplashPage]
+class SplashPageRoute extends PageRouteInfo<void> {
+  const SplashPageRoute({List<PageRouteInfo>? children})
+      : super(
+          SplashPageRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'SplashPageRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const SplashPage();
+    },
+  );
+}
