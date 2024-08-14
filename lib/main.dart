@@ -8,19 +8,19 @@ void main() {
 }
 
 class MainApp extends StatelessWidget {
- MainApp({super.key});
+  MainApp({super.key});
   final _appRouter = AppRouter();
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
         designSize: const Size(413.83, 896),
         minTextAdapt: true,
-        splitScreenMode: true, 
+        splitScreenMode: true,
         builder: (_, child) {
-          return  MaterialApp.router(
+          return MaterialApp.router(
+            debugShowCheckedModeBanner: false,
             routerConfig: _appRouter.config(),
-        );
-      }
-    );
+          );
+        });
   }
 }
