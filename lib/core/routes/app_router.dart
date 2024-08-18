@@ -1,5 +1,6 @@
 import 'package:auto_route/annotations.dart';
 import 'package:auto_route/auto_route.dart';
+import 'package:green_vegease/features/onboarding/presentation/pages/onboard_page.dart';
 import 'package:green_vegease/features/splashscreen/presentation/pages/splash_page.dart';
 
 import '../../features/auth/presentation/pages/login_page.dart';
@@ -15,5 +16,6 @@ class AppRouter extends RootStackRouter {
           page: LoginPageRoute.page,
         ),
         AutoRoute(page: SplashPageRoute.page, path: "/"),
+        AutoRoute(page: OnboardPageRoute.page,),
       ];
 }

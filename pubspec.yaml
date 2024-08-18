@@ -30,4 +30,6 @@ flutter:
   assets:
     - assets\images\login_background.svg
     - assets\images\carrot.svg
+    - assets\images\online groceriet.svg
+    - assets\images\onboarding.svg
 
