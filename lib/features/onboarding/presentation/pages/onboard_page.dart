@@ -1,8 +1,11 @@
 import 'package:auto_route/annotations.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:green_vegease/core/theme/colors.dart';
+
+import '../../../../core/routes/app_router.dart';
 
 @RoutePage()
 class OnboardPage extends StatefulWidget {
@@ -16,11 +19,14 @@ class _OnboardPageState extends State<OnboardPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      b
       body: Stack(
         children: [
           Image.asset(
             'assets/images/onbording.png',
             fit: BoxFit.cover,
+            height: 896.h,
+            width: 414.w,
           ),
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -66,7 +72,9 @@ class _OnboardPageState extends State<OnboardPage> {
                 height: 40.h,
               ),
               GestureDetector(
-                onTap: () {},
+                onTap: () {
+                  AutoRouter.of(context).replace(const LoginPageRoute());
+                },
                 child: Container(
                   margin: EdgeInsets.symmetric(horizontal: 30.5.w),
                   height: 57.h,

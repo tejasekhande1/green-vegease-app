@@ -28,7 +28,7 @@ flutter:
         - asset: assets\fonts\Gilroy-Medium.ttf  
   generate: true
   assets:
-    - assets\images\login_background.svg
+    - assets\images\login_background.png
     - assets\images\carrot.svg
     - assets\images\online groceriet.svg
     - assets\images\onbording.png

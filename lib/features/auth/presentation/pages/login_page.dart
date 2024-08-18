@@ -1,6 +1,5 @@
 import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 @RoutePage()
 class LoginPage extends StatefulWidget {
@@ -16,11 +15,11 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
         body: Stack(
       children: [
-        SvgPicture.asset(
-          "assets//images/login_background.svg", // Path to your SVG file
+        Image.asset(
+          "assets/images/login_background.png",
           width: double.infinity,
           height: double.infinity,
-          fit: BoxFit.cover, // Ensures the SVG covers the entire container
+          fit: BoxFit.cover,
         ),
       ],
     ));
