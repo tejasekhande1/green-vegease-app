@@ -19,7 +19,7 @@ class _OnboardPageState extends State<OnboardPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      b
+      
       body: Stack(
         children: [
           Image.asset(
