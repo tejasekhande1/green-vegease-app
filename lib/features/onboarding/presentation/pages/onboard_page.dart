@@ -3,6 +3,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:green_vegease/core/common/widgets/button_widget.dart';
 import 'package:green_vegease/core/theme/colors.dart';
 
 import '../../../../core/routes/app_router.dart';
@@ -19,47 +20,56 @@ class _OnboardPageState extends State<OnboardPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      
       body: Stack(
         children: [
-          Image.asset(
-            'assets/images/onbording.png',
-            fit: BoxFit.cover,
+          SizedBox(
             height: 896.h,
             width: 414.w,
+            child: Image.asset(
+              'assets/images/onbording.png',
+              fit: BoxFit.cover,
+            ),
           ),
           Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               SizedBox(
-                height: 30.h,
                 width: 414.w,
               ),
               const Spacer(),
-              SvgPicture.asset(
-                "assets/images/carrot.svg",
+              SizedBox(
                 height: 56.h,
                 width: 48.w,
+                child: SvgPicture.asset(
+                  "assets/images/carrot.svg",
+                  fit: BoxFit.contain,
+                ),
               ),
               SizedBox(
-                height: 35.h,
+                height: 30.h,
               ),
               Text(
                 "Welcome",
                 style: TextStyle(
+                    height: 0.7,
                     fontWeight: FontWeight.w500,
                     fontFamily: 'Gilroy',
                     fontSize: 48.sp,
                     color: kColorWhite),
               ),
+              SizedBox(
+                height: 15.h,
+              ),
               Text(
                 "to our store",
                 style: TextStyle(
+                    height: 0.7,
                     fontWeight: FontWeight.w500,
                     fontFamily: 'Gilroy',
                     fontSize: 48.sp,
                     color: kColorWhite),
+              ),
+              SizedBox(
+                height: 15.h,
               ),
               Text(
                 "Ger your groceries in as fast as one hour",
@@ -69,32 +79,15 @@ class _OnboardPageState extends State<OnboardPage> {
                     color: kColorLiteWhite),
               ),
               SizedBox(
-                height: 40.h,
+                height: 45.h,
               ),
               GestureDetector(
-                onTap: () {
-                  AutoRouter.of(context).replace(const LoginPageRoute());
-                },
-                child: Container(
-                  margin: EdgeInsets.symmetric(horizontal: 30.5.w),
-                  height: 57.h,
-                  decoration: BoxDecoration(
-                      color: kColorPrimary,
-                      borderRadius: BorderRadius.circular(19)),
-                  child: Center(
-                    child: Text(
-                      "Get Started",
-                      style: TextStyle(
-                          fontWeight: FontWeight.w500,
-                          fontFamily: 'Gilroy',
-                          fontSize: 18.sp,
-                          color: kColorWhite),
-                    ),
-                  ),
-                ),
-              ),
+                  onTap: () {
+                    AutoRouter.of(context).push(const LoginPageRoute());
+                  },
+                  child: const ButtonWidget(title: "Get Started")),
               SizedBox(
-                height: 50.h,
+                height: 75.h,
               )
             ],
           )

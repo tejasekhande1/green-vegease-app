@@ -61,6 +61,7 @@ class _SplashPageState extends State<SplashPage> {
                     Text(
                       "Green Vegease",
                       style: TextStyle(
+                          height: 1,
                           fontFamily: 'Gilroy',
                           fontWeight: FontWeight.w600,
                           fontSize: 35.sp,
@@ -68,8 +69,8 @@ class _SplashPageState extends State<SplashPage> {
                     ),
                     SvgPicture.asset(
                       "assets/images/online groceriet.svg",
-                      height: 15.h,
-                      width: 15.w,
+                      height: 21.h,
+                      width: 21.w,
                     ),
                   ],
                 )
