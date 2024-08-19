@@ -33,7 +33,6 @@ flutter:
   assets:
     - assets\images\login_background.png
     - assets\images\carrot.svg
-    - assets\images\online groceriet.svg
-    - assets\images\on_bording.png
+    - assets\images\on_bording (1).png
     - assets\images\colored_carrot.svg
 
