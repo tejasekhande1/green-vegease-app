@@ -26,7 +26,7 @@ class _OnboardPageState extends State<OnboardPage> {
             height: 896.h,
             width: 414.w,
             child: Image.asset(
-              'assets/images/onbording.png',
+              'assets/images/on_bording.png',
               fit: BoxFit.cover,
             ),
           ),
@@ -83,9 +83,11 @@ class _OnboardPageState extends State<OnboardPage> {
               ),
               GestureDetector(
                   onTap: () {
-                    AutoRouter.of(context).push(const LoginPageRoute());
+                    // AutoRouter.of(context).push(const LoginPageRoute());
                   },
-                  child: const ButtonWidget(title: "Get Started")),
+                  child: Container(
+                      margin: EdgeInsets.symmetric(horizontal: 20.w),
+                      child: const ButtonWidget(title: "Get Started"))),
               SizedBox(
                 height: 75.h,
               )

@@ -25,11 +25,15 @@ flutter:
   fonts:
     - family: Gilroy
       fonts:
-        - asset: assets\fonts\Gilroy-Medium.ttf  
+        - asset: assets\fonts\Gilroy-Regular.ttf
+          weight: 600
+        - asset: assets\fonts\Gilroy-Medium.ttf 
+          weight: 400 
   generate: true
   assets:
     - assets\images\login_background.png
     - assets\images\carrot.svg
     - assets\images\online groceriet.svg
-    - assets\images\onbording.png
+    - assets\images\on_bording.png
+    - assets\images\colored_carrot.svg
 

@@ -10,25 +10,6 @@
 part of 'app_router.dart';
 
 /// generated route for
-/// [LoginPage]
-class LoginPageRoute extends PageRouteInfo<void> {
-  const LoginPageRoute({List<PageRouteInfo>? children})
-      : super(
-          LoginPageRoute.name,
-          initialChildren: children,
-        );
-
-  static const String name = 'LoginPageRoute';
-
-  static PageInfo page = PageInfo(
-    name,
-    builder: (data) {
-      return const LoginPage();
-    },
-  );
-}
-
-/// generated route for
 /// [OnboardPage]
 class OnboardPageRoute extends PageRouteInfo<void> {
   const OnboardPageRoute({List<PageRouteInfo>? children})
