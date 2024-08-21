@@ -1,6 +1,8 @@
 import 'package:auto_route/annotations.dart';
 import 'package:auto_route/auto_route.dart';
-
+import 'package:green_vegease/features/auth/presentation/pages/singup_page.dart';
+import 'package:green_vegease/features/onboarding/presentation/pages/onboard_page.dart';
+import 'package:green_vegease/features/splashscreen/presentation/pages/splash_page.dart';
 import '../../features/auth/presentation/pages/login_page.dart';
 part 'app_router.gr.dart';
 
@@ -10,6 +12,11 @@ class AppRouter extends RootStackRouter {
   RouteType get defaultRouteType => const RouteType.adaptive();
   @override
   List<AutoRoute> get routes => [
-     AutoRoute(page: LoginPageRoute.page, path: "/"),
-  ]; 
-} 
+        AutoRoute(
+          page: LoginPageRoute.page,
+        ),
+        AutoRoute(page: SplashPageRoute.page, path: "/"),
+        AutoRoute(page: OnboardPageRoute.page),
+        AutoRoute(page: SingupPageRoute.page),
+      ];
+}

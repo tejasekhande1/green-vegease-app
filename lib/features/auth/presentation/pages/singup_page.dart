@@ -6,67 +6,67 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:green_vegease/core/common/widgets/button_widget.dart';
 import 'package:green_vegease/core/theme/colors.dart';
 
-import '../../../../core/routes/app_router.dart';
-
 @RoutePage()
-class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+class SingupPage extends StatefulWidget {
+  const SingupPage ({super.key});
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  State<SingupPage > createState() => _SingupPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _SingupPageState extends State<SingupPage > {
+  final TextEditingController usernameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
-  bool isPasswordVisible = false;
+  bool unShowPass = true;
 
-  void togglePasswordVisibility() {
-    setState(() {
-      isPasswordVisible = !isPasswordVisible;
-    });
+  Icon _toggleIcon() {
+    return Icon(
+      unShowPass ? Icons.remove_red_eye_outlined : Icons.remove_red_eye,
+    );
   }
-
-  Icon get toggleIcon => Icon(
-      isPasswordVisible ? Icons.remove_red_eye : Icons.remove_red_eye_outlined);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
       backgroundColor: kColorWhite,
-      body: Stack(
-        children: [
-          _buildBackgroundImage(),
-          Padding(
-            padding: EdgeInsets.all(25.w),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                _buildLogo(),
-                SizedBox(height: 100.h),
-                _buildTitle(),
-                SizedBox(height: 15.h),
-                _buildSubtitle(),
-                SizedBox(height: 24.h),
-                _buildEmailField(),
-                SizedBox(height: 30.h),
-                _buildPasswordField(),
-                SizedBox(height: 20.h),
-                _buildForgotPasswordText(),
-                SizedBox(height: 30.h),
-                _buildLogInButton(),
-                SizedBox(height: 25.h),
-                _buildSignUpPrompt(),
-              ],
+      body: SingleChildScrollView(
+        child: Stack(
+          children: [
+            _buildBackgroundImage(),
+            Padding(
+              padding: EdgeInsets.all(25.w),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(height: 77.25.h),
+                  _buildLogo(),
+                  SizedBox(height: 100.h),
+                  _buildTitle(),
+                  SizedBox(height: 15.h),
+                  _buildSubtitle(),
+                  SizedBox(height: 24.h),
+                  _buildTextField("Username", "Enter username", usernameController),
+                  SizedBox(height: 30.h),
+                  _buildTextField("Email", "Enter email id", emailController),
+                  SizedBox(height: 20.h),
+                  _buildPasswordField(),
+                  SizedBox(height: 20.h),
+                  _buildTermsText(),
+                  SizedBox(height: 30.h),
+                  _buildSignUpButton(),
+                  SizedBox(height: 25.h),
+                  _buildLoginOption(),
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
 
-// -->  background Image
+//--> background Image
   Widget _buildBackgroundImage() {
     return Image.asset(
       "assets/images/login_background.png",
@@ -76,25 +76,18 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-// -- > Carrot Logo
   Widget _buildLogo() {
-    return Column(
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        SizedBox(height: 77.25.h),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SvgPicture.asset("assets/images/colored_carrot.svg"),
-          ],
-        ),
+        SvgPicture.asset("assets/images/colored_carrot.svg"),
       ],
     );
   }
 
-// --> Login Title
   Widget _buildTitle() {
     return Text(
-      "Login",
+      "Sign Up",
       style: TextStyle(
         color: kColorBlack,
         fontFamily: "Gilroy",
@@ -106,7 +99,7 @@ class _LoginPageState extends State<LoginPage> {
 
   Widget _buildSubtitle() {
     return Text(
-      "Enter your email and password",
+      "Enter your credentials to continue",
       style: TextStyle(
         color: kColorGrey,
         fontFamily: "Gilroy",
@@ -116,13 +109,13 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-// --> Email TextField
-  Widget _buildEmailField() {
+  //--> UserName TextField and Email TextField
+  Widget _buildTextField(String label, String hint, TextEditingController controller) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          "Email",
+          label,
           style: TextStyle(
             color: kColorGrey,
             fontFamily: "Gilroy",
@@ -137,7 +130,7 @@ class _LoginPageState extends State<LoginPage> {
             ),
           ),
           child: TextFormField(
-            controller: emailController,
+            controller: controller,
             cursorHeight: 25,
             style: TextStyle(
               fontSize: 18.sp,
@@ -146,7 +139,7 @@ class _LoginPageState extends State<LoginPage> {
               color: kColorBlack,
             ),
             decoration: InputDecoration(
-              hintText: "Enter email id",
+              hintText: hint,
               hintStyle: TextStyle(
                 color: kColorTextHint,
                 fontFamily: "Gilroy",
@@ -160,8 +153,7 @@ class _LoginPageState extends State<LoginPage> {
       ],
     );
   }
-
-// --> Password TextField
+//--> password TextField
   Widget _buildPasswordField() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -183,7 +175,7 @@ class _LoginPageState extends State<LoginPage> {
           ),
           child: TextFormField(
             controller: passwordController,
-            obscureText: !isPasswordVisible,
+            obscureText: unShowPass,
             obscuringCharacter: ".",
             cursorHeight: 25,
             style: TextStyle(
@@ -202,8 +194,12 @@ class _LoginPageState extends State<LoginPage> {
               ),
               border: InputBorder.none,
               suffixIcon: GestureDetector(
-                onTap: togglePasswordVisibility,
-                child: toggleIcon,
+                onTap: () {
+                  setState(() {
+                    unShowPass = !unShowPass;
+                  });
+                },
+                child: _toggleIcon(),
               ),
             ),
           ),
@@ -212,39 +208,66 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-// --> Forgot password Button
-  Widget _buildForgotPasswordText() {
+  Widget _buildTermsText() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
-        Text(
-          "Forgot Password?",
-          style: TextStyle(
-            fontSize: 14.sp,
-            fontFamily: "Gilroy",
-            fontWeight: FontWeight.w400,
-            color: kColorBlack,
+        Expanded(
+          child: RichText(
+            text: TextSpan(
+              text: "By continuing you agree to our ",
+              style: TextStyle(
+                fontSize: 16.sp,
+                fontFamily: "Gilroy",
+                fontWeight: FontWeight.w400,
+                color: kColorBlack,
+              ),
+              children: [
+                TextSpan(
+                  text: "Terms of Service",
+                  style: TextStyle(
+                    fontSize: 16.sp,
+                    color: kColorPrimary,
+                    fontWeight: FontWeight.w400,
+                  ),
+                ),
+                TextSpan(
+                  text: " and ",
+                  style: TextStyle(
+                    fontSize: 16.sp,
+                    fontWeight: FontWeight.w400,
+                  ),
+                ),
+                TextSpan(
+                  text: "Privacy Policy",
+                  style: TextStyle(
+                    fontSize: 16.sp,
+                    color: kColorPrimary,
+                    fontWeight: FontWeight.w400,
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ],
     );
   }
 
-// --> Login Button
-  Widget _buildLogInButton() {
+  Widget _buildSignUpButton() {
     return GestureDetector(
-      onTap: () {},
-      child: const ButtonWidget(title: "Log In"),
+      onTap: () {
+      },
+      child: const ButtonWidget(title: "Sign Up"),
     );
   }
-
-//--> Sign-Up Button for Registration
-  Widget _buildSignUpPrompt() {
+//--> Login Button
+  Widget _buildLoginOption() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Text(
-          "Don’t have an account? ",
+          "Already have an account? ",
           style: TextStyle(
             fontSize: 14.sp,
             fontFamily: "Gilroy",
@@ -254,11 +277,10 @@ class _LoginPageState extends State<LoginPage> {
         ),
         GestureDetector(
           onTap: () {
-            AutoRouter.of(context).push(const SingupPageRoute());
-            FocusScope.of(context).unfocus();
+            AutoRouter.of(context).back();
           },
           child: Text(
-            "Signup",
+            "Login",
             style: TextStyle(
               fontSize: 14.sp,
               fontFamily: "Gilroy",
