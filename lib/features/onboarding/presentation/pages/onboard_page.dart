@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:green_vegease/core/common/widgets/button_widget.dart';
 import 'package:green_vegease/core/theme/colors.dart';
+import 'package:green_vegease/core/theme/text_styles.dart';
 import '../../../../core/routes/app_router.dart';
 
 @RoutePage()
@@ -69,10 +70,8 @@ class _OnboardPageState extends State<OnboardPage> {
   Widget _buildTitleText(String text) {
     return Text(
       text,
-      style: TextStyle(
+      style: kTextStyleGilroy500.copyWith(
         height: 0.7,
-        fontWeight: FontWeight.w500,
-        fontFamily: 'Gilroy',
         fontSize: 48.sp,
         color: kColorWhite,
       ),
@@ -83,8 +82,7 @@ class _OnboardPageState extends State<OnboardPage> {
   Widget _buildSubtitleText(String text) {
     return Text(
       text,
-      style: TextStyle(
-        fontFamily: 'Gilroy',
+      style: kTextStyleGilroy400.copyWith(
         fontSize: 16.sp,
         color: kColorLiteWhite,
       ),

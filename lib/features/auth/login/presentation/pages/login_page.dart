@@ -1,4 +1,3 @@
-import 'package:auto_route/annotations.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -6,7 +5,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:green_vegease/core/common/widgets/button_widget.dart';
 import 'package:green_vegease/core/theme/colors.dart';
 
-import '../../../../core/routes/app_router.dart';
+import '../../../../../core/routes/app_router.dart';
+import '../../../../../core/theme/text_styles.dart';
 
 @RoutePage()
 class LoginPage extends StatefulWidget {
@@ -94,11 +94,9 @@ class _LoginPageState extends State<LoginPage> {
 // --> Login Title
   Widget _buildTitle() {
     return Text(
-      "Login",
-      style: TextStyle(
+      "Loging",
+      style: kTextStyleGilroy600.copyWith(
         color: kColorBlack,
-        fontFamily: "Gilroy",
-        fontWeight: FontWeight.w600,
         fontSize: 26.sp,
       ),
     );
@@ -107,10 +105,8 @@ class _LoginPageState extends State<LoginPage> {
   Widget _buildSubtitle() {
     return Text(
       "Enter your email and password",
-      style: TextStyle(
+      style: kTextStyleGilroy500.copyWith(
         color: kColorGrey,
-        fontFamily: "Gilroy",
-        fontWeight: FontWeight.w400,
         fontSize: 16.sp,
       ),
     );
@@ -123,10 +119,8 @@ class _LoginPageState extends State<LoginPage> {
       children: [
         Text(
           "Email",
-          style: TextStyle(
+          style: kTextStyleGilroy600.copyWith(
             color: kColorGrey,
-            fontFamily: "Gilroy",
-            fontWeight: FontWeight.w600,
             fontSize: 16.sp,
           ),
         ),
@@ -139,18 +133,14 @@ class _LoginPageState extends State<LoginPage> {
           child: TextFormField(
             controller: emailController,
             cursorHeight: 25,
-            style: TextStyle(
+            style: kTextStyleGilroy500.copyWith(
               fontSize: 18.sp,
-              fontFamily: "Gilroy",
-              fontWeight: FontWeight.w400,
               color: kColorBlack,
             ),
             decoration: InputDecoration(
               hintText: "Enter email id",
-              hintStyle: TextStyle(
+              hintStyle: kTextStyleGilroy400.copyWith(
                 color: kColorTextHint,
-                fontFamily: "Gilroy",
-                fontWeight: FontWeight.w400,
                 fontSize: 16.sp,
               ),
               border: InputBorder.none,
@@ -168,10 +158,8 @@ class _LoginPageState extends State<LoginPage> {
       children: [
         Text(
           "Password",
-          style: TextStyle(
+          style: kTextStyleGilroy600.copyWith(
             color: kColorGrey,
-            fontFamily: "Gilroy",
-            fontWeight: FontWeight.w600,
             fontSize: 16.sp,
           ),
         ),
@@ -186,18 +174,14 @@ class _LoginPageState extends State<LoginPage> {
             obscureText: !isPasswordVisible,
             obscuringCharacter: ".",
             cursorHeight: 25,
-            style: TextStyle(
+            style: kTextStyleGilroy500.copyWith(
               fontSize: 18.sp,
-              fontFamily: "Gilroy",
-              fontWeight: FontWeight.w400,
               color: kColorBlack,
             ),
             decoration: InputDecoration(
               hintText: "Enter password",
-              hintStyle: TextStyle(
+              hintStyle: kTextStyleGilroy400.copyWith(
                 color: kColorTextHint,
-                fontFamily: "Gilroy",
-                fontWeight: FontWeight.w400,
                 fontSize: 16.sp,
               ),
               border: InputBorder.none,
@@ -219,10 +203,8 @@ class _LoginPageState extends State<LoginPage> {
       children: [
         Text(
           "Forgot Password?",
-          style: TextStyle(
+          style: kTextStyleGilroy500.copyWith(
             fontSize: 14.sp,
-            fontFamily: "Gilroy",
-            fontWeight: FontWeight.w400,
             color: kColorBlack,
           ),
         ),
@@ -245,10 +227,8 @@ class _LoginPageState extends State<LoginPage> {
       children: [
         Text(
           "Don’t have an account? ",
-          style: TextStyle(
+          style: kTextStyleGilroy600.copyWith(
             fontSize: 14.sp,
-            fontFamily: "Gilroy",
-            fontWeight: FontWeight.w600,
             color: kColorBlack,
           ),
         ),
@@ -259,10 +239,8 @@ class _LoginPageState extends State<LoginPage> {
           },
           child: Text(
             "Signup",
-            style: TextStyle(
+            style: kTextStyleGilroy600.copyWith(
               fontSize: 14.sp,
-              fontFamily: "Gilroy",
-              fontWeight: FontWeight.w600,
               color: kColorPrimary,
             ),
           ),

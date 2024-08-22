@@ -1,13 +1,12 @@
 import 'dart:async';
-
 import 'package:auto_route/annotations.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:green_vegease/core/theme/colors.dart';
-
 import '../../../../core/routes/app_router.dart';
+import '../../../../core/theme/text_styles.dart';
 
 @RoutePage()
 class SplashPage extends StatefulWidget {
@@ -60,20 +59,14 @@ class _SplashPageState extends State<SplashPage> {
                   children: [
                     Text(
                       "Green Vegease",
-                      style: TextStyle(
-                          height: 1.2,
-                          fontFamily: 'Gilroy',
-                          fontWeight: FontWeight.w600,
-                          fontSize: 35.sp,
-                          color: kColorWhite),
+                      style: kTextStyleGilroy600.copyWith(
+                          height: 1.2, fontSize: 35.sp, color: kColorWhite),
                     ),
                     Text(
                       " o n l i n e   g r o c e r i e t",
-                      style: TextStyle(
+                      style: kTextStyleGilroy400.copyWith(
                           wordSpacing: 6.1.sp,
                           height: 1,
-                          fontFamily: 'Gilroy',
-                          fontWeight: FontWeight.w400,
                           fontSize: 14.sp,
                           color: kColorWhite),
                     ),

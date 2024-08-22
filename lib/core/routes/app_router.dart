@@ -1,9 +1,9 @@
 import 'package:auto_route/annotations.dart';
 import 'package:auto_route/auto_route.dart';
-import 'package:green_vegease/features/auth/presentation/pages/singup_page.dart';
+import 'package:green_vegease/features/auth/signup/presentation/pages/singup_page.dart';
 import 'package:green_vegease/features/onboarding/presentation/pages/onboard_page.dart';
 import 'package:green_vegease/features/splashscreen/presentation/pages/splash_page.dart';
-import '../../features/auth/presentation/pages/login_page.dart';
+import '../../features/auth/login/presentation/pages/login_page.dart';
 part 'app_router.gr.dart';
 
 @AutoRouterConfig(replaceInRouteName: "Route")

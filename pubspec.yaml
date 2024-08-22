@@ -23,12 +23,25 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   fonts:
-    - family: Gilroy
+    - family: Gilroy-Regular
       fonts:
         - asset: assets\fonts\Gilroy-Regular.ttf
-          weight: 600
+    - family: Gilroy-Medium
+      fonts:
         - asset: assets\fonts\Gilroy-Medium.ttf 
-          weight: 400 
+    - family: Gilroy-Bold
+      fonts:
+        - asset: assets\fonts\Gilroy-Bold.ttf
+    - family: Gilroy-SemiBold
+      fonts:
+        - asset: assets\fonts\Gilroy-SemiBold.ttf
+    - family: Gilroy-Light
+      fonts:
+        - asset: assets\fonts\Gilroy-Light.ttf
+    - family: Gilroy-ExtraBold
+      fonts:
+        - asset: assets\fonts\Gilroy-ExtraBold.ttf
+        
   generate: true
   assets:
     - assets\images\login_background.png
