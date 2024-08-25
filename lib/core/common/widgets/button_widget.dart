@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../theme/colors.dart';
+import '../../theme/text_styles.dart';
 
 class ButtonWidget extends StatelessWidget {
   final String title;
@@ -16,9 +17,7 @@ class ButtonWidget extends StatelessWidget {
       child: Center(
         child: Text(
           title,
-          style: TextStyle(
-              fontWeight: FontWeight.w600,
-              fontFamily: 'Gilroy',
+          style: kTextStyleGilroy600.copyWith(
               fontSize: 18.sp,
               color: kColorWhite),
         ),

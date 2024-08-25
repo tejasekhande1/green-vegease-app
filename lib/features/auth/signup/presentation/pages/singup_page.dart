@@ -6,15 +6,17 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:green_vegease/core/common/widgets/button_widget.dart';
 import 'package:green_vegease/core/theme/colors.dart';
 
+import '../../../../../core/theme/text_styles.dart';
+
 @RoutePage()
 class SingupPage extends StatefulWidget {
-  const SingupPage ({super.key});
+  const SingupPage({super.key});
 
   @override
-  State<SingupPage > createState() => _SingupPageState();
+  State<SingupPage> createState() => _SingupPageState();
 }
 
-class _SingupPageState extends State<SingupPage > {
+class _SingupPageState extends State<SingupPage> {
   final TextEditingController usernameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
@@ -46,7 +48,8 @@ class _SingupPageState extends State<SingupPage > {
                   SizedBox(height: 15.h),
                   _buildSubtitle(),
                   SizedBox(height: 24.h),
-                  _buildTextField("Username", "Enter username", usernameController),
+                  _buildTextField(
+                      "Username", "Enter username", usernameController),
                   SizedBox(height: 30.h),
                   _buildTextField("Email", "Enter email id", emailController),
                   SizedBox(height: 20.h),
@@ -88,10 +91,8 @@ class _SingupPageState extends State<SingupPage > {
   Widget _buildTitle() {
     return Text(
       "Sign Up",
-      style: TextStyle(
+      style: kTextStyleGilroy600.copyWith(
         color: kColorBlack,
-        fontFamily: "Gilroy",
-        fontWeight: FontWeight.w600,
         fontSize: 26.sp,
       ),
     );
@@ -100,26 +101,23 @@ class _SingupPageState extends State<SingupPage > {
   Widget _buildSubtitle() {
     return Text(
       "Enter your credentials to continue",
-      style: TextStyle(
+      style: kTextStyleGilroy500.copyWith(
         color: kColorGrey,
-        fontFamily: "Gilroy",
-        fontWeight: FontWeight.w400,
         fontSize: 16.sp,
       ),
     );
   }
 
   //--> UserName TextField and Email TextField
-  Widget _buildTextField(String label, String hint, TextEditingController controller) {
+  Widget _buildTextField(
+      String label, String hint, TextEditingController controller) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           label,
-          style: TextStyle(
+          style: kTextStyleGilroy600.copyWith(
             color: kColorGrey,
-            fontFamily: "Gilroy",
-            fontWeight: FontWeight.w600,
             fontSize: 16.sp,
           ),
         ),
@@ -132,18 +130,14 @@ class _SingupPageState extends State<SingupPage > {
           child: TextFormField(
             controller: controller,
             cursorHeight: 25,
-            style: TextStyle(
+            style: kTextStyleGilroy400.copyWith(
               fontSize: 18.sp,
-              fontFamily: "Gilroy",
-              fontWeight: FontWeight.w400,
               color: kColorBlack,
             ),
             decoration: InputDecoration(
               hintText: hint,
-              hintStyle: TextStyle(
+              hintStyle: kTextStyleGilroy400.copyWith(
                 color: kColorTextHint,
-                fontFamily: "Gilroy",
-                fontWeight: FontWeight.w400,
                 fontSize: 16.sp,
               ),
               border: InputBorder.none,
@@ -153,6 +147,7 @@ class _SingupPageState extends State<SingupPage > {
       ],
     );
   }
+
 //--> password TextField
   Widget _buildPasswordField() {
     return Column(
@@ -160,10 +155,8 @@ class _SingupPageState extends State<SingupPage > {
       children: [
         Text(
           "Password",
-          style: TextStyle(
+          style: kTextStyleGilroy600.copyWith(
             color: kColorGrey,
-            fontFamily: "Gilroy",
-            fontWeight: FontWeight.w600,
             fontSize: 16.sp,
           ),
         ),
@@ -176,20 +169,16 @@ class _SingupPageState extends State<SingupPage > {
           child: TextFormField(
             controller: passwordController,
             obscureText: unShowPass,
-            obscuringCharacter: ".",
+            // obscuringCharacter: ".",
             cursorHeight: 25,
-            style: TextStyle(
+            style: kTextStyleGilroy400.copyWith(
               fontSize: 18.sp,
-              fontFamily: "Gilroy",
-              fontWeight: FontWeight.w400,
               color: kColorBlack,
             ),
             decoration: InputDecoration(
               hintText: "Enter password",
-              hintStyle: TextStyle(
+              hintStyle: kTextStyleGilroy400.copyWith(
                 color: kColorTextHint,
-                fontFamily: "Gilroy",
-                fontWeight: FontWeight.w400,
                 fontSize: 16.sp,
               ),
               border: InputBorder.none,
@@ -216,34 +205,29 @@ class _SingupPageState extends State<SingupPage > {
           child: RichText(
             text: TextSpan(
               text: "By continuing you agree to our ",
-              style: TextStyle(
-                fontSize: 16.sp,
-                fontFamily: "Gilroy",
-                fontWeight: FontWeight.w400,
-                color: kColorBlack,
+              style: kTextStyleGilroy500.copyWith(
+                fontSize: 14.sp,
+                color: kColorGrey,
               ),
               children: [
                 TextSpan(
                   text: "Terms of Service",
-                  style: TextStyle(
-                    fontSize: 16.sp,
+                  style: kTextStyleGilroy500.copyWith(
+                    fontSize: 14.sp,
                     color: kColorPrimary,
-                    fontWeight: FontWeight.w400,
                   ),
                 ),
                 TextSpan(
                   text: " and ",
-                  style: TextStyle(
-                    fontSize: 16.sp,
-                    fontWeight: FontWeight.w400,
+                  style: kTextStyleGilroy500.copyWith(
+                    fontSize: 14.sp,
                   ),
                 ),
                 TextSpan(
                   text: "Privacy Policy",
-                  style: TextStyle(
-                    fontSize: 16.sp,
+                  style: kTextStyleGilroy500.copyWith(
+                    fontSize: 14.sp,
                     color: kColorPrimary,
-                    fontWeight: FontWeight.w400,
                   ),
                 ),
               ],
@@ -256,11 +240,11 @@ class _SingupPageState extends State<SingupPage > {
 
   Widget _buildSignUpButton() {
     return GestureDetector(
-      onTap: () {
-      },
+      onTap: () {},
       child: const ButtonWidget(title: "Sign Up"),
     );
   }
+
 //--> Login Button
   Widget _buildLoginOption() {
     return Row(
@@ -268,10 +252,8 @@ class _SingupPageState extends State<SingupPage > {
       children: [
         Text(
           "Already have an account? ",
-          style: TextStyle(
+          style: kTextStyleGilroy600.copyWith(
             fontSize: 14.sp,
-            fontFamily: "Gilroy",
-            fontWeight: FontWeight.w600,
             color: kColorBlack,
           ),
         ),
@@ -281,10 +263,8 @@ class _SingupPageState extends State<SingupPage > {
           },
           child: Text(
             "Login",
-            style: TextStyle(
+            style: kTextStyleGilroy600.copyWith(
               fontSize: 14.sp,
-              fontFamily: "Gilroy",
-              fontWeight: FontWeight.w600,
               color: kColorPrimary,
             ),
           ),
