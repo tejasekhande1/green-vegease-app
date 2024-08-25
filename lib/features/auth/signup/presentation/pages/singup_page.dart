@@ -6,6 +6,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:green_vegease/core/common/widgets/button_widget.dart';
 import 'package:green_vegease/core/theme/colors.dart';
 
+import '../../../../../core/common/widgets/snackbar_widget.dart';
 import '../../../../../core/theme/text_styles.dart';
 
 @RoutePage()
@@ -24,6 +25,7 @@ class _SingupPageState extends State<SingupPage> {
 
   Icon _toggleIcon() {
     return Icon(
+      size: 24.h,
       unShowPass ? Icons.remove_red_eye_outlined : Icons.remove_red_eye,
     );
   }
@@ -83,7 +85,12 @@ class _SingupPageState extends State<SingupPage> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        SvgPicture.asset("assets/images/colored_carrot.svg"),
+        SvgPicture.asset(
+          "assets/images/colored_carrot.svg",
+          height: 55.h,
+          fit: BoxFit.fill,
+          width: 48.w,
+        ),
       ],
     );
   }
@@ -240,7 +247,14 @@ class _SingupPageState extends State<SingupPage> {
 
   Widget _buildSignUpButton() {
     return GestureDetector(
-      onTap: () {},
+      onTap: () {
+        if (emailController.text.isEmpty ||
+            passwordController.text.isEmpty ||
+            usernameController.text.isEmpty) {
+          CustomSnackbar.show(context, "Enter Valid Data",
+              backgroundColor: kColorPrimary);
+        }
+      },
       child: const ButtonWidget(title: "Sign Up"),
     );
   }

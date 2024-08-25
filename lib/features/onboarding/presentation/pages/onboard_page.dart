@@ -62,7 +62,7 @@ class _OnboardPageState extends State<OnboardPage> {
       width: 48.w,
       child: SvgPicture.asset(
         "assets/images/carrot.svg",
-        fit: BoxFit.contain,
+        fit: BoxFit.fill,
       ),
     );
   }

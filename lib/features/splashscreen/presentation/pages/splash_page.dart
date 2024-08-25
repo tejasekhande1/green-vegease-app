@@ -46,11 +46,8 @@ class _SplashPageState extends State<SplashPage> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                SvgPicture.asset(
-                  "assets/images/carrot.svg",
-                  height: 63.h,
-                  width: 54.w,
-                ),
+                SvgPicture.asset("assets/images/carrot.svg",
+                    height: 63.h, width: 54.w, fit: BoxFit.fill),
                 SizedBox(
                   width: 18.w,
                 ),
@@ -65,7 +62,7 @@ class _SplashPageState extends State<SplashPage> {
                     Text(
                       " o n l i n e   g r o c e r i e t",
                       style: kTextStyleGilroy400.copyWith(
-                          wordSpacing: 6.1.sp,
+                          wordSpacing: 6.4.sp,
                           height: 1,
                           fontSize: 14.sp,
                           color: kColorWhite),

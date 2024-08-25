@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:green_vegease/core/common/widgets/button_widget.dart';
+import 'package:green_vegease/core/common/widgets/snackbar_widget.dart';
 import 'package:green_vegease/core/theme/colors.dart';
 
 import '../../../../../core/routes/app_router.dart';
@@ -28,40 +29,46 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Icon get toggleIcon => Icon(
-      isPasswordVisible ? Icons.remove_red_eye : Icons.remove_red_eye_outlined);
+        size: 24.h,
+        isPasswordVisible
+            ? Icons.remove_red_eye
+            : Icons.remove_red_eye_outlined,
+      );
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: kColorWhite,
-      body: Stack(
-        children: [
-          _buildBackgroundImage(),
-          Padding(
-            padding: EdgeInsets.all(25.w),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                _buildLogo(),
-                SizedBox(height: 100.h),
-                _buildTitle(),
-                SizedBox(height: 15.h),
-                _buildSubtitle(),
-                SizedBox(height: 24.h),
-                _buildEmailField(),
-                SizedBox(height: 30.h),
-                _buildPasswordField(),
-                SizedBox(height: 20.h),
-                _buildForgotPasswordText(),
-                SizedBox(height: 30.h),
-                _buildLogInButton(),
-                SizedBox(height: 25.h),
-                _buildSignUpPrompt(),
-              ],
+      body: SingleChildScrollView(
+        child: Stack(
+          children: [
+            _buildBackgroundImage(),
+            Padding(
+              padding: EdgeInsets.all(25.w),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  _buildLogo(),
+                  SizedBox(height: 100.h),
+                  _buildTitle(),
+                  SizedBox(height: 15.h),
+                  _buildSubtitle(),
+                  SizedBox(height: 24.h),
+                  _buildEmailField(),
+                  SizedBox(height: 30.h),
+                  _buildPasswordField(),
+                  SizedBox(height: 20.h),
+                  _buildForgotPasswordText(),
+                  SizedBox(height: 30.h),
+                  _buildLogInButton(),
+                  SizedBox(height: 25.h),
+                  _buildSignUpPrompt(),
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -84,7 +91,12 @@ class _LoginPageState extends State<LoginPage> {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            SvgPicture.asset("assets/images/colored_carrot.svg"),
+            SvgPicture.asset(
+              "assets/images/colored_carrot.svg",
+              height: 55.h,
+              fit: BoxFit.fill,
+              width: 48.w,
+            ),
           ],
         ),
       ],
@@ -172,7 +184,6 @@ class _LoginPageState extends State<LoginPage> {
           child: TextFormField(
             controller: passwordController,
             obscureText: !isPasswordVisible,
-            obscuringCharacter: ".",
             cursorHeight: 25,
             style: kTextStyleGilroy500.copyWith(
               fontSize: 18.sp,
@@ -215,7 +226,12 @@ class _LoginPageState extends State<LoginPage> {
 // --> Login Button
   Widget _buildLogInButton() {
     return GestureDetector(
-      onTap: () {},
+      onTap: () {
+        if (emailController.text.isEmpty || passwordController.text.isEmpty) {
+          CustomSnackbar.show(context, "Enter Valid Data",
+              backgroundColor: kColorPrimary);
+        }
+      },
       child: const ButtonWidget(title: "Log In"),
     );
   }
