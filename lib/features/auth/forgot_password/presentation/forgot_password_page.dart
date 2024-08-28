@@ -5,21 +5,20 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:green_vegease/core/common/widgets/button_widget.dart';
 import 'package:green_vegease/core/common/widgets/snackbar_widget.dart';
 import 'package:green_vegease/core/theme/colors.dart';
-
-import '../../../../../core/routes/app_router.dart';
 import '../../../../../core/theme/text_styles.dart';
 
 @RoutePage()
-class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+class ForgotPasswordPage extends StatefulWidget {
+  const ForgotPasswordPage({super.key});
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  State<ForgotPasswordPage> createState() => _ForgotPasswordPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+  final TextEditingController passwordController2 = TextEditingController();
   bool isPasswordVisible = false;
 
   void togglePasswordVisibility() {
@@ -31,6 +30,20 @@ class _LoginPageState extends State<LoginPage> {
   Icon get toggleIcon => Icon(
         size: 24.h,
         isPasswordVisible
+            ? Icons.remove_red_eye
+            : Icons.remove_red_eye_outlined,
+      );
+  bool isPasswordVisible1 = false;
+
+  void togglePasswordVisibility1() {
+    setState(() {
+      isPasswordVisible1 = !isPasswordVisible1;
+    });
+  }
+
+  Icon get toggleIcon1 => Icon(
+        size: 24.h,
+        isPasswordVisible1
             ? Icons.remove_red_eye
             : Icons.remove_red_eye_outlined,
       );
@@ -58,12 +71,10 @@ class _LoginPageState extends State<LoginPage> {
                   _buildEmailField(),
                   SizedBox(height: 30.h),
                   _buildPasswordField(),
-                  SizedBox(height: 20.h),
-                  _buildForgotPasswordText(),
                   SizedBox(height: 30.h),
+                  _buildPasswordField2(),
+                  SizedBox(height: 20.h),
                   _buildLogInButton(),
-                  SizedBox(height: 25.h),
-                  _buildSignUpPrompt(),
                 ],
               ),
             ),
@@ -106,7 +117,7 @@ class _LoginPageState extends State<LoginPage> {
 // --> Login Title
   Widget _buildTitle() {
     return Text(
-      "Loging",
+      "Forgot Password",
       style: kTextStyleGilroy600.copyWith(
         color: kColorBlack,
         fontSize: 26.sp,
@@ -116,7 +127,7 @@ class _LoginPageState extends State<LoginPage> {
 
   Widget _buildSubtitle() {
     return Text(
-      "Enter your email and password",
+      "Enter details to reset password",
       style: kTextStyleGilroy500.copyWith(
         color: kColorGrey,
         fontSize: 16.sp,
@@ -163,7 +174,7 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-// --> Password TextField
+// --> Password TextField1
   Widget _buildPasswordField() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -207,20 +218,43 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-// --> Forgot password Button
-  Widget _buildForgotPasswordText() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.end,
+  // --> Password TextField2
+  Widget _buildPasswordField2() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        GestureDetector(
-          onTap: () {
-            AutoRouter.of(context).push(const ForgotPasswordPageRoute());
-          },
-          child: Text(
-            "Forgot Password?",
+        Text(
+          "Confirm Password",
+          style: kTextStyleGilroy600.copyWith(
+            color: kColorGrey,
+            fontSize: 16.sp,
+          ),
+        ),
+        Container(
+          decoration: const BoxDecoration(
+            border: Border(
+              bottom: BorderSide(color: kColorTextFieldBorder),
+            ),
+          ),
+          child: TextFormField(
+            controller: passwordController2,
+            obscureText: !isPasswordVisible1,
+            cursorHeight: 25,
             style: kTextStyleGilroy500.copyWith(
-              fontSize: 14.sp,
+              fontSize: 18.sp,
               color: kColorBlack,
+            ),
+            decoration: InputDecoration(
+              hintText: "Enter password",
+              hintStyle: kTextStyleGilroy400.copyWith(
+                color: kColorTextHint,
+                fontSize: 16.sp,
+              ),
+              border: InputBorder.none,
+              suffixIcon: GestureDetector(
+                onTap: togglePasswordVisibility1,
+                child: toggleIcon1,
+              ),
             ),
           ),
         ),
@@ -235,43 +269,9 @@ class _LoginPageState extends State<LoginPage> {
         if (emailController.text.isEmpty || passwordController.text.isEmpty) {
           CustomSnackbar.show(context, "Enter Valid Data",
               backgroundColor: kColorPrimary);
-        } else {
-          if (passwordController.text.length <= 7) {
-            CustomSnackbar.show(context, "Password must have 8 character",
-                backgroundColor: kColorPrimary);
-          }
         }
       },
-      child: const ButtonWidget(title: "Log In"),
-    );
-  }
-
-//--> Sign-Up Button for Registration
-  Widget _buildSignUpPrompt() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Text(
-          "Don’t have an account? ",
-          style: kTextStyleGilroy600.copyWith(
-            fontSize: 14.sp,
-            color: kColorBlack,
-          ),
-        ),
-        GestureDetector(
-          onTap: () {
-            AutoRouter.of(context).push(const SingupPageRoute());
-            FocusScope.of(context).unfocus();
-          },
-          child: Text(
-            "Signup",
-            style: kTextStyleGilroy600.copyWith(
-              fontSize: 14.sp,
-              color: kColorPrimary,
-            ),
-          ),
-        ),
-      ],
+      child: const ButtonWidget(title: "Changed Password"),
     );
   }
 }

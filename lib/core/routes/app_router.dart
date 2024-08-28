@@ -3,6 +3,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:green_vegease/features/auth/signup/presentation/pages/singup_page.dart';
 import 'package:green_vegease/features/onboarding/presentation/pages/onboard_page.dart';
 import 'package:green_vegease/features/splashscreen/presentation/pages/splash_page.dart';
+import '../../features/auth/forgot_password/presentation/forgot_password_page.dart';
 import '../../features/auth/login/presentation/pages/login_page.dart';
 part 'app_router.gr.dart';
 
@@ -18,5 +19,7 @@ class AppRouter extends RootStackRouter {
         AutoRoute(page: SplashPageRoute.page, path: "/"),
         AutoRoute(page: OnboardPageRoute.page),
         AutoRoute(page: SingupPageRoute.page),
+        AutoRoute(page: ForgotPasswordPageRoute.page),
+        
       ];
 }

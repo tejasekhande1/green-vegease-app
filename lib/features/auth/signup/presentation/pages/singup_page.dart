@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:green_vegease/core/common/widgets/button_widget.dart';
+import 'package:green_vegease/core/routes/app_router.dart';
 import 'package:green_vegease/core/theme/colors.dart';
 
 import '../../../../../core/common/widgets/snackbar_widget.dart';
@@ -21,9 +22,20 @@ class _SingupPageState extends State<SingupPage> {
   final TextEditingController usernameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+  final TextEditingController confirmPasswordController =
+      TextEditingController();
   bool unShowPass = true;
 
   Icon _toggleIcon() {
+    return Icon(
+      size: 24.h,
+      unShowPass ? Icons.remove_red_eye_outlined : Icons.remove_red_eye,
+    );
+  }
+
+  bool unShowPass1 = true;
+
+  Icon _toggleIcon1() {
     return Icon(
       size: 24.h,
       unShowPass ? Icons.remove_red_eye_outlined : Icons.remove_red_eye,
@@ -43,9 +55,9 @@ class _SingupPageState extends State<SingupPage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(height: 77.25.h),
+                  SizedBox(height: 67.25.h),
                   _buildLogo(),
-                  SizedBox(height: 100.h),
+                  SizedBox(height: 50.h),
                   _buildTitle(),
                   SizedBox(height: 15.h),
                   _buildSubtitle(),
@@ -56,6 +68,8 @@ class _SingupPageState extends State<SingupPage> {
                   _buildTextField("Email", "Enter email id", emailController),
                   SizedBox(height: 20.h),
                   _buildPasswordField(),
+                  SizedBox(height: 20.h),
+                  _buildConfirmPasswordField(),
                   SizedBox(height: 20.h),
                   _buildTermsText(),
                   SizedBox(height: 30.h),
@@ -148,6 +162,53 @@ class _SingupPageState extends State<SingupPage> {
                 fontSize: 16.sp,
               ),
               border: InputBorder.none,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildConfirmPasswordField() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          "Confirm Password",
+          style: kTextStyleGilroy600.copyWith(
+            color: kColorGrey,
+            fontSize: 16.sp,
+          ),
+        ),
+        Container(
+          decoration: const BoxDecoration(
+            border: Border(
+              bottom: BorderSide(color: kColorTextFieldBorder),
+            ),
+          ),
+          child: TextFormField(
+            controller: confirmPasswordController,
+            obscureText: unShowPass,
+            cursorHeight: 25,
+            style: kTextStyleGilroy400.copyWith(
+              fontSize: 18.sp,
+              color: kColorBlack,
+            ),
+            decoration: InputDecoration(
+              hintText: "Confirm password",
+              hintStyle: kTextStyleGilroy400.copyWith(
+                color: kColorTextHint,
+                fontSize: 16.sp,
+              ),
+              border: InputBorder.none,
+              suffixIcon: GestureDetector(
+                onTap: () {
+                  setState(() {
+                    unShowPass1 = !unShowPass1;
+                  });
+                },
+                child: _toggleIcon1(),
+              ),
             ),
           ),
         ),
@@ -248,11 +309,58 @@ class _SingupPageState extends State<SingupPage> {
   Widget _buildSignUpButton() {
     return GestureDetector(
       onTap: () {
-        if (emailController.text.isEmpty ||
-            passwordController.text.isEmpty ||
-            usernameController.text.isEmpty) {
-          CustomSnackbar.show(context, "Enter Valid Data",
+        String username = usernameController.text.trim();
+        String password = passwordController.text.trim();
+        String email = emailController.text.trim();
+        String confirmPassword = confirmPasswordController.text
+            .trim(); // Make sure to create and assign this controller.
+
+        // Username validation
+        if (username.isEmpty || username.length < 5) {
+          CustomSnackbar.show(
+              context, "Username must be at least 5 characters long.",
               backgroundColor: kColorPrimary);
+          return;
+        }
+
+        // Password validation
+        if (password.isEmpty || password.length < 8) {
+          CustomSnackbar.show(
+              context, "Password must be at least 8 characters long.",
+              backgroundColor: kColorPrimary);
+          return;
+        }
+        if (!RegExp(r'[A-Z]').hasMatch(password)) {
+          CustomSnackbar.show(
+              context, "Password must contain at least one capital letter.",
+              backgroundColor: kColorPrimary);
+          return;
+        }
+        if (!RegExp(r'[!@#$%^&*(),.?":{}|<>]').hasMatch(password)) {
+          CustomSnackbar.show(
+              context, "Password must contain at least one special character.",
+              backgroundColor: kColorPrimary);
+          return;
+        }
+
+        // Confirm Password validation
+        if (password != confirmPassword) {
+          CustomSnackbar.show(
+              context, "Password and Confirm Password do not match.",
+              backgroundColor: kColorPrimary);
+          return;
+        }
+
+        // If all validations pass
+        if (email.isEmpty ||
+            password.isEmpty ||
+            username.isEmpty ||
+            confirmPassword.isEmpty) {
+          CustomSnackbar.show(context, "Enter valid data.",
+              backgroundColor: kColorPrimary);
+        } else {
+          // Proceed with the sign-up logic
+          // e.g., API call, etc.
         }
       },
       child: const ButtonWidget(title: "Sign Up"),
@@ -273,7 +381,7 @@ class _SingupPageState extends State<SingupPage> {
         ),
         GestureDetector(
           onTap: () {
-            AutoRouter.of(context).back();
+            AutoRouter.of(context).replace(const LoginPageRoute());
           },
           child: Text(
             "Login",
