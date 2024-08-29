@@ -2,11 +2,11 @@ import 'package:auto_route/annotations.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:green_vegease/core/common/widgets/button_widget.dart';
-import 'package:green_vegease/core/theme/colors.dart';
-import 'package:green_vegease/core/theme/text_styles.dart';
+import 'package:green_vegease/features/onboarding/presentation/widgets/logo_widget.dart';
+import 'package:green_vegease/features/onboarding/presentation/widgets/subtitle_widget.dart';
 import '../../../../core/routes/app_router.dart';
+import '../widgets/title_text_widget.dart';
 
 @RoutePage()
 class OnboardPage extends StatefulWidget {
@@ -22,83 +22,37 @@ class _OnboardPageState extends State<OnboardPage> {
     return Scaffold(
       body: Stack(
         children: [
-          _buildBackgroundImage(),
-          _buildContent(),
+          Positioned.fill(
+            child: Image.asset(
+              'assets/images/on_bording (1).png',
+              fit: BoxFit.fill,
+            ),
+          ),
+          Column(
+            children: [
+              const Spacer(),
+              const LogoWidget(),
+              SizedBox(height: 30.h),
+              const TitleTextWidget(text: "Welcome"),
+              SizedBox(height: 15.h),
+              const TitleTextWidget(text: "to our store"),
+              SizedBox(height: 15.h),
+              const SubtitleWidget(
+                  text: "Get your groceries in as fast as one hour"),
+              SizedBox(height: 45.h),
+              GestureDetector(
+                onTap: () {
+                  AutoRouter.of(context).push(const LoginPageRoute());
+                },
+                child: Container(
+                  margin: EdgeInsets.symmetric(horizontal: 20.w),
+                  child: const ButtonWidget(title: "Get Started"),
+                ),
+              ),
+              SizedBox(height: 75.h),
+            ],
+          )
         ],
-      ),
-    );
-  }
-
-  Widget _buildBackgroundImage() {
-    return Positioned.fill(
-      child: Image.asset(
-        'assets/images/on_bording (1).png',
-        fit: BoxFit.fill,
-      ),
-    );
-  }
-
-  Widget _buildContent() {
-    return Column(
-      children: [
-        const Spacer(),
-        _buildLogo(),
-        SizedBox(height: 30.h),
-        _buildTitleText("Welcome"),
-        SizedBox(height: 15.h),
-        _buildTitleText("to our store"),
-        SizedBox(height: 15.h),
-        _buildSubtitleText("Get your groceries in as fast as one hour"),
-        SizedBox(height: 45.h),
-        _buildGetStartedButton(),
-        SizedBox(height: 75.h),
-      ],
-    );
-  }
-
-  Widget _buildLogo() {
-    return SizedBox(
-      height: 56.h,
-      width: 48.w,
-      child: SvgPicture.asset(
-        "assets/images/carrot.svg",
-        fit: BoxFit.fill,
-      ),
-    );
-  }
-
-  Widget _buildTitleText(String text) {
-    return Text(
-      text,
-      style: kTextStyleGilroy500.copyWith(
-        height: 0.7,
-        fontSize: 48.sp,
-        color: kColorWhite,
-      ),
-      textAlign: TextAlign.center,
-    );
-  }
-
-  Widget _buildSubtitleText(String text) {
-    return Text(
-      text,
-      style: kTextStyleGilroy400.copyWith(
-        fontSize: 16.sp,
-        color: kColorLiteWhite,
-      ),
-      textAlign: TextAlign.center,
-    );
-  }
-
-// --> Get Started Button
-  Widget _buildGetStartedButton() {
-    return GestureDetector(
-      onTap: () {
-        AutoRouter.of(context).push(const LoginPageRoute());
-      },
-      child: Container(
-        margin: EdgeInsets.symmetric(horizontal: 20.w),
-        child: const ButtonWidget(title: "Get Started"),
       ),
     );
   }
