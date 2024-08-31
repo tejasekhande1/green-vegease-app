@@ -3,11 +3,12 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:green_vegease/core/common/widgets/button_widget.dart';
+import 'package:green_vegease/core/routes/app_router.dart';
 import 'package:green_vegease/core/theme/colors.dart';
-
-import '../../../../../core/common/widgets/snackbar_widget.dart';
+import 'package:green_vegease/features/auth/signup/presentation/widgets/password_text_field_widget.dart';
+import 'package:green_vegease/features/auth/signup/presentation/widgets/signup_button_widget.dart';
 import '../../../../../core/theme/text_styles.dart';
+import '../widgets/text_field_widget.dart';
 
 @RoutePage()
 class SingupPage extends StatefulWidget {
@@ -21,15 +22,9 @@ class _SingupPageState extends State<SingupPage> {
   final TextEditingController usernameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
-  bool unShowPass = true;
-
-  Icon _toggleIcon() {
-    return Icon(
-      size: 24.h,
-      unShowPass ? Icons.remove_red_eye_outlined : Icons.remove_red_eye,
-    );
-  }
-
+  final TextEditingController confirmPasswordController =
+      TextEditingController();
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,29 +32,44 @@ class _SingupPageState extends State<SingupPage> {
       body: SingleChildScrollView(
         child: Stack(
           children: [
-            _buildBackgroundImage(),
+            Image.asset(
+              "assets/images/login_background.png",
+              width: 414.w,
+              height: 896.h,
+              fit: BoxFit.fill,
+            ),
             Padding(
               padding: EdgeInsets.all(25.w),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(height: 77.25.h),
+                  SizedBox(height: 67.25.h),
                   _buildLogo(),
-                  SizedBox(height: 100.h),
+                  SizedBox(height: 50.h),
                   _buildTitle(),
                   SizedBox(height: 15.h),
                   _buildSubtitle(),
                   SizedBox(height: 24.h),
-                  _buildTextField(
-                      "Username", "Enter username", usernameController),
+                  TextFieldWidget(
+                      label: "Username",
+                      hint: "Enter username",
+                      controller: usernameController),
                   SizedBox(height: 30.h),
-                  _buildTextField("Email", "Enter email id", emailController),
+                  TextFieldWidget(
+                      label: "Email",
+                      hint: "Enter email id",
+                      controller: emailController),
                   SizedBox(height: 20.h),
-                  _buildPasswordField(),
+                  PasswordTextFieldWidget(
+                      controller: passwordController, title: "Password"),
+                  SizedBox(height: 20.h),
+                  PasswordTextFieldWidget(
+                      controller: passwordController,
+                      title: "Confirm Password"),
                   SizedBox(height: 20.h),
                   _buildTermsText(),
                   SizedBox(height: 30.h),
-                  _buildSignUpButton(),
+                  SignupButtonWidget(confirmPasswordController: confirmPasswordController, emailController: emailController, passwordController: passwordController, usernameController: usernameController),
                   SizedBox(height: 25.h),
                   _buildLoginOption(),
                 ],
@@ -68,16 +78,6 @@ class _SingupPageState extends State<SingupPage> {
           ],
         ),
       ),
-    );
-  }
-
-//--> background Image
-  Widget _buildBackgroundImage() {
-    return Image.asset(
-      "assets/images/login_background.png",
-      width: 414.w,
-      height: 896.h,
-      fit: BoxFit.fill,
     );
   }
 
@@ -154,56 +154,7 @@ class _SingupPageState extends State<SingupPage> {
       ],
     );
   }
-
-//--> password TextField
-  Widget _buildPasswordField() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          "Password",
-          style: kTextStyleGilroy600.copyWith(
-            color: kColorGrey,
-            fontSize: 16.sp,
-          ),
-        ),
-        Container(
-          decoration: const BoxDecoration(
-            border: Border(
-              bottom: BorderSide(color: kColorTextFieldBorder),
-            ),
-          ),
-          child: TextFormField(
-            controller: passwordController,
-            obscureText: unShowPass,
-            // obscuringCharacter: ".",
-            cursorHeight: 25,
-            style: kTextStyleGilroy400.copyWith(
-              fontSize: 18.sp,
-              color: kColorBlack,
-            ),
-            decoration: InputDecoration(
-              hintText: "Enter password",
-              hintStyle: kTextStyleGilroy400.copyWith(
-                color: kColorTextHint,
-                fontSize: 16.sp,
-              ),
-              border: InputBorder.none,
-              suffixIcon: GestureDetector(
-                onTap: () {
-                  setState(() {
-                    unShowPass = !unShowPass;
-                  });
-                },
-                child: _toggleIcon(),
-              ),
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-
+  
   Widget _buildTermsText() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.end,
@@ -245,20 +196,6 @@ class _SingupPageState extends State<SingupPage> {
     );
   }
 
-  Widget _buildSignUpButton() {
-    return GestureDetector(
-      onTap: () {
-        if (emailController.text.isEmpty ||
-            passwordController.text.isEmpty ||
-            usernameController.text.isEmpty) {
-          CustomSnackbar.show(context, "Enter Valid Data",
-              backgroundColor: kColorPrimary);
-        }
-      },
-      child: const ButtonWidget(title: "Sign Up"),
-    );
-  }
-
 //--> Login Button
   Widget _buildLoginOption() {
     return Row(
@@ -273,7 +210,7 @@ class _SingupPageState extends State<SingupPage> {
         ),
         GestureDetector(
           onTap: () {
-            AutoRouter.of(context).back();
+            AutoRouter.of(context).replace(const LoginPageRoute());
           },
           child: Text(
             "Login",

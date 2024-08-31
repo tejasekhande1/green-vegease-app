@@ -11,15 +11,14 @@ class ButtonWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 100.w, vertical: 15.h),
+      padding: EdgeInsets.symmetric(vertical: 15.h),
       decoration: BoxDecoration(
           color: kColorPrimary, borderRadius: BorderRadius.circular(19)),
       child: Center(
         child: Text(
           title,
-          style: kTextStyleGilroy600.copyWith(
-              fontSize: 18.sp,
-              color: kColorWhite),
+          style:
+              kTextStyleGilroy600.copyWith(fontSize: 18.sp, color: kColorWhite),
         ),
       ),
     );
