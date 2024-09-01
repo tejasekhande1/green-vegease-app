@@ -42,7 +42,20 @@ class SignupButtonWidget extends StatelessWidget {
               backgroundColor: kColorRed);
           return;
         }
+        // email validation
+        final RegExp emailRegExp = RegExp(
+          r'^[a-zA-Z0-9._]+@[a-zA-Z0-9]+\.[a-zA-Z]+',
+        );
 
+        if (email.isEmpty) {
+          CustomSnackbar.show(context, "Please enter your email",
+              backgroundColor: kColorRed);
+          return;
+        } else if (!emailRegExp.hasMatch(email)) {
+          CustomSnackbar.show(context, "Please enter a valid email address",
+              backgroundColor: kColorRed);
+          return;
+        }
         // Password validation
         if (password.isEmpty || password.length < 8) {
           CustomSnackbar.show(
