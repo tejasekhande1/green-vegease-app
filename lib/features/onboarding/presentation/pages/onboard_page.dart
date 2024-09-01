@@ -1,8 +1,10 @@
 import 'package:auto_route/annotations.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:green_vegease/core/common/widgets/button_widget.dart';
+import 'package:green_vegease/core/theme/colors.dart';
 import 'package:green_vegease/features/onboarding/presentation/widgets/logo_widget.dart';
 import 'package:green_vegease/features/onboarding/presentation/widgets/subtitle_widget.dart';
 import '../../../../core/routes/app_router.dart';
@@ -19,6 +21,9 @@ class OnboardPage extends StatefulWidget {
 class _OnboardPageState extends State<OnboardPage> {
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+      statusBarColor: kColorTransparent, //or set color with: Color(0xFF0000FF)
+    ));
     return Scaffold(
       body: Stack(
         children: [

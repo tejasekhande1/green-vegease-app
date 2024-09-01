@@ -1,11 +1,13 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:green_vegease/core/common/widgets/button_widget.dart';
 import 'package:green_vegease/core/common/widgets/snackbar_widget.dart';
 import 'package:green_vegease/core/theme/colors.dart';
 import '../../../../../core/theme/text_styles.dart';
+import '../../../../core/routes/app_router.dart';
 
 @RoutePage()
 class ForgotPasswordPage extends StatefulWidget {
@@ -19,6 +21,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController passwordController2 = TextEditingController();
+  final TextEditingController otpController = TextEditingController();
   bool isPasswordVisible = false;
 
   void togglePasswordVisibility() {
@@ -51,7 +54,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
+      // resizeToAvoidBottomInset: false,
       backgroundColor: kColorWhite,
       body: SingleChildScrollView(
         child: Stack(
@@ -59,23 +62,43 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
             _buildBackgroundImage(),
             Padding(
               padding: EdgeInsets.all(25.w),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  _buildLogo(),
-                  SizedBox(height: 100.h),
-                  _buildTitle(),
-                  SizedBox(height: 15.h),
-                  _buildSubtitle(),
-                  SizedBox(height: 24.h),
-                  _buildEmailField(),
-                  SizedBox(height: 30.h),
-                  _buildPasswordField(),
-                  SizedBox(height: 30.h),
-                  _buildPasswordField2(),
-                  SizedBox(height: 20.h),
-                  _buildLogInButton(),
-                ],
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(
+                      height: 35.h,
+                    ),
+                    GestureDetector(
+                        onTap: () {
+                          AutoRouter.of(context).popForced();
+                        },
+                        child: SvgPicture.asset(
+                          "assets/icons/back_arrow.svg",
+                          height: 18.h,
+                          width: 10.w,
+                          fit: BoxFit.fill,
+                        )),
+                    _buildLogo(),
+                    SizedBox(height: 50.h),
+                    _buildTitle(),
+                    SizedBox(height: 15.h),
+                    _buildSubtitle(),
+                    SizedBox(height: 24.h),
+                    _buildEmailField(),
+                    SizedBox(height: 25.h),
+                    _buildOtpField(),
+                    SizedBox(height: 30.h),
+                    _buildPasswordField(),
+                    SizedBox(height: 30.h),
+                    _buildPasswordField2(),
+                    SizedBox(height: 20.h),
+                    _buildLogInButton(),
+                    SizedBox(
+                      height: 20.h,
+                    ),
+                  ],
+                ),
               ),
             ),
           ],
@@ -98,7 +121,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
   Widget _buildLogo() {
     return Column(
       children: [
-        SizedBox(height: 77.25.h),
+        SizedBox(height: 40.25.h),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -135,13 +158,12 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
     );
   }
 
-// --> Email TextField
-  Widget _buildEmailField() {
+  Widget _buildOtpField() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          "Email",
+          "Otp",
           style: kTextStyleGilroy600.copyWith(
             color: kColorGrey,
             fontSize: 16.sp,
@@ -154,14 +176,19 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
             ),
           ),
           child: TextFormField(
-            controller: emailController,
+            keyboardType: TextInputType.number,
+            inputFormatters: [
+              FilteringTextInputFormatter.digitsOnly,
+              LengthLimitingTextInputFormatter(4),
+            ],
+            controller: otpController,
             cursorHeight: 25,
             style: kTextStyleGilroy500.copyWith(
               fontSize: 18.sp,
               color: kColorBlack,
             ),
             decoration: InputDecoration(
-              hintText: "Enter email id",
+              hintText: "- - - -",
               hintStyle: kTextStyleGilroy400.copyWith(
                 color: kColorTextHint,
                 fontSize: 16.sp,
@@ -170,6 +197,60 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
             ),
           ),
         ),
+      ],
+    );
+  }
+
+// --> Email TextField
+  Widget _buildEmailField() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          "Mobile Number",
+          style: kTextStyleGilroy600.copyWith(
+            color: kColorGrey,
+            fontSize: 16.sp,
+          ),
+        ),
+        Container(
+          decoration: const BoxDecoration(
+            border: Border(
+              bottom: BorderSide(color: kColorTextFieldBorder),
+            ),
+          ),
+          child: TextFormField(
+            keyboardType: TextInputType.phone,
+            inputFormatters: [
+              FilteringTextInputFormatter.digitsOnly,
+              LengthLimitingTextInputFormatter(10),
+            ],
+            controller: emailController,
+            cursorHeight: 25,
+            style: kTextStyleGilroy500.copyWith(
+              fontSize: 18.sp,
+              color: kColorBlack,
+            ),
+            decoration: InputDecoration(
+              hintText: "Enter mobile number",
+              hintStyle: kTextStyleGilroy400.copyWith(
+                color: kColorTextHint,
+                fontSize: 16.sp,
+              ),
+              border: InputBorder.none,
+            ),
+          ),
+        ),
+        SizedBox(
+          height: 8.h,
+        ),
+        GestureDetector(
+            onTap: () {},
+            child: Text(
+              "Get Otp",
+              style: kTextStyleGilroy400.copyWith(
+                  height: 1, fontSize: 12, color: kColorPrimary),
+            ))
       ],
     );
   }
@@ -266,9 +347,50 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
   Widget _buildLogInButton() {
     return GestureDetector(
       onTap: () {
-        if (emailController.text.isEmpty || passwordController.text.isEmpty) {
+        if (emailController.text.trim().isEmpty ||
+            passwordController.text.trim().isEmpty ||
+            passwordController2.text.trim().isEmpty) {
+          if (emailController.text.trim().isEmpty) {
+            CustomSnackbar.show(context, "Please enter email",
+                backgroundColor: kColorRed);
+          } else if (passwordController.text.trim().isEmpty) {
+            CustomSnackbar.show(context, "Please enter password",
+                backgroundColor: kColorRed);
+          } else {
+            CustomSnackbar.show(context, "Please enter confirm password",
+                backgroundColor: kColorRed);
+          }
           CustomSnackbar.show(context, "Enter Valid Data",
-              backgroundColor: kColorPrimary);
+              backgroundColor: kColorRed);
+        } else {
+          if (passwordController.text.isEmpty ||
+              passwordController.text.length < 8) {
+            CustomSnackbar.show(
+                context, "Password must be at least 8 characters long.",
+                backgroundColor: kColorRed);
+            return;
+          }
+          if (!RegExp(r'[A-Z]').hasMatch(passwordController.text)) {
+            CustomSnackbar.show(
+                context, "Password must contain at least one capital letter.",
+                backgroundColor: kColorRed);
+            return;
+          }
+          if (!RegExp(r'[!@#$%^&*(),.?":{}|<>]')
+              .hasMatch(passwordController.text)) {
+            CustomSnackbar.show(context,
+                "Password must contain at least one special character.",
+                backgroundColor: kColorRed);
+            return;
+          }
+
+          // Confirm Password validation
+          if (passwordController.text != passwordController2.text) {
+            CustomSnackbar.show(
+                context, "Password and Confirm Password do not match.",
+                backgroundColor: kColorRed);
+            return;
+          }
         }
       },
       child: const ButtonWidget(title: "Changed Password"),

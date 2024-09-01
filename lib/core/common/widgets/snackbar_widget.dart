@@ -7,6 +7,7 @@ class CustomSnackbar {
   static void show(
     BuildContext context,
     String message, {
+    bool isFloatingButton = false,
     Color backgroundColor = kColorPrimary,
     Color textColor = kColorWhite,
     Duration duration = const Duration(seconds: 3),
@@ -26,8 +27,15 @@ class CustomSnackbar {
       duration: duration,
       action: action,
       padding: padding,
+      dismissDirection: DismissDirection.up,
       shape: shape,
-      behavior: SnackBarBehavior.floating, // Makes the snackbar floating
+      behavior: SnackBarBehavior.floating,
+      margin: EdgeInsets.only(
+          bottom: isFloatingButton
+              ? MediaQuery.of(context).size.height - 170
+              : MediaQuery.of(context).size.height - 100,
+          left: 10,
+          right: 10),
     );
 
     ScaffoldMessenger.of(context).showSnackBar(snackbar);

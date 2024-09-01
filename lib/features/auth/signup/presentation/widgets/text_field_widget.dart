@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../../core/theme/colors.dart';
@@ -8,7 +9,11 @@ class TextFieldWidget extends StatelessWidget {
   final String label;
   final String hint;
   final TextEditingController controller;
-  const TextFieldWidget({super.key, required this.label, required this.hint,required this.controller});
+  const TextFieldWidget(
+      {super.key,
+      required this.label,
+      required this.hint,
+      required this.controller});
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +34,16 @@ class TextFieldWidget extends StatelessWidget {
             ),
           ),
           child: TextFormField(
+            keyboardType: label == "Mobile Number"
+                ? TextInputType.phone
+                : TextInputType.emailAddress,
             controller: controller,
+            inputFormatters: label == "Mobile Number"
+                ? [
+                    FilteringTextInputFormatter.digitsOnly,
+                    LengthLimitingTextInputFormatter(10),
+                  ]
+                : [],
             cursorHeight: 25,
             style: kTextStyleGilroy400.copyWith(
               fontSize: 18.sp,

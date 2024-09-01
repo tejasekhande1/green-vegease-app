@@ -1,6 +1,7 @@
 import 'package:auto_route/annotations.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:green_vegease/core/routes/app_router.dart';
@@ -22,33 +23,65 @@ class _SingupPageState extends State<SingupPage> {
   final TextEditingController usernameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+  final TextEditingController mobileNumberController = TextEditingController();
+  final TextEditingController firstNameController = TextEditingController();
+  final TextEditingController lastNameController = TextEditingController();
   final TextEditingController confirmPasswordController =
       TextEditingController();
-  
+
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+      statusBarIconBrightness: Brightness.dark,
+      statusBarColor: kColorTransparent, //or set color with: Color(0xFF0000FF)
+    ));
     return Scaffold(
       backgroundColor: kColorWhite,
-      body: SingleChildScrollView(
-        child: Stack(
-          children: [
-            Image.asset(
-              "assets/images/login_background.png",
-              width: 414.w,
-              height: 896.h,
-              fit: BoxFit.fill,
-            ),
-            Padding(
+      body: Stack(
+        children: [
+          Image.asset(
+            "assets/images/login_background.png",
+            width: 414.w,
+            height: 896.h,
+            fit: BoxFit.fill,
+          ),
+          SingleChildScrollView(
+            child: Padding(
               padding: EdgeInsets.all(25.w),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(height: 67.25.h),
+                  SizedBox(height: 40.h),
                   _buildLogo(),
                   SizedBox(height: 50.h),
                   _buildTitle(),
                   SizedBox(height: 15.h),
                   _buildSubtitle(),
+                  SizedBox(height: 24.h),
+                  TextFieldWidget(
+                      label: "Mobile Number",
+                      hint: "Enter mobile number",
+                      controller: mobileNumberController),
+                  SizedBox(height: 24.h),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: TextFieldWidget(
+                            label: "Firstname",
+                            hint: "Enter firstname",
+                            controller: firstNameController),
+                      ),
+                      SizedBox(
+                        width: 15.w,
+                      ),
+                      Expanded(
+                        child: TextFieldWidget(
+                            label: "Lastname",
+                            hint: "Enter lastname",
+                            controller: lastNameController),
+                      ),
+                    ],
+                  ),
                   SizedBox(height: 24.h),
                   TextFieldWidget(
                       label: "Username",
@@ -64,19 +97,24 @@ class _SingupPageState extends State<SingupPage> {
                       controller: passwordController, title: "Password"),
                   SizedBox(height: 20.h),
                   PasswordTextFieldWidget(
-                      controller: passwordController,
+                      controller: confirmPasswordController,
                       title: "Confirm Password"),
                   SizedBox(height: 20.h),
                   _buildTermsText(),
                   SizedBox(height: 30.h),
-                  SignupButtonWidget(confirmPasswordController: confirmPasswordController, emailController: emailController, passwordController: passwordController, usernameController: usernameController),
+                  SignupButtonWidget(
+                      mobileController: mobileNumberController,
+                      confirmPasswordController: confirmPasswordController,
+                      emailController: emailController,
+                      passwordController: passwordController,
+                      usernameController: usernameController),
                   SizedBox(height: 25.h),
                   _buildLoginOption(),
                 ],
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -154,7 +192,7 @@ class _SingupPageState extends State<SingupPage> {
       ],
     );
   }
-  
+
   Widget _buildTermsText() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.end,
