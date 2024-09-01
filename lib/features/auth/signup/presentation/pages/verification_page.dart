@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+import '../../../../../core/common/widgets/snackbar_widget.dart';
 import '../../../../../core/theme/colors.dart';
 import '../../../../../core/theme/text_styles.dart';
 
@@ -112,8 +113,14 @@ class VerificationPage extends StatelessWidget {
         shape: const CircleBorder(),
         backgroundColor: kColorPrimary,
         onPressed: () {
-          if (otpController.text.trim().isNotEmpty) {
-            // AutoRouter.of(context).push();
+          FocusScope.of(context).unfocus();
+          if (otpController.text.trim().isNotEmpty &&
+              otpController.text.trim().length == 4) {
+            CustomSnackbar.show(context, "SignUp successful",
+                backgroundColor: kColorPrimary, isFloatingButton: true);
+          } else {
+            CustomSnackbar.show(context, "Please enter valid otp",
+                backgroundColor: kColorRed, isFloatingButton: true);
           }
         },
         child: SvgPicture.asset(
