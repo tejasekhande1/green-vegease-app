@@ -103,3 +103,38 @@ class SplashPageRoute extends PageRouteInfo<void> {
     },
   );
 }
+
+/// generated route for
+/// [VerificationPage]
+class VerificationPageRoute extends PageRouteInfo<VerificationPageRouteArgs> {
+  VerificationPageRoute({
+    Key? key,
+    List<PageRouteInfo>? children,
+  }) : super(
+          VerificationPageRoute.name,
+          args: VerificationPageRouteArgs(key: key),
+          initialChildren: children,
+        );
+
+  static const String name = 'VerificationPageRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      final args = data.argsAs<VerificationPageRouteArgs>(
+          orElse: () => const VerificationPageRouteArgs());
+      return VerificationPage(key: args.key);
+    },
+  );
+}
+
+class VerificationPageRouteArgs {
+  const VerificationPageRouteArgs({this.key});
+
+  final Key? key;
+
+  @override
+  String toString() {
+    return 'VerificationPageRouteArgs{key: $key}';
+  }
+}

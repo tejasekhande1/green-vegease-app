@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:green_vegease/core/common/widgets/button_widget.dart';
@@ -18,7 +19,7 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  final TextEditingController emailController = TextEditingController();
+  final TextEditingController mobileController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   bool isPasswordVisible = false;
 
@@ -37,6 +38,10 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+      statusBarIconBrightness: Brightness.dark,
+      statusBarColor: kColorTransparent, //or set color with: Color(0xFF0000FF)
+    ));
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: kColorWhite,
@@ -65,7 +70,7 @@ class _LoginPageState extends State<LoginPage> {
                   SizedBox(height: 25.h),
                   _buildSignUpPrompt(),
                 ],
-              ), 
+              ),
             ),
           ],
         ),
@@ -130,7 +135,7 @@ class _LoginPageState extends State<LoginPage> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          "Email",
+          "Mobile Number",
           style: kTextStyleGilroy600.copyWith(
             color: kColorGrey,
             fontSize: 16.sp,
@@ -143,14 +148,19 @@ class _LoginPageState extends State<LoginPage> {
             ),
           ),
           child: TextFormField(
-            controller: emailController,
+            keyboardType: TextInputType.phone,
+            controller: mobileController,
+            inputFormatters: [
+              FilteringTextInputFormatter.digitsOnly,
+              LengthLimitingTextInputFormatter(10),
+            ],
             cursorHeight: 25,
             style: kTextStyleGilroy500.copyWith(
               fontSize: 18.sp,
               color: kColorBlack,
             ),
             decoration: InputDecoration(
-              hintText: "Enter email id",
+              hintText: "Enter mobile number",
               hintStyle: kTextStyleGilroy400.copyWith(
                 color: kColorTextHint,
                 fontSize: 16.sp,
@@ -232,13 +242,23 @@ class _LoginPageState extends State<LoginPage> {
   Widget _buildLogInButton() {
     return GestureDetector(
       onTap: () {
-        if (emailController.text.isEmpty || passwordController.text.isEmpty) {
-          CustomSnackbar.show(context, "Enter Valid Data",
-              backgroundColor: kColorPrimary);
+        if (mobileController.text.isEmpty || passwordController.text.isEmpty) {
+          if (mobileController.text.isEmpty) {
+            CustomSnackbar.show(context, "Please enter mobile number",
+                backgroundColor: kColorRed);
+          } else {
+            CustomSnackbar.show(context, "Please enter password",
+                backgroundColor: kColorRed);
+          }
         } else {
           if (passwordController.text.length <= 7) {
             CustomSnackbar.show(context, "Password must have 8 character",
-                backgroundColor: kColorPrimary);
+                backgroundColor: kColorRed);
+          } else if (mobileController.text.length < 10) {
+            CustomSnackbar.show(context, "Please enter valid mobile number",
+                backgroundColor: kColorRed);
+          } else {
+            AutoRouter.of(context).push(VerificationPageRoute());
           }
         }
       },

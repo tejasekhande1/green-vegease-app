@@ -8,3 +8,5 @@ const kColorLiteWhite = Color.fromRGBO(252, 252, 252, 0.7);
 const kColorGetWhite = Color.fromRGBO(255, 249, 255, 1);
 const kColorTextFieldBorder = Color.fromRGBO(226, 226, 226, 1);
 const kColorTextHint = Color.fromRGBO(177, 177, 177, 1);
+const kColorRed = Colors.red;
+const kColorTransparent = Colors.transparent;
