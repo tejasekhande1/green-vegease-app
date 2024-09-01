@@ -242,7 +242,10 @@ class _LoginPageState extends State<LoginPage> {
   Widget _buildLogInButton() {
     return GestureDetector(
       onTap: () {
-        if (mobileController.text.isEmpty || passwordController.text.isEmpty) {
+        if(mobileController.text.trim().isEmpty && passwordController.text.trim().isEmpty){
+             CustomSnackbar.show(context, "Please enter mobile number and password",
+              backgroundColor: kColorRed);
+        }else if (mobileController.text.trim().isEmpty || passwordController.text.trim().isEmpty) {
           if (mobileController.text.isEmpty) {
             CustomSnackbar.show(context, "Please enter mobile number",
                 backgroundColor: kColorRed);
@@ -258,7 +261,9 @@ class _LoginPageState extends State<LoginPage> {
             CustomSnackbar.show(context, "Please enter valid mobile number",
                 backgroundColor: kColorRed);
           } else {
-            AutoRouter.of(context).push(VerificationPageRoute());
+            CustomSnackbar.show(context, "Logged in successful",
+                backgroundColor: kColorPrimary);
+            // AutoRouter.of(context).push();
           }
         }
       },

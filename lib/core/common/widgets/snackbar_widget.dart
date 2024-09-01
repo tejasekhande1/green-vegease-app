@@ -26,8 +26,13 @@ class CustomSnackbar {
       duration: duration,
       action: action,
       padding: padding,
+      dismissDirection: DismissDirection.up,
       shape: shape,
-      behavior: SnackBarBehavior.floating, // Makes the snackbar floating
+      behavior: SnackBarBehavior.floating,
+      margin: EdgeInsets.only(
+          bottom: MediaQuery.of(context).size.height - 100,
+          left: 10,
+          right: 10), 
     );
 
     ScaffoldMessenger.of(context).showSnackBar(snackbar);
