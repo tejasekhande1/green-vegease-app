@@ -103,6 +103,8 @@ class _SingupPageState extends State<SingupPage> {
                   _buildTermsText(),
                   SizedBox(height: 30.h),
                   SignupButtonWidget(
+                    firstNameController: firstNameController,
+                    lastNameController: lastNameController,
                       mobileController: mobileNumberController,
                       confirmPasswordController: confirmPasswordController,
                       emailController: emailController,

@@ -1,12 +1,18 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:green_vegease/core/routes/app_router.dart';
+import 'package:green_vegease/features/auth/signup/domain/models/signup_model.dart';
+import 'package:green_vegease/features/auth/signup/presentation/bloc/signup_bloc.dart';
+import 'package:green_vegease/features/auth/signup/presentation/bloc/signup_event.dart';
 
 import '../../../../../core/common/widgets/button_widget.dart';
 import '../../../../../core/common/widgets/snackbar_widget.dart';
 import '../../../../../core/theme/colors.dart';
 
 class SignupButtonWidget extends StatelessWidget {
+  final TextEditingController firstNameController;
+  final TextEditingController lastNameController;
   final TextEditingController mobileController;
   final TextEditingController usernameController;
   final TextEditingController passwordController;
@@ -14,6 +20,8 @@ class SignupButtonWidget extends StatelessWidget {
   final TextEditingController confirmPasswordController;
   const SignupButtonWidget(
       {super.key,
+      required this.firstNameController,
+      required this.lastNameController,
       required this.mobileController,
       required this.confirmPasswordController,
       required this.emailController,
@@ -93,6 +101,15 @@ class SignupButtonWidget extends StatelessWidget {
           CustomSnackbar.show(context, "Enter valid data.",
               backgroundColor: kColorRed);
         } else {
+          context.read<SignUpBloc>().add(SignUpSubmitted(
+              model: SignUp(
+                  firstname: firstNameController.text,
+                  username: username,
+                  lastname: lastNameController.text,
+                  email: email,
+                  mobileNumber: mobile,
+                  password: password,
+                  confirmedPassword: confirmPassword)));
           AutoRouter.of(context).push(VerificationPageRoute());
           // Proceed with the sign-up logic
           // e.g., API call, etc.
