@@ -2,12 +2,17 @@ import 'package:auto_route/annotations.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:green_vegease/core/common/widgets/loader_widget.dart';
 import 'package:green_vegease/core/routes/app_router.dart';
 import 'package:green_vegease/core/theme/colors.dart';
+import 'package:green_vegease/features/auth/signup/presentation/bloc/signup_bloc.dart';
+import 'package:green_vegease/features/auth/signup/presentation/bloc/signup_state.dart';
 import 'package:green_vegease/features/auth/signup/presentation/widgets/password_text_field_widget.dart';
 import 'package:green_vegease/features/auth/signup/presentation/widgets/signup_button_widget.dart';
+import '../../../../../core/common/widgets/snackbar_widget.dart';
 import '../../../../../core/theme/text_styles.dart';
 import '../widgets/text_field_widget.dart';
 
@@ -103,8 +108,8 @@ class _SingupPageState extends State<SingupPage> {
                   _buildTermsText(),
                   SizedBox(height: 30.h),
                   SignupButtonWidget(
-                    firstNameController: firstNameController,
-                    lastNameController: lastNameController,
+                      firstNameController: firstNameController,
+                      lastNameController: lastNameController,
                       mobileController: mobileNumberController,
                       confirmPasswordController: confirmPasswordController,
                       emailController: emailController,
@@ -116,6 +121,18 @@ class _SingupPageState extends State<SingupPage> {
               ),
             ),
           ),
+          BlocConsumer<SignUpBloc, SignUpState>(listener: (context, state) {
+            if (state is SignUpFailed) {
+              CustomSnackbar.show(context, state.error,
+                  backgroundColor: kColorRed);
+            }
+          }, builder: (context, state) {
+            if (state is SignUpLoading) {
+              return const LoaderWidget();
+            }
+
+            return const SizedBox();
+          })
         ],
       ),
     );

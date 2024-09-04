@@ -17,6 +17,8 @@ dependencies:
   flutter_launcher_icons: ^0.13.1
   flutter_screenutil: ^5.9.3
   flutter_svg: ^2.0.10+1
+  http: ^1.2.2
+  json_annotation: ^4.9.0
   rename_app: ^1.6.1
   retrofit: ^4.2.0
   retrofit_generator: ^8.2.1
