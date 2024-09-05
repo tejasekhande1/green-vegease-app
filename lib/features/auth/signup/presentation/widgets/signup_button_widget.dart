@@ -113,9 +113,7 @@ class SignupButtonWidget extends StatelessWidget {
                       mobileNumber: mobile,
                       password: password,
                       confirmedPassword: confirmPassword)));
-              if (state is SignUpSuccess) {
-                AutoRouter.of(context).push(VerificationPageRoute());
-              } 
+              
               // Proceed with the sign-up logic
               // e.g., API call, etc.
             }

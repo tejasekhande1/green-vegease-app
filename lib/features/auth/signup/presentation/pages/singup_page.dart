@@ -33,6 +33,15 @@ class _SingupPageState extends State<SingupPage> {
   final TextEditingController lastNameController = TextEditingController();
   final TextEditingController confirmPasswordController =
       TextEditingController();
+  void clearControllers() {
+    usernameController.clear();
+    emailController.clear();
+    passwordController.clear();
+    mobileNumberController.clear();
+    firstNameController.clear();
+    lastNameController.clear();
+    confirmPasswordController.clear();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -126,11 +135,17 @@ class _SingupPageState extends State<SingupPage> {
               CustomSnackbar.show(context, state.error,
                   backgroundColor: kColorRed);
             }
+            if (state is SignUpSuccess) {
+              AutoRouter.of(context)
+                  .push(VerificationPageRoute())
+                  .then((value) {
+                clearControllers();
+              });
+            }
           }, builder: (context, state) {
             if (state is SignUpLoading) {
               return const LoaderWidget();
             }
-
             return const SizedBox();
           })
         ],

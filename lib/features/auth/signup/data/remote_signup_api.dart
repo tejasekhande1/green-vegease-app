@@ -7,7 +7,10 @@ part 'remote_signup_api.g.dart';
 
 @RestApi(baseUrl: Constants.apiAuthBaseUrl)
 abstract class AuthService {
-  factory AuthService(Dio dio, {String baseUrl,}) = _AuthService;
+  factory AuthService(
+    Dio dio, {
+    String baseUrl,
+  }) = _AuthService;
 
   @POST("/signup")
   Future<void> signup(@Body() SignUp signup);

@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'remote_signup_api.dart';
+part of 'remote_login_api.dart';
 
 // **************************************************************************
 // RetrofitGenerator
@@ -8,8 +8,8 @@ part of 'remote_signup_api.dart';
 
 // ignore_for_file: unnecessary_brace_in_string_interps,no_leading_underscores_for_local_identifiers,unused_element
 
-class _AuthService implements AuthService {
-  _AuthService(
+class _LoginService implements LoginService {
+  _LoginService(
     this._dio, {
     this.baseUrl,
   }) {
@@ -22,12 +22,12 @@ class _AuthService implements AuthService {
 
 
   @override
-  Future<void> signup(SignUp signup) async {
+  Future<void> logIn(LogIn login) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
-    _data.addAll(signup.toJson());
+    _data.addAll(login.toJson());
     final _options = _setStreamType<void>(Options(
       method: 'POST',
       headers: _headers,
@@ -35,7 +35,7 @@ class _AuthService implements AuthService {
     )
         .compose(
           _dio.options,
-          '/signup',
+          '/login',
           queryParameters: queryParameters,
           data: _data,
         )

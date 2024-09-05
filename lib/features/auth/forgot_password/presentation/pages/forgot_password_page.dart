@@ -6,8 +6,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:green_vegease/core/common/widgets/button_widget.dart';
 import 'package:green_vegease/core/common/widgets/snackbar_widget.dart';
 import 'package:green_vegease/core/theme/colors.dart';
-import '../../../../../core/theme/text_styles.dart';
-import '../../../../core/routes/app_router.dart';
+import '../../../../../../core/theme/text_styles.dart';
+import '../../../../../core/routes/app_router.dart';
 
 @RoutePage()
 class ForgotPasswordPage extends StatefulWidget {

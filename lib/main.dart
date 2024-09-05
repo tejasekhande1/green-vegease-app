@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:green_vegease/features/auth/signup/presentation/bloc/signup_bloc.dart';
 
 import 'core/routes/app_router.dart';
+import 'features/auth/login/presentation/bloc/login_bloc.dart';
 
 void main() {
   runApp(MainApp());
@@ -19,8 +20,15 @@ class MainApp extends StatelessWidget {
         minTextAdapt: true,
         splitScreenMode: true,
         builder: (_, child) {
-          return BlocProvider(
-            create: (context) => SignUpBloc(),
+          return MultiBlocProvider(
+            providers: [
+              BlocProvider(
+                create: (context) => SignUpBloc(),
+              ),
+              BlocProvider(
+                create: (context) => LogInBloc(),
+              ),
+            ],
             child: MaterialApp.router(
               debugShowCheckedModeBanner: false,
               routerConfig: _appRouter.config(),

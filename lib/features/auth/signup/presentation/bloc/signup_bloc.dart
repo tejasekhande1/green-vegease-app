@@ -12,14 +12,12 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
   }
   void _onSignUp(SignUpSubmitted event, Emitter<SignUpState> emit) async {
     emit(SignUpLoading());
- 
+
     try {
       // Trigger the API call
-      await AuthService(Dio(
-      )).signup(event.model);
+      await AuthService(Dio()).signup(event.model);
       // If no error, emit success state
       emit(SignUpSuccess());
-      log("Signup successful");
     } on DioException catch (e) {
       // Log detailed error information
       if (e.response != null) {
