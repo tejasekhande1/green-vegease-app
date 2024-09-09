@@ -1,14 +1,20 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:green_vegease/core/common/widgets/button_widget.dart';
+import 'package:green_vegease/core/common/widgets/loader_widget.dart';
 import 'package:green_vegease/core/common/widgets/snackbar_widget.dart';
 import 'package:green_vegease/core/theme/colors.dart';
+import 'package:green_vegease/features/auth/login/domain/model/login_model.dart';
 
 import '../../../../../core/routes/app_router.dart';
 import '../../../../../core/theme/text_styles.dart';
+import '../bloc/login_bloc.dart';
+import '../bloc/login_event.dart';
+import '../bloc/login_state.dart';
 
 @RoutePage()
 class LoginPage extends StatefulWidget {
@@ -22,6 +28,11 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController mobileController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   bool isPasswordVisible = false;
+
+  void clearController() {
+    mobileController.clear();
+    passwordController.clear();
+  }
 
   void togglePasswordVisibility() {
     setState(() {
@@ -72,6 +83,24 @@ class _LoginPageState extends State<LoginPage> {
                 ],
               ),
             ),
+            BlocConsumer<LogInBloc, LogInState>(
+              listener: (context, state) {
+                if (state is LogInSuccess) {
+                  CustomSnackbar.show(context, "Logged in successful",
+                      backgroundColor: kColorPrimary);
+                }
+                if (state is LogInFailed) {
+                  CustomSnackbar.show(context, state.error,
+                      backgroundColor: kColorRed);
+                }
+              },
+              builder: (context, state) {
+                if (state is LogInLoading) {
+                  return const LoaderWidget();
+                }
+                return const SizedBox();
+              },
+            )
           ],
         ),
       ),
@@ -224,7 +253,11 @@ class _LoginPageState extends State<LoginPage> {
       children: [
         GestureDetector(
           onTap: () {
-            AutoRouter.of(context).push(const ForgotPasswordPageRoute());
+            AutoRouter.of(context)
+                .push(const ForgotPasswordPageRoute())
+                .then((onValue) {
+              clearController();
+            });
           },
           child: Text(
             "Forgot Password?",
@@ -242,10 +275,14 @@ class _LoginPageState extends State<LoginPage> {
   Widget _buildLogInButton() {
     return GestureDetector(
       onTap: () {
-        if(mobileController.text.trim().isEmpty && passwordController.text.trim().isEmpty){
-             CustomSnackbar.show(context, "Please enter mobile number and password",
+        FocusScope.of(context).unfocus();
+        if (mobileController.text.trim().isEmpty &&
+            passwordController.text.trim().isEmpty) {
+          CustomSnackbar.show(
+              context, "Please enter mobile number and password",
               backgroundColor: kColorRed);
-        }else if (mobileController.text.trim().isEmpty || passwordController.text.trim().isEmpty) {
+        } else if (mobileController.text.trim().isEmpty ||
+            passwordController.text.trim().isEmpty) {
           if (mobileController.text.isEmpty) {
             CustomSnackbar.show(context, "Please enter mobile number",
                 backgroundColor: kColorRed);
@@ -261,9 +298,10 @@ class _LoginPageState extends State<LoginPage> {
             CustomSnackbar.show(context, "Please enter valid mobile number",
                 backgroundColor: kColorRed);
           } else {
-            CustomSnackbar.show(context, "Logged in successful",
-                backgroundColor: kColorPrimary);
-            // AutoRouter.of(context).push();
+            context.read<LogInBloc>().add(LogInSubmitted(
+                model: LogIn(
+                    mobileNumber: mobileController.text,
+                    password: passwordController.text)));
           }
         }
       },
@@ -285,8 +323,10 @@ class _LoginPageState extends State<LoginPage> {
         ),
         GestureDetector(
           onTap: () {
-            AutoRouter.of(context).push(const SingupPageRoute());
             FocusScope.of(context).unfocus();
+            AutoRouter.of(context).push(const SingupPageRoute()).then((value) {
+              clearController();
+            });
           },
           child: Text(
             "Signup",

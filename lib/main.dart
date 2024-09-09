@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:green_vegease/features/auth/forgot_password/presentation/bloc/reset_pass_bloc.dart';
+import 'package:green_vegease/features/auth/signup/presentation/bloc/signup_bloc.dart';
 
 import 'core/routes/app_router.dart';
+import 'features/auth/login/presentation/bloc/login_bloc.dart';
 
 void main() {
   runApp(MainApp());
@@ -17,9 +21,22 @@ class MainApp extends StatelessWidget {
         minTextAdapt: true,
         splitScreenMode: true,
         builder: (_, child) {
-          return MaterialApp.router(
-            debugShowCheckedModeBanner: false,
-            routerConfig: _appRouter.config(),
+          return MultiBlocProvider(
+            providers: [
+              BlocProvider(
+                create: (context) => SignUpBloc(),
+              ),
+              BlocProvider(
+                create: (context) => LogInBloc(),
+              ),
+              BlocProvider(
+                create: (context) => ResetPassBloc(),
+              ),
+            ],
+            child: MaterialApp.router(
+              debugShowCheckedModeBanner: false,
+              routerConfig: _appRouter.config(),
+            ),
           );
         });
   }
