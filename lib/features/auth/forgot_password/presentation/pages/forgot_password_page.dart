@@ -1,13 +1,19 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:green_vegease/core/common/widgets/button_widget.dart';
 import 'package:green_vegease/core/common/widgets/snackbar_widget.dart';
 import 'package:green_vegease/core/theme/colors.dart';
+import 'package:green_vegease/features/auth/forgot_password/domain/reset_pass_model.dart';
+import 'package:green_vegease/features/auth/forgot_password/presentation/bloc/reset_pass_event.dart';
+import 'package:green_vegease/features/auth/forgot_password/presentation/bloc/reset_pass_state.dart';
 import '../../../../../../core/theme/text_styles.dart';
+import '../../../../../core/common/widgets/loader_widget.dart';
 import '../../../../../core/routes/app_router.dart';
+import '../bloc/reset_pass_bloc.dart';
 
 @RoutePage()
 class ForgotPasswordPage extends StatefulWidget {
@@ -20,8 +26,9 @@ class ForgotPasswordPage extends StatefulWidget {
 class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
-  final TextEditingController passwordController2 = TextEditingController();
-  final TextEditingController otpController = TextEditingController();
+  final TextEditingController confirmPasswordController2 =
+      TextEditingController();
+  final TextEditingController oldPassController = TextEditingController();
   bool isPasswordVisible = false;
 
   void togglePasswordVisibility() {
@@ -101,6 +108,25 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                 ),
               ),
             ),
+            BlocConsumer<ResetPassBloc, ResetPassState>(
+              listener: (context, state) {
+                if (state is ResetPassSuccess) {
+                  CustomSnackbar.show(context, "Password Changed Successful",
+                      backgroundColor: kColorPrimary);
+                  AutoRouter.of(context).popForced();
+                }
+                if (state is ResetPassFailed) {
+                  CustomSnackbar.show(context, state.error,
+                      backgroundColor: kColorRed);
+                }
+              },
+              builder: (context, state) {
+                if (state is ResetPassLoading) {
+                  return const LoaderWidget();
+                }
+                return const SizedBox();
+              },
+            )
           ],
         ),
       ),
@@ -163,7 +189,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          "Otp",
+          "Old Password",
           style: kTextStyleGilroy600.copyWith(
             color: kColorGrey,
             fontSize: 16.sp,
@@ -176,19 +202,19 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
             ),
           ),
           child: TextFormField(
-            keyboardType: TextInputType.number,
-            inputFormatters: [
-              FilteringTextInputFormatter.digitsOnly,
-              LengthLimitingTextInputFormatter(4),
-            ],
-            controller: otpController,
+            keyboardType: TextInputType.text,
+            // inputFormatters: [
+            //   FilteringTextInputFormatter.digitsOnly,
+            //   LengthLimitingTextInputFormatter(4),
+            // ],
+            controller: oldPassController,
             cursorHeight: 25,
             style: kTextStyleGilroy500.copyWith(
               fontSize: 18.sp,
               color: kColorBlack,
             ),
             decoration: InputDecoration(
-              hintText: "- - - -",
+              hintText: "Enter old password",
               hintStyle: kTextStyleGilroy400.copyWith(
                 color: kColorTextHint,
                 fontSize: 16.sp,
@@ -221,10 +247,10 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
           ),
           child: TextFormField(
             keyboardType: TextInputType.phone,
-            inputFormatters: [
-              FilteringTextInputFormatter.digitsOnly,
-              LengthLimitingTextInputFormatter(10),
-            ],
+            // inputFormatters: [
+            //   FilteringTextInputFormatter.digitsOnly,
+            //   LengthLimitingTextInputFormatter(10),
+            // ],
             controller: emailController,
             cursorHeight: 25,
             style: kTextStyleGilroy500.copyWith(
@@ -241,16 +267,16 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
             ),
           ),
         ),
-        SizedBox(
-          height: 8.h,
-        ),
-        GestureDetector(
-            onTap: () {},
-            child: Text(
-              "Get Otp",
-              style: kTextStyleGilroy400.copyWith(
-                  height: 1, fontSize: 12, color: kColorPrimary),
-            ))
+        // SizedBox(
+        //   height: 8.h,
+        // ),
+        // GestureDetector(
+        //     onTap: () {},
+        //     child: Text(
+        //       "Get Otp",
+        //       style: kTextStyleGilroy400.copyWith(
+        //           height: 1, fontSize: 12, color: kColorPrimary),
+        //     ))
       ],
     );
   }
@@ -261,7 +287,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          "Password",
+          "New Password",
           style: kTextStyleGilroy600.copyWith(
             color: kColorGrey,
             fontSize: 16.sp,
@@ -282,7 +308,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
               color: kColorBlack,
             ),
             decoration: InputDecoration(
-              hintText: "Enter password",
+              hintText: "Enter new password",
               hintStyle: kTextStyleGilroy400.copyWith(
                 color: kColorTextHint,
                 fontSize: 16.sp,
@@ -305,7 +331,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          "Confirm Password",
+          "Confirm New Password",
           style: kTextStyleGilroy600.copyWith(
             color: kColorGrey,
             fontSize: 16.sp,
@@ -318,7 +344,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
             ),
           ),
           child: TextFormField(
-            controller: passwordController2,
+            controller: confirmPasswordController2,
             obscureText: !isPasswordVisible1,
             cursorHeight: 25,
             style: kTextStyleGilroy500.copyWith(
@@ -326,7 +352,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
               color: kColorBlack,
             ),
             decoration: InputDecoration(
-              hintText: "Enter password",
+              hintText: "Enter confirm password",
               hintStyle: kTextStyleGilroy400.copyWith(
                 color: kColorTextHint,
                 fontSize: 16.sp,
@@ -349,7 +375,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
       onTap: () {
         if (emailController.text.trim().isEmpty ||
             passwordController.text.trim().isEmpty ||
-            passwordController2.text.trim().isEmpty) {
+            confirmPasswordController2.text.trim().isEmpty) {
           if (emailController.text.trim().isEmpty) {
             CustomSnackbar.show(context, "Please enter email",
                 backgroundColor: kColorRed);
@@ -385,12 +411,18 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
           }
 
           // Confirm Password validation
-          if (passwordController.text != passwordController2.text) {
+          if (passwordController.text != confirmPasswordController2.text) {
             CustomSnackbar.show(
                 context, "Password and Confirm Password do not match.",
                 backgroundColor: kColorRed);
             return;
           }
+          context.read<ResetPassBloc>().add(ResetPassSubmitted(
+              model: ResetPassword(
+                  email: emailController.text,
+                  oldPassword: oldPassController.text,
+                  newPassword: passwordController.text,
+                  confirmedNewPassword: confirmPasswordController2.text)));
         }
       },
       child: const ButtonWidget(title: "Changed Password"),

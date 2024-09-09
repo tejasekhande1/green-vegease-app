@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'remote_login_api.dart';
+part of 'remote_reset_pass_api.dart';
 
 // **************************************************************************
 // RetrofitGenerator
@@ -8,11 +8,10 @@ part of 'remote_login_api.dart';
 
 // ignore_for_file: unnecessary_brace_in_string_interps,no_leading_underscores_for_local_identifiers,unused_element
 
-class _LoginService implements LoginService {
-  _LoginService(
+class _ResetPassService implements ResetPassService {
+  _ResetPassService(
     this._dio, {
     this.baseUrl,
-  
   }) {
     baseUrl ??= 'http://192.168.165.60:8000/api/v1/auth';
   }
@@ -23,20 +22,20 @@ class _LoginService implements LoginService {
 
 
   @override
-  Future<void> logIn(LogIn login) async {
+  Future<void> resetPassword(ResetPassword resetPass) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
-    _data.addAll(login.toJson());
+    _data.addAll(resetPass.toJson());
     final _options = _setStreamType<void>(Options(
-      method: 'POST',
+      method: 'PATCH',
       headers: _headers,
       extra: _extra,
     )
         .compose(
           _dio.options,
-          '/login',
+          '/reset-password',
           queryParameters: queryParameters,
           data: _data,
         )

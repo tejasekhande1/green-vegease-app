@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:green_vegease/features/auth/forgot_password/presentation/bloc/reset_pass_bloc.dart';
 import 'package:green_vegease/features/auth/signup/presentation/bloc/signup_bloc.dart';
 
 import 'core/routes/app_router.dart';
@@ -27,6 +28,9 @@ class MainApp extends StatelessWidget {
               ),
               BlocProvider(
                 create: (context) => LogInBloc(),
+              ),
+              BlocProvider(
+                create: (context) => ResetPassBloc(),
               ),
             ],
             child: MaterialApp.router(
