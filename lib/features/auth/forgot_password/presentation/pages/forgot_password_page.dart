@@ -11,6 +11,7 @@ import 'package:green_vegease/features/auth/forgot_password/domain/reset_pass_mo
 import 'package:green_vegease/features/auth/forgot_password/presentation/bloc/reset_pass_event.dart';
 import 'package:green_vegease/features/auth/forgot_password/presentation/bloc/reset_pass_state.dart';
 import '../../../../../../core/theme/text_styles.dart';
+import '../../../../../core/common/bloc/internet_bloc/internet_bloc.dart';
 import '../../../../../core/common/widgets/loader_widget.dart';
 import '../../../../../core/routes/app_router.dart';
 import '../bloc/reset_pass_bloc.dart';
@@ -371,61 +372,73 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
 
 // --> Login Button
   Widget _buildLogInButton() {
-    return GestureDetector(
-      onTap: () {
-        if (emailController.text.trim().isEmpty ||
-            passwordController.text.trim().isEmpty ||
-            confirmPasswordController2.text.trim().isEmpty) {
-          if (emailController.text.trim().isEmpty) {
-            CustomSnackbar.show(context, "Please enter email",
-                backgroundColor: kColorRed);
-          } else if (passwordController.text.trim().isEmpty) {
-            CustomSnackbar.show(context, "Please enter password",
-                backgroundColor: kColorRed);
-          } else {
-            CustomSnackbar.show(context, "Please enter confirm password",
-                backgroundColor: kColorRed);
-          }
-          CustomSnackbar.show(context, "Enter Valid Data",
-              backgroundColor: kColorRed);
-        } else {
-          if (passwordController.text.isEmpty ||
-              passwordController.text.length < 8) {
-            CustomSnackbar.show(
-                context, "Password must be at least 8 characters long.",
-                backgroundColor: kColorRed);
-            return;
-          }
-          if (!RegExp(r'[A-Z]').hasMatch(passwordController.text)) {
-            CustomSnackbar.show(
-                context, "Password must contain at least one capital letter.",
-                backgroundColor: kColorRed);
-            return;
-          }
-          if (!RegExp(r'[!@#$%^&*(),.?":{}|<>]')
-              .hasMatch(passwordController.text)) {
-            CustomSnackbar.show(context,
-                "Password must contain at least one special character.",
-                backgroundColor: kColorRed);
-            return;
-          }
+    return BlocBuilder<InternetBloc, InternetStatus>(
+      builder: (context, state) {
+        return GestureDetector(
+          onTap: () {
+            FocusScope.of(context).unfocus();
+            if (emailController.text.trim().isEmpty ||
+                passwordController.text.trim().isEmpty ||
+                confirmPasswordController2.text.trim().isEmpty) {
+              if (emailController.text.trim().isEmpty) {
+                CustomSnackbar.show(context, "Please enter email",
+                    backgroundColor: kColorRed);
+              } else if (passwordController.text.trim().isEmpty) {
+                CustomSnackbar.show(context, "Please enter password",
+                    backgroundColor: kColorRed);
+              } else {
+                CustomSnackbar.show(context, "Please enter confirm password",
+                    backgroundColor: kColorRed);
+              }
+              CustomSnackbar.show(context, "Enter Valid Data",
+                  backgroundColor: kColorRed);
+            } else {
+              if (passwordController.text.isEmpty ||
+                  passwordController.text.length < 8) {
+                CustomSnackbar.show(
+                    context, "Password must be at least 8 characters long.",
+                    backgroundColor: kColorRed);
+                return;
+              }
+              if (!RegExp(r'[A-Z]').hasMatch(passwordController.text)) {
+                CustomSnackbar.show(context,
+                    "Password must contain at least one capital letter.",
+                    backgroundColor: kColorRed);
+                return;
+              }
+              if (!RegExp(r'[!@#$%^&*(),.?":{}|<>]')
+                  .hasMatch(passwordController.text)) {
+                CustomSnackbar.show(context,
+                    "Password must contain at least one special character.",
+                    backgroundColor: kColorRed);
+                return;
+              }
 
-          // Confirm Password validation
-          if (passwordController.text != confirmPasswordController2.text) {
-            CustomSnackbar.show(
-                context, "Password and Confirm Password do not match.",
-                backgroundColor: kColorRed);
-            return;
-          }
-          context.read<ResetPassBloc>().add(ResetPassSubmitted(
-              model: ResetPassword(
-                  email: emailController.text,
-                  oldPassword: oldPassController.text,
-                  newPassword: passwordController.text,
-                  confirmedNewPassword: confirmPasswordController2.text)));
-        }
+              // Confirm Password validation
+              if (passwordController.text != confirmPasswordController2.text) {
+                CustomSnackbar.show(
+                    context, "Password and Confirm Password do not match.",
+                    backgroundColor: kColorRed);
+                return;
+              }
+              if (state.status == ConnectivityStatus.connected) {
+                context.read<ResetPassBloc>().add(ResetPassSubmitted(
+                    model: ResetPassword(
+                        email: emailController.text,
+                        oldPassword: oldPassController.text,
+                        newPassword: passwordController.text,
+                        confirmedNewPassword:
+                            confirmPasswordController2.text)));
+              } else {
+                CustomSnackbar.show(
+                    context, "Please check internet connectivity",
+                    backgroundColor: kColorRed);
+              }
+            }
+          },
+          child: const ButtonWidget(title: "Changed Password"),
+        );
       },
-      child: const ButtonWidget(title: "Changed Password"),
     );
   }
 }

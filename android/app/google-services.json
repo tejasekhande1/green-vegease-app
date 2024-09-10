@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "904183955352",
+    "project_id": "green-vegease",
+    "storage_bucket": "green-vegease.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:904183955352:android:120a83956fa466377635ed",
+        "android_client_info": {
+          "package_name": "com.example.green_vegeas"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBnM0qLdjYmMow3S-0AkACGnVmgCKEEMYE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:904183955352:android:bbdc2c610c2551d97635ed",
+        "android_client_info": {
+          "package_name": "com.example.green_vegease"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBnM0qLdjYmMow3S-0AkACGnVmgCKEEMYE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

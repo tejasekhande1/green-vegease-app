@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:green_vegease/core/common/bloc/internet_bloc/internet_bloc.dart';
 import 'package:green_vegease/core/common/widgets/button_widget.dart';
 import 'package:green_vegease/core/common/widgets/loader_widget.dart';
 import 'package:green_vegease/core/common/widgets/snackbar_widget.dart';
@@ -273,39 +274,49 @@ class _LoginPageState extends State<LoginPage> {
 
 // --> Login Button
   Widget _buildLogInButton() {
-    return GestureDetector(
-      onTap: () {
-        FocusScope.of(context).unfocus();
-        if (mobileController.text.trim().isEmpty &&
-            passwordController.text.trim().isEmpty) {
-          CustomSnackbar.show(
-              context, "Please enter mobile number and password",
-              backgroundColor: kColorRed);
-        } else if (mobileController.text.trim().isEmpty ||
-            passwordController.text.trim().isEmpty) {
-          if (mobileController.text.isEmpty) {
-            CustomSnackbar.show(context, "Please enter mobile number",
-                backgroundColor: kColorRed);
-          } else {
-            CustomSnackbar.show(context, "Please enter password",
-                backgroundColor: kColorRed);
-          }
-        } else {
-          if (passwordController.text.length <= 7) {
-            CustomSnackbar.show(context, "Password must have 8 character",
-                backgroundColor: kColorRed);
-          } else if (mobileController.text.length < 10) {
-            CustomSnackbar.show(context, "Please enter valid mobile number",
-                backgroundColor: kColorRed);
-          } else {
-            context.read<LogInBloc>().add(LogInSubmitted(
-                model: LogIn(
-                    mobileNumber: mobileController.text,
-                    password: passwordController.text)));
-          }
-        }
+    return BlocBuilder<InternetBloc, InternetStatus>(
+      builder: (context, state) {
+        return GestureDetector(
+          onTap: () {
+            FocusScope.of(context).unfocus();
+            if (mobileController.text.trim().isEmpty &&
+                passwordController.text.trim().isEmpty) {
+              CustomSnackbar.show(
+                  context, "Please enter mobile number and password",
+                  backgroundColor: kColorRed);
+            } else if (mobileController.text.trim().isEmpty ||
+                passwordController.text.trim().isEmpty) {
+              if (mobileController.text.isEmpty) {
+                CustomSnackbar.show(context, "Please enter mobile number",
+                    backgroundColor: kColorRed);
+              } else {
+                CustomSnackbar.show(context, "Please enter password",
+                    backgroundColor: kColorRed);
+              }
+            } else {
+              if (passwordController.text.length <= 7) {
+                CustomSnackbar.show(context, "Password must have 8 character",
+                    backgroundColor: kColorRed);
+              } else if (mobileController.text.length < 10) {
+                CustomSnackbar.show(context, "Please enter valid mobile number",
+                    backgroundColor: kColorRed);
+              } else {
+                if (state.status == ConnectivityStatus.connected) {
+                  context.read<LogInBloc>().add(LogInSubmitted(
+                      model: LogIn(
+                          mobileNumber: mobileController.text,
+                          password: passwordController.text)));
+                } else {
+                  CustomSnackbar.show(
+                      context, "Please check internet connectivity",
+                      backgroundColor: kColorRed);
+                }
+              }
+            }
+          },
+          child: const ButtonWidget(title: "Log In"),
+        );
       },
-      child: const ButtonWidget(title: "Log In"),
     );
   }
 

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:green_vegease/core/common/widgets/button_widget.dart';
+import 'package:green_vegease/core/constants/constants.dart';
 import 'package:green_vegease/core/theme/colors.dart';
 import 'package:green_vegease/features/onboarding/presentation/widgets/logo_widget.dart';
 import 'package:green_vegease/features/onboarding/presentation/widgets/subtitle_widget.dart';
@@ -19,6 +20,13 @@ class OnboardPage extends StatefulWidget {
 }
 
 class _OnboardPageState extends State<OnboardPage> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    Constants.firebaseCloudMessaging.setupInteractedMessage();
+  }
+
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
