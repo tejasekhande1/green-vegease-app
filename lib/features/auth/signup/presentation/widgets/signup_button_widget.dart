@@ -6,6 +6,7 @@ import 'package:green_vegease/features/auth/signup/domain/models/signup_model.da
 import 'package:green_vegease/features/auth/signup/presentation/bloc/signup_bloc.dart';
 import 'package:green_vegease/features/auth/signup/presentation/bloc/signup_event.dart';
 
+import '../../../../../core/common/bloc/internet_bloc/internet_bloc.dart';
 import '../../../../../core/common/widgets/button_widget.dart';
 import '../../../../../core/common/widgets/snackbar_widget.dart';
 import '../../../../../core/theme/colors.dart';
@@ -31,7 +32,7 @@ class SignupButtonWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<SignUpBloc, SignUpState>(
+    return BlocBuilder<InternetBloc, InternetStatus>(
       builder: (context, state) {
         return GestureDetector(
           onTap: () {
@@ -104,16 +105,22 @@ class SignupButtonWidget extends StatelessWidget {
               CustomSnackbar.show(context, "Enter valid data.",
                   backgroundColor: kColorRed);
             } else {
-              context.read<SignUpBloc>().add(SignUpSubmitted(
-                  model: SignUp(
-                      firstname: firstNameController.text,
-                      username: username,
-                      lastname: lastNameController.text,
-                      email: email,
-                      mobileNumber: mobile,
-                      password: password,
-                      confirmedPassword: confirmPassword)));
-              
+              if (state.status == ConnectivityStatus.connected) {
+                context.read<SignUpBloc>().add(SignUpSubmitted(
+                    model: SignUp(
+                        firstname: firstNameController.text,
+                        username: username,
+                        lastname: lastNameController.text,
+                        email: email,
+                        mobileNumber: mobile,
+                        password: password,
+                        confirmedPassword: confirmPassword)));
+              } else {
+                CustomSnackbar.show(
+                    context, "Please check internet connectivity",
+                    backgroundColor: kColorRed);
+              }
+
               // Proceed with the sign-up logic
               // e.g., API call, etc.
             }
