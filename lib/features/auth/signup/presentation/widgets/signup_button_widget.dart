@@ -1,16 +1,11 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:green_vegease/core/routes/app_router.dart';
-import 'package:green_vegease/features/auth/signup/domain/models/signup_model.dart';
 import 'package:green_vegease/features/auth/signup/presentation/bloc/signup_bloc.dart';
 import 'package:green_vegease/features/auth/signup/presentation/bloc/signup_event.dart';
-
 import '../../../../../core/common/bloc/internet_bloc/internet_bloc.dart';
 import '../../../../../core/common/widgets/button_widget.dart';
-import '../../../../../core/common/widgets/snackbar_widget.dart';
 import '../../../../../core/theme/colors.dart';
-import '../bloc/signup_state.dart';
+import '../../../../../core/utils/utils.dart';
 
 class SignupButtonWidget extends StatelessWidget {
   final TextEditingController firstNameController;
@@ -44,13 +39,13 @@ class SignupButtonWidget extends StatelessWidget {
             String confirmPassword = confirmPasswordController.text
                 .trim(); // Make sure to create and assign this controller.
             if (mobile.isEmpty || mobile.length < 10) {
-              CustomSnackbar.show(context, "Please enter valid mobile number",
+              Utils.customSnackBar(context, "Please enter valid mobile number",
                   backgroundColor: kColorRed);
               return;
             }
             // Username validation
             if (username.isEmpty || username.length < 5) {
-              CustomSnackbar.show(
+              Utils.customSnackBar(
                   context, "Username must be at least 5 characters long.",
                   backgroundColor: kColorRed);
               return;
@@ -61,29 +56,30 @@ class SignupButtonWidget extends StatelessWidget {
             );
 
             if (email.isEmpty) {
-              CustomSnackbar.show(context, "Please enter your email",
+              Utils.customSnackBar(context, "Please enter your email",
                   backgroundColor: kColorRed);
               return;
             } else if (!emailRegExp.hasMatch(email)) {
-              CustomSnackbar.show(context, "Please enter a valid email address",
+              Utils.customSnackBar(
+                  context, "Please enter a valid email address",
                   backgroundColor: kColorRed);
               return;
             }
             // Password validation
             if (password.isEmpty || password.length < 8) {
-              CustomSnackbar.show(
+              Utils.customSnackBar(
                   context, "Password must be at least 8 characters long.",
                   backgroundColor: kColorRed);
               return;
             }
             if (!RegExp(r'[A-Z]').hasMatch(password)) {
-              CustomSnackbar.show(
+              Utils.customSnackBar(
                   context, "Password must contain at least one capital letter.",
                   backgroundColor: kColorRed);
               return;
             }
             if (!RegExp(r'[!@#$%^&*(),.?":{}|<>]').hasMatch(password)) {
-              CustomSnackbar.show(context,
+              Utils.customSnackBar(context,
                   "Password must contain at least one special character.",
                   backgroundColor: kColorRed);
               return;
@@ -91,7 +87,7 @@ class SignupButtonWidget extends StatelessWidget {
 
             // Confirm Password validation
             if (password != confirmPassword) {
-              CustomSnackbar.show(
+              Utils.customSnackBar(
                   context, "Password and Confirm Password do not match.",
                   backgroundColor: kColorRed);
               return;
@@ -102,21 +98,21 @@ class SignupButtonWidget extends StatelessWidget {
                 password.isEmpty ||
                 username.isEmpty ||
                 confirmPassword.isEmpty) {
-              CustomSnackbar.show(context, "Enter valid data.",
+              Utils.customSnackBar(context, "Enter valid data.",
                   backgroundColor: kColorRed);
             } else {
               if (state.status == ConnectivityStatus.connected) {
                 context.read<SignUpBloc>().add(SignUpSubmitted(
-                    model: SignUp(
-                        firstname: firstNameController.text,
-                        username: username,
-                        lastname: lastNameController.text,
-                        email: email,
-                        mobileNumber: mobile,
-                        password: password,
-                        confirmedPassword: confirmPassword)));
+                    signUpData: {
+                        "firstname": firstNameController.text,
+                        "username": username,
+                        "lastname": lastNameController.text,
+                        "email": email,
+                        "mobileNumber": mobile,
+                        "password": password,
+                        "confirmedPassword": confirmPassword}));
               } else {
-                CustomSnackbar.show(
+                Utils.customSnackBar(
                     context, "Please check internet connectivity",
                     backgroundColor: kColorRed);
               }

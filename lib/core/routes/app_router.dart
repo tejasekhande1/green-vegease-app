@@ -7,6 +7,7 @@ import 'package:green_vegease/features/splashscreen/presentation/pages/splash_pa
 import '../../features/auth/forgot_password/presentation/pages/forgot_password_page.dart';
 import '../../features/auth/login/presentation/pages/login_page.dart';
 import '../../features/auth/signup/presentation/pages/verification_page.dart';
+import '../../features/dashboard/products/presentation/product_page.dart';
 part 'app_router.gr.dart';
 
 @AutoRouterConfig(replaceInRouteName: "Route")

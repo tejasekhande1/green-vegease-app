@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:green_vegease/core/theme/colors.dart';
-import 'package:green_vegease/core/theme/text_styles.dart';
 
-class CustomSnackbar {
-  static void show(
+import '../theme/colors.dart';
+import '../theme/text_styles.dart';
+
+class Utils {
+
+  static void customSnackBar(
     BuildContext context,
     String message, {
     bool isFloatingButton = false,
@@ -39,5 +42,30 @@ class CustomSnackbar {
     );
 
     ScaffoldMessenger.of(context).showSnackBar(snackbar);
+  }
+
+  static InterceptorsWrapper getLoggingInterceptor() {
+    int count = 0;
+    return InterceptorsWrapper(
+      onRequest: (options, handler) {
+        count++;
+        debugPrint('Request[${options.method}] => PATH: ${options.path}');
+        debugPrint('Request HEADERS: ${options.headers}');
+        debugPrint('Request DATA: ${options.data}');
+        debugPrint('API call count: $count');
+        return handler.next(options);
+      },
+      onResponse: (response, handler) {
+        debugPrint(
+            'Response[${response.statusCode}] => DATA: ${response.data}');
+        return handler.next(response);
+      },
+      onError: (DioException e, handler) {
+        debugPrint("test error:}");
+        debugPrint('Error[${e.response?.statusCode}] => MESSAGE: ${e.message}');
+        debugPrint('Error DATA: ${e.response?.data}');
+        return handler.next(e);
+      },
+    );
   }
 }

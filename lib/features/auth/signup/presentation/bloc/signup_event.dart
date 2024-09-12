@@ -1,5 +1,4 @@
 import 'package:equatable/equatable.dart';
-import 'package:green_vegease/features/auth/signup/domain/models/signup_model.dart';
 
 abstract class SignUpEvent extends Equatable {
   const SignUpEvent();
@@ -9,10 +8,10 @@ abstract class SignUpEvent extends Equatable {
 }
 
 class SignUpSubmitted extends SignUpEvent {
-  final SignUp model;
+  final Map<String,dynamic> signUpData;
 
-  const SignUpSubmitted({required this.model});
+  const SignUpSubmitted({required this.signUpData});
 
   @override
-  List<Object> get props => [model];
+  List<Object> get props => [signUpData];
 }

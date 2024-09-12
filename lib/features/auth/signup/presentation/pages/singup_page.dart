@@ -12,8 +12,8 @@ import 'package:green_vegease/features/auth/signup/presentation/bloc/signup_bloc
 import 'package:green_vegease/features/auth/signup/presentation/bloc/signup_state.dart';
 import 'package:green_vegease/features/auth/signup/presentation/widgets/password_text_field_widget.dart';
 import 'package:green_vegease/features/auth/signup/presentation/widgets/signup_button_widget.dart';
-import '../../../../../core/common/widgets/snackbar_widget.dart';
 import '../../../../../core/theme/text_styles.dart';
+import '../../../../../core/utils/utils.dart';
 import '../widgets/text_field_widget.dart';
 
 @RoutePage()
@@ -132,7 +132,7 @@ class _SingupPageState extends State<SingupPage> {
           ),
           BlocConsumer<SignUpBloc, SignUpState>(listener: (context, state) {
             if (state is SignUpFailed) {
-              CustomSnackbar.show(context, state.error,
+              Utils.customSnackBar(context, state.error,
                   backgroundColor: kColorRed);
             }
             if (state is SignUpSuccess) {

@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'remote_login_api.dart';
+part of 'remote_signup_api.dart';
 
 // **************************************************************************
 // RetrofitGenerator
@@ -8,11 +8,11 @@ part of 'remote_login_api.dart';
 
 // ignore_for_file: unnecessary_brace_in_string_interps,no_leading_underscores_for_local_identifiers,unused_element
 
-class _LoginService implements LoginService {
-  _LoginService(
+class _SignUpApiService implements SignUpApiService {
+  _SignUpApiService(
     this._dio, {
     this.baseUrl,
-  
+    this.errorLogger,
   }) {
     baseUrl ??= 'http://192.168.165.60:8000/api/v1/auth';
   }
@@ -21,22 +21,23 @@ class _LoginService implements LoginService {
 
   String? baseUrl;
 
+  final ParseErrorLogger? errorLogger;
 
   @override
-  Future<void> logIn(LogIn login) async {
+  Future<SignUpModel> signUp(Map<String, dynamic> signUp) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
-    _data.addAll(login.toJson());
-    final _options = _setStreamType<void>(Options(
+    _data.addAll(signUp);
+    final _options = _setStreamType<SignUpModel>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
     )
         .compose(
           _dio.options,
-          '/login',
+          '/signup',
           queryParameters: queryParameters,
           data: _data,
         )
@@ -45,7 +46,15 @@ class _LoginService implements LoginService {
           _dio.options.baseUrl,
           baseUrl,
         )));
-    await _dio.fetch<void>(_options);
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late SignUpModel _value;
+    try {
+      _value = SignUpModel.fromJson(_result.data!);
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options);
+      rethrow;
+    }
+    return _value;
   }
 
   RequestOptions _setStreamType<T>(RequestOptions requestOptions) {

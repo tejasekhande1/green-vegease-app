@@ -1,5 +1,4 @@
 import 'package:equatable/equatable.dart';
-import 'package:green_vegease/features/auth/forgot_password/domain/reset_pass_model.dart';
 
 abstract class ResetPassEvent extends Equatable {
   const ResetPassEvent();
@@ -9,10 +8,10 @@ abstract class ResetPassEvent extends Equatable {
 }
 
 class ResetPassSubmitted extends ResetPassEvent {
-  final ResetPassword model;
+  final Map<String,dynamic> resetData;
 
-  const ResetPassSubmitted({required this.model});
+  const ResetPassSubmitted({required this.resetData});
 
   @override
-  List<Object> get props => [model];
+  List<Object> get props => [resetData];
 }

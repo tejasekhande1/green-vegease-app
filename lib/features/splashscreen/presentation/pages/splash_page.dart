@@ -36,8 +36,15 @@ class _SplashPageState extends State<SplashPage> {
   }
 
   @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    precacheImage(
+        Image.asset('assets/images/on_bording (1).png').image, context);
+  }
+
+  @override
   Widget build(BuildContext context) {
-     SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
       statusBarColor: kColorTransparent, //or set color with: Color(0xFF0000FF)
     ));
     return Scaffold(

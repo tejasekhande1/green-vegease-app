@@ -1,17 +1,18 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 import 'package:green_vegease/features/auth/forgot_password/presentation/bloc/reset_pass_bloc.dart';
 import 'package:green_vegease/features/auth/signup/presentation/bloc/signup_bloc.dart';
 import 'package:green_vegease/firebase_options.dart';
-import 'package:firebase_core/firebase_core.dart';
+
 import 'core/common/bloc/internet_bloc/internet_bloc.dart';
 import 'core/constants/constants.dart';
 import 'core/routes/app_router.dart';
 import 'features/auth/login/presentation/bloc/login_bloc.dart';
 import 'features/injuction.dart';
-
 
 @pragma('vm:entry-point')
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
@@ -53,13 +54,13 @@ class MainApp extends StatelessWidget {
           return MultiBlocProvider(
             providers: [
               BlocProvider(
-                create: (context) => SignUpBloc(),
+                create: (context) => SignUpBloc(signUpRepository: serviceLocator()),
               ),
               BlocProvider(
-                create: (context) => LogInBloc(),
+                create: (context) => LogInBloc(loginRepository: serviceLocator()),
               ),
               BlocProvider(
-                create: (context) => ResetPassBloc(),
+                create: (context) => ResetPassBloc(forgotPassWordRepository: serviceLocator()),
               ),
               BlocProvider(
                 create: (context) => InternetBloc()..trackConnectivityChange()

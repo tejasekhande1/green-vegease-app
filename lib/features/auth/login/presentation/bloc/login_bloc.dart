@@ -1,13 +1,11 @@
-import 'dart:developer';
-
-import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../data/remote_login_api.dart';
+import '../../data/repository/login_repository.dart';
 import 'login_event.dart';
 import 'login_state.dart';
 
 class LogInBloc extends Bloc<LogInEvent, LogInState> {
-  LogInBloc() : super(LogInInitial()) {
+  final LoginRepository _repository;
+  LogInBloc({required LoginRepository loginRepository}) : _repository= loginRepository,super(LogInInitial()) {
     on<LogInSubmitted>(_onLogIn);
   }
   void _onLogIn(LogInSubmitted event, Emitter<LogInState> emit) async {
@@ -15,16 +13,14 @@ class LogInBloc extends Bloc<LogInEvent, LogInState> {
 
     try {
       // Trigger the API call
-      await LoginService(Dio()).logIn(event.model);
       // If no error, emit success state
-      emit(LogInSuccess());
-    } on DioException catch (e) {
-      // Log detailed error information
-      if (e.response != null) {
-        emit(LogInFailed(error: e.response!.data["message"]));
+
+      final data = await _repository.loginUser(event.loginData);
+      if (data.success!) {
+        emit(LogInSuccess());
       } else {
-        log('${e.message}');
-        emit(LogInFailed(error: "Please check details"));
+        // Emit failure state with error message
+        emit(LogInFailed(error: data.message!));
       }
       // Emit failure state with error message
     } catch (e) {

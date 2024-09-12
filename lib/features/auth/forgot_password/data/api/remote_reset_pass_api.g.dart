@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'remote_signup_api.dart';
+part of 'remote_reset_pass_api.dart';
 
 // **************************************************************************
 // RetrofitGenerator
@@ -8,10 +8,11 @@ part of 'remote_signup_api.dart';
 
 // ignore_for_file: unnecessary_brace_in_string_interps,no_leading_underscores_for_local_identifiers,unused_element
 
-class _AuthService implements AuthService {
-  _AuthService(
+class _ForgotPassWordApiService implements ForgotPassWordApiService {
+  _ForgotPassWordApiService(
     this._dio, {
     this.baseUrl,
+    this.errorLogger,
   }) {
     baseUrl ??= 'http://192.168.165.60:8000/api/v1/auth';
   }
@@ -20,22 +21,24 @@ class _AuthService implements AuthService {
 
   String? baseUrl;
 
+  final ParseErrorLogger? errorLogger;
 
   @override
-  Future<void> signup(SignUp signup) async {
+  Future<ForgotPassWordModel> forgotPassword(
+      Map<String, dynamic> resetPass) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
-    _data.addAll(signup.toJson());
-    final _options = _setStreamType<void>(Options(
-      method: 'POST',
+    _data.addAll(resetPass);
+    final _options = _setStreamType<ForgotPassWordModel>(Options(
+      method: 'PATCH',
       headers: _headers,
       extra: _extra,
     )
         .compose(
           _dio.options,
-          '/signup',
+          '/reset-password',
           queryParameters: queryParameters,
           data: _data,
         )
@@ -44,7 +47,15 @@ class _AuthService implements AuthService {
           _dio.options.baseUrl,
           baseUrl,
         )));
-    await _dio.fetch<void>(_options);
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late ForgotPassWordModel _value;
+    try {
+      _value = ForgotPassWordModel.fromJson(_result.data!);
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options);
+      rethrow;
+    }
+    return _value;
   }
 
   RequestOptions _setStreamType<T>(RequestOptions requestOptions) {
