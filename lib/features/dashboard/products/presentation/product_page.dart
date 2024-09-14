@@ -8,13 +8,12 @@ class ProductPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
+      appBar: AppBar(),
       body: Column(
-        children: [
-          
-        ],
+        children: [],
       ),
-      drawer: CommonDrawer(page: "Product"),
+      drawer: CommonDrawer(),
     );
   }
 }

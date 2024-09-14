@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import '../../../../../core/utils/utils.dart';
@@ -20,18 +22,16 @@ class LoginService {
       _dio.interceptors.add(Utils.getLoggingInterceptor());
       final data = await _loginApi.logIn(body);
       return data;
-    } catch (e) {
+    } on DioException catch (e) {
       // Assuming `e` is a DioError and contains a response
-      if (e is DioException && e.response != null) {
-        final response = e.response?.data;
-        final message = response['message'] ?? 'An unknown error occurred';
-
-        // Throw custom exception with the message
-        throw Exception(message);
+      if (e.response != null) {
+        return LogInModel(success: false, message: e.response!.data['message']);
       } else {
-        // Default exception in case it's not a DioError or doesn't contain a response
-        throw Exception("Failed to Login user");
+        throw Exception("Failed to Login user :$e");
       }
+    } catch (e) {
+      // Default exception in case it's not a DioError or doesn't contain a response
+      throw Exception("Failed to Login user :$e");
     }
   }
 }

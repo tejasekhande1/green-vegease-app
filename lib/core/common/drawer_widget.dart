@@ -6,10 +6,8 @@ import 'package:green_vegease/core/theme/text_styles.dart';
 
 import '../theme/colors.dart';
 
-
 class CommonDrawer extends StatefulWidget {
-  final String page;
-  const CommonDrawer({super.key, required this.page});
+  const CommonDrawer({super.key});
 
   @override
   State<CommonDrawer> createState() => _CommonDrawerState();
@@ -18,16 +16,12 @@ class CommonDrawer extends StatefulWidget {
 bool isDarkTheme = false;
 
 class _CommonDrawerState extends State<CommonDrawer> {
+  String page = "orders";
   void changeTheme() {
     isDarkTheme = !isDarkTheme;
     setState(() {});
   }
 
-  String selectedValue = "English";
-
-  String email = "Email";
-  String name = "Name";
-  String imageUrl = "";
   @override
   void initState() {
     super.initState();
@@ -45,7 +39,10 @@ class _CommonDrawerState extends State<CommonDrawer> {
       ),
       child: Column(
         children: [
-         const Divider(
+          SizedBox(
+            height: 100.h,
+          ),
+          const Divider(
             color: kColorWhite,
           ),
           SizedBox(
@@ -61,36 +58,30 @@ class _CommonDrawerState extends State<CommonDrawer> {
                   margin: EdgeInsets.only(left: 10.w),
                   padding: EdgeInsets.only(top: 10.h, bottom: 10.h, left: 30.w),
                   decoration: BoxDecoration(
-                      color:
-                          widget.page == "Home" ? Colors.white : kColorPrimary,
+                      color: page == "orders" ? Colors.white : kColorPrimary,
                       borderRadius: const BorderRadius.only(
                           topLeft: Radius.circular(25),
                           bottomLeft: Radius.circular(25))),
                   child: Row(
                     children: [
                       Icon(Icons.home,
-                          color: widget.page == "Home"
-                              ? kColorPrimary
-                              : kColorWhite),
+                          color:
+                              page == "orders" ? kColorPrimary : kColorWhite),
                       SizedBox(
                         width: 30.w,
                       ),
-                      Text("Orders",
-                          style: kTextStyleGilroy500.copyWith(
+                      Text(
+                        "Orders",
+                        style: kTextStyleGilroy500.copyWith(
                             fontWeight: FontWeight.w500,
                             fontSize: 16.sp,
-                            color: widget.page == "Home"
-                                ? kColorPrimary
-                                : kColorWhite),
+                            color:
+                                page == "orders" ? kColorPrimary : kColorWhite),
                       )
                     ],
                   ),
                 ),
               ),
-             
-            
-
-              
               SizedBox(
                 height: 30.h,
               ),
@@ -102,28 +93,24 @@ class _CommonDrawerState extends State<CommonDrawer> {
                   margin: EdgeInsets.only(left: 10.w),
                   padding: EdgeInsets.only(top: 10.h, bottom: 10.h, left: 30.w),
                   decoration: BoxDecoration(
-                      color:
-                          widget.page != "Prof" ? kColorPrimary : kColorWhite,
+                      color: page != "Prof" ? kColorPrimary : kColorWhite,
                       borderRadius: const BorderRadius.only(
                           topLeft: Radius.circular(25),
                           bottomLeft: Radius.circular(25))),
                   child: Row(
                     children: [
                       Icon(Icons.person,
-                          color: widget.page == "Prof"
-                              ? kColorPrimary
-                              : kColorWhite),
+                          color: page == "Prof" ? kColorPrimary : kColorWhite),
                       SizedBox(
                         width: 30.w,
                       ),
                       Text(
-      "Products",
+                        "Products",
                         style: kTextStyleGilroy500.copyWith(
                             fontWeight: FontWeight.w500,
                             fontSize: 16.sp,
-                            color: widget.page == "Prof"
-                                ? kColorPrimary
-                                : kColorWhite),
+                            color:
+                                page == "Prof" ? kColorPrimary : kColorWhite),
                       )
                     ],
                   ),
@@ -141,26 +128,23 @@ class _CommonDrawerState extends State<CommonDrawer> {
                   margin: EdgeInsets.only(left: 10.w),
                   padding: EdgeInsets.only(top: 10.h, bottom: 10.h, left: 30.w),
                   decoration: BoxDecoration(
-                      color: widget.page != "Imp" ? kColorPrimary : kColorWhite,
+                      color: page != "Imp" ? kColorPrimary : kColorWhite,
                       borderRadius: const BorderRadius.only(
                           topLeft: Radius.circular(25),
                           bottomLeft: Radius.circular(25))),
                   child: Row(
                     children: [
                       Icon(Icons.star_border_purple500_sharp,
-                          color: widget.page == "Imp"
-                              ? kColorPrimary
-                              : kColorWhite),
+                          color: page == "Imp" ? kColorPrimary : kColorWhite),
                       SizedBox(
                         width: 30.w,
                       ),
-                      Text("Categories",
-                         style: kTextStyleGilroy500.copyWith(
+                      Text(
+                        "Categories",
+                        style: kTextStyleGilroy500.copyWith(
                             fontWeight: FontWeight.w500,
                             fontSize: 16.sp,
-                            color: widget.page == "Imp"
-                                ? kColorPrimary
-                                : kColorWhite),
+                            color: page == "Imp" ? kColorPrimary : kColorWhite),
                       )
                     ],
                   ),
@@ -178,27 +162,23 @@ class _CommonDrawerState extends State<CommonDrawer> {
                   margin: EdgeInsets.only(left: 10.w),
                   padding: EdgeInsets.only(top: 10.h, bottom: 10.h, left: 30.w),
                   decoration: BoxDecoration(
-                      color: widget.page != "Rec" ? kColorPrimary : kColorWhite,
+                      color: page != "Rec" ? kColorPrimary : kColorWhite,
                       borderRadius: const BorderRadius.only(
                           topLeft: Radius.circular(25),
                           bottomLeft: Radius.circular(25))),
                   child: Row(
                     children: [
                       Icon(Icons.delete_forever,
-                          color: widget.page == "Rec"
-                              ? kColorPrimary
-                              : kColorWhite),
+                          color: page == "Rec" ? kColorPrimary : kColorWhite),
                       SizedBox(
                         width: 30.w,
                       ),
-                      Text("Customers",
-      
+                      Text(
+                        "Customers",
                         style: kTextStyleGilroy500.copyWith(
                             fontWeight: FontWeight.w500,
                             fontSize: 16.sp,
-                            color: widget.page == "Rec"
-                                ? kColorPrimary
-                                : kColorWhite),
+                            color: page == "Rec" ? kColorPrimary : kColorWhite),
                       )
                     ],
                   ),
@@ -215,26 +195,23 @@ class _CommonDrawerState extends State<CommonDrawer> {
                   margin: EdgeInsets.only(left: 10.w),
                   padding: EdgeInsets.only(top: 10.h, bottom: 10.h, left: 30.w),
                   decoration: BoxDecoration(
-                      color: widget.page != "Set" ? kColorPrimary : kColorWhite,
+                      color: page != "Set" ? kColorPrimary : kColorWhite,
                       borderRadius: const BorderRadius.only(
                           topLeft: Radius.circular(25),
                           bottomLeft: Radius.circular(25))),
                   child: Row(
                     children: [
                       Icon(Icons.settings,
-                          color: widget.page == "Set"
-                              ? kColorPrimary
-                              : kColorWhite),
+                          color: page == "Set" ? kColorPrimary : kColorWhite),
                       SizedBox(
                         width: 30.w,
                       ),
-                      Text("Settings",
-                         style: kTextStyleGilroy500.copyWith(
+                      Text(
+                        "Settings",
+                        style: kTextStyleGilroy500.copyWith(
                             fontWeight: FontWeight.w500,
                             fontSize: 16.sp,
-                            color: widget.page == "Set"
-                                ? kColorPrimary
-                                : kColorWhite),
+                            color: page == "Set" ? kColorPrimary : kColorWhite),
                       )
                     ],
                   ),

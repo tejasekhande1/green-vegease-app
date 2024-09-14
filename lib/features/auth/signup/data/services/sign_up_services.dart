@@ -4,7 +4,6 @@ import '../../../../../core/utils/utils.dart';
 import '../api/remote_signup_api.dart';
 import '../model/signup_model.dart';
 
-
 class SignUpService {
   final SignUpApiService _signUpApi;
   final Dio _dio;
@@ -15,21 +14,24 @@ class SignUpService {
   Future<SignUpModel> signUp(Map<String, dynamic> body) async {
     try {
       debugPrint("in SignUp Service before headers");
-      // final headers = {
-      //   // 'Authorization': await Utils.authHeader(),
-      //   "content-type": "application/json",
-      //   "uuid": "12345",
-      //   "Accept-Language": "en",
-      //   "platform": "android"
-      // };
+
       debugPrint("in SignUp service");
       // _dio.options.headers = headers;
 
       _dio.interceptors.add(Utils.getLoggingInterceptor());
       final data = await _signUpApi.signUp(body);
       return data;
+    } on DioException catch (e) {
+      // Assuming `e` is a DioError and contains a response
+      if (e.response != null) {
+        return SignUpModel(
+            success: false, message: e.response!.data['message']);
+      } else {
+        throw Exception("Failed to Login user :$e");
+      }
     } catch (e) {
-      throw Exception("Failed to SignUp user");
+      // Default exception in case it's not a DioError or doesn't contain a response
+      throw Exception("Failed to Login user :$e");
     }
   }
 }

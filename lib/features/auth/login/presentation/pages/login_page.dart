@@ -8,6 +8,8 @@ import 'package:green_vegease/core/common/bloc/internet_bloc/internet_bloc.dart'
 import 'package:green_vegease/core/common/widgets/button_widget.dart';
 import 'package:green_vegease/core/common/widgets/loader_widget.dart';
 import 'package:green_vegease/core/theme/colors.dart';
+import 'package:green_vegease/core/utils/validation_mixin.dart';
+import 'package:green_vegease/features/dashboard/products/presentation/product_page.dart';
 import '../../../../../core/routes/app_router.dart';
 import '../../../../../core/theme/text_styles.dart';
 import '../../../../../core/utils/utils.dart';
@@ -23,7 +25,7 @@ class LoginPage extends StatefulWidget {
   State<LoginPage> createState() => _LoginPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _LoginPageState extends State<LoginPage> with ValidationMixin {
   final TextEditingController mobileController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   bool isPasswordVisible = false;
@@ -85,8 +87,12 @@ class _LoginPageState extends State<LoginPage> {
             BlocConsumer<LogInBloc, LogInState>(
               listener: (context, state) {
                 if (state is LogInSuccess) {
-                  Utils.customSnackBar(context, "Logged in successful",
+                  Utils.customSnackBar(context, state.response.message!,
                       backgroundColor: kColorPrimary);
+                  if (state.response.user!.role == "admin") {
+                    AutoRouter.of(context)
+                        .popAndPushAll([const ProductPageRoute()]);
+                  }
                 }
                 if (state is LogInFailed) {
                   Utils.customSnackBar(context, state.error,
