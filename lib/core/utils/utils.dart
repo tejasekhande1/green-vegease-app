@@ -1,12 +1,43 @@
+import 'dart:convert';
+import 'dart:io';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
+import '../config/config.dart';
 import '../theme/colors.dart';
 import '../theme/text_styles.dart';
+import 'package:device_info_plus/device_info_plus.dart';
 
 class Utils {
+static Future<String> authHeader() async {
+    String basicAuth =
+        'Basic ${base64Encode(utf8.encode('${AppConfig.username}:${AppConfig.password}'))}';
+    return basicAuth;
+  }
 
+  static Future<String> getAppVersion() async {
+    PackageInfo? info = await PackageInfo.fromPlatform();
+    return info.version.toString();
+  }
+
+  static void showCustomSnackBar(BuildContext context, String message) {
+    ScaffoldMessenger.of(context)
+        .showSnackBar(SnackBar(content: Text(message)));
+  }
+
+  Future<String?> getDeviceId() async {
+    DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+    String? deviceId;
+    if (Platform.isAndroid) {
+      AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
+      deviceId = androidInfo.id.toString();
+    } else if (Platform.isIOS) {
+      IosDeviceInfo iosInfo = await deviceInfo.iosInfo;
+      deviceId = iosInfo.identifierForVendor.toString();
+    }
+    return deviceId;
+  }
   static void customSnackBar(
     BuildContext context,
     String message, {

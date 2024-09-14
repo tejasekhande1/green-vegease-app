@@ -14,13 +14,6 @@ class LoginService {
   Future<LogInModel> login(Map<String, dynamic> body) async {
     try {
       debugPrint("in Login Service before headers");
-      // final headers = {
-      //   // 'Authorization': await Utils.authHeader(),
-      //   "content-type": "application/json",
-      //   "uuid": "12345",
-      //   "Accept-Language": "en",
-      //   "platform": "android"
-      // };
       debugPrint("in Login service");
       // _dio.options.headers = headers;
 

@@ -12,7 +12,7 @@ import 'core/common/bloc/internet_bloc/internet_bloc.dart';
 import 'core/constants/constants.dart';
 import 'core/routes/app_router.dart';
 import 'features/auth/login/presentation/bloc/login_bloc.dart';
-import 'features/injuction.dart';
+import 'features/init_dependancies.dart';
 
 @pragma('vm:entry-point')
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {

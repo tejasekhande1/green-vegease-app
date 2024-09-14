@@ -1,8 +1,10 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../core/routes/app_router.dart';
 // import 'package:shared_preferences/shared_preferences.dart';
 
+import '../core/services/firebase_service/shared_preferences_service/share_prefrences_service.dart';
 import 'auth/forgot_password/data/api/remote_reset_pass_api.dart';
 import 'auth/forgot_password/data/repository/forgot_pass_word_repository.dart';
 import 'auth/forgot_password/data/services/forgot_pass_word_services.dart';
@@ -19,8 +21,8 @@ import 'auth/signup/presentation/bloc/signup_bloc.dart';
 final serviceLocator = GetIt.instance;
 
 Future<void> initDependencies() async {
-  // final SharedPreferences sharedPreferences= await SharedPreferences.getInstance();
-  // serviceLocator.registerLazySingleton<SharedPreferencesService>(() => SharedPreferencesService(sharedPreferences));
+  final SharedPreferences sharedPreferences= await SharedPreferences.getInstance();
+  serviceLocator.registerLazySingleton<SharedPreferencesService>(() => SharedPreferencesService(sharedPreferences));
   serviceLocator.registerSingleton<AppRouter>(AppRouter());
   serviceLocator.registerLazySingleton<Dio>(() => Dio());
 
