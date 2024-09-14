@@ -67,10 +67,6 @@ flutter:
         
   generate: true
   assets:
-    - assets\images\login_background.png
-    - assets\images\carrot.svg
-    - assets\images\on_bording (1).png
-    - assets\icons\back_arrow.svg
-    - assets\images\colored_carrot.svg
-    - assets\icons\forward_arrow.svg
+    - assets/images/
+    - assets/icons/
 

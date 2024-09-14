@@ -10,6 +10,8 @@ import 'package:green_vegease/core/common/widgets/loader_widget.dart';
 import 'package:green_vegease/core/theme/colors.dart';
 import 'package:green_vegease/core/utils/validation_mixin.dart';
 import 'package:green_vegease/features/dashboard/products/presentation/product_page.dart';
+import 'package:green_vegease/features/init_dependancies.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../../../../core/routes/app_router.dart';
 import '../../../../../core/theme/text_styles.dart';
 import '../../../../../core/utils/utils.dart';
@@ -90,8 +92,9 @@ class _LoginPageState extends State<LoginPage> with ValidationMixin {
                   Utils.customSnackBar(context, state.response.message!,
                       backgroundColor: kColorPrimary);
                   if (state.response.user!.role == "admin") {
+                  
                     AutoRouter.of(context)
-                        .popAndPushAll([const ProductPageRoute()]);
+                        .replaceAll([const OrdersPageRoute()]);
                   }
                 }
                 if (state is LogInFailed) {

@@ -10,6 +10,44 @@
 part of 'app_router.dart';
 
 /// generated route for
+/// [CategoriesPage]
+class CategoriesPageRoute extends PageRouteInfo<void> {
+  const CategoriesPageRoute({List<PageRouteInfo>? children})
+      : super(
+          CategoriesPageRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'CategoriesPageRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const CategoriesPage();
+    },
+  );
+}
+
+/// generated route for
+/// [CustomersPage]
+class CustomersPageRoute extends PageRouteInfo<void> {
+  const CustomersPageRoute({List<PageRouteInfo>? children})
+      : super(
+          CustomersPageRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'CustomersPageRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const CustomersPage();
+    },
+  );
+}
+
+/// generated route for
 /// [ForgotPasswordPage]
 class ForgotPasswordPageRoute extends PageRouteInfo<void> {
   const ForgotPasswordPageRoute({List<PageRouteInfo>? children})
@@ -67,6 +105,25 @@ class OnboardPageRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [OrdersPage]
+class OrdersPageRoute extends PageRouteInfo<void> {
+  const OrdersPageRoute({List<PageRouteInfo>? children})
+      : super(
+          OrdersPageRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'OrdersPageRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const OrdersPage();
+    },
+  );
+}
+
+/// generated route for
 /// [ProductPage]
 class ProductPageRoute extends PageRouteInfo<void> {
   const ProductPageRoute({List<PageRouteInfo>? children})
@@ -81,6 +138,25 @@ class ProductPageRoute extends PageRouteInfo<void> {
     name,
     builder: (data) {
       return const ProductPage();
+    },
+  );
+}
+
+/// generated route for
+/// [SettingsPage]
+class SettingsPageRoute extends PageRouteInfo<void> {
+  const SettingsPageRoute({List<PageRouteInfo>? children})
+      : super(
+          SettingsPageRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'SettingsPageRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const SettingsPage();
     },
   );
 }
