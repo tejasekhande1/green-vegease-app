@@ -4,5 +4,5 @@ class AppConfig {
   static const String password = 'mypcot';
   static const String acceptedLanguage = 'en';
 
-  static const String apiBaseUrl = "http://192.168.165.60:8000/api/v1/auth";
+  static const String apiBaseUrl = "http://192.168.25.60:8000/api/v1/auth";
 }

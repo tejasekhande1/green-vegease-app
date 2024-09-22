@@ -10,3 +10,5 @@ const kColorTextFieldBorder = Color.fromRGBO(226, 226, 226, 1);
 const kColorTextHint = Color.fromRGBO(177, 177, 177, 1);
 const kColorRed = Colors.red;
 const kColorTransparent = Colors.transparent;
+const kColorBlurRadius = Color.fromRGBO(41, 0, 0, 0);
+const kColorBackground = Color.fromARGB(255, 246, 246, 246);

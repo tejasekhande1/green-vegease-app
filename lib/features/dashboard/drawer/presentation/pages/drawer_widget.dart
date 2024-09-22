@@ -6,6 +6,7 @@ import 'package:green_vegease/core/theme/text_styles.dart';
 
 import '../../../../../core/constants/constants.dart';
 import '../../../../../core/theme/colors.dart';
+import '../widgets/logout_pop_up.dart';
 import '../widgets/menu_widget.dart';
 
 class CommonDrawer extends StatelessWidget {
@@ -15,7 +16,8 @@ class CommonDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      elevation: 100,
+      width: 320.w,
+      elevation: 90,
       backgroundColor: kColorPrimary,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.only(
@@ -54,8 +56,7 @@ class CommonDrawer extends StatelessWidget {
                 child:
                     // -->  Orders Menu Widget
                     MenuWidget(
-                      icon: Constants.kOrderIc
-                      ,
+                  icon: Constants.kOrderIc,
                   page: page,
                   menuName: "Orders",
                 ),
@@ -70,7 +71,7 @@ class CommonDrawer extends StatelessWidget {
                 child:
                     // -->  Products Menu Widget
                     MenuWidget(
-                      icon: Constants.kProductIc,
+                  icon: Constants.kProductIc,
                   page: page,
                   menuName: "Products",
                 ),
@@ -85,7 +86,7 @@ class CommonDrawer extends StatelessWidget {
                 child:
                     // -->  Categories Menu Widget
                     MenuWidget(
-                      icon: Constants.kExploreIc,
+                  icon: Constants.kExploreIc,
                   page: page,
                   menuName: "Categories",
                 ),
@@ -100,7 +101,7 @@ class CommonDrawer extends StatelessWidget {
                 child:
                     // -->  Customers Menu Widget
                     MenuWidget(
-                      icon: Constants.kPersonIc,
+                  icon: Constants.kPersonIc,
                   page: page,
                   menuName: "Customers",
                 ),
@@ -116,9 +117,24 @@ class CommonDrawer extends StatelessWidget {
                 child:
                     // -->  Settings Menu Widget
                     MenuWidget(
-                      icon: Constants.kSettingsIc,
+                  icon: Constants.kSettingsIc,
                   page: page,
                   menuName: "Settings",
+                ),
+              ),
+              SizedBox(
+                height: 30.h,
+              ),
+              GestureDetector(
+                onTap: () {
+                  showCustomDialog(context);
+                },
+                child:
+                    // -->  Settings Menu Widget
+                    MenuWidget(
+                  icon: Constants.kLogoutIc,
+                  page: page,
+                  menuName: "Logout",
                 ),
               ),
             ],

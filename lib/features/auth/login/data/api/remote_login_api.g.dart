@@ -14,7 +14,7 @@ class _LoginApiService implements LoginApiService {
     this.baseUrl,
     this.errorLogger,
   }) {
-    baseUrl ??= 'http://192.168.165.60:8000/api/v1/auth';
+    baseUrl ??= 'http://192.168.25.60:8000/api/v1/auth';
   }
 
   final Dio _dio;

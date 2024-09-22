@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'remote_reset_pass_api.dart';
+part of 'category_api.dart';
 
 // **************************************************************************
 // RetrofitGenerator
@@ -8,8 +8,8 @@ part of 'remote_reset_pass_api.dart';
 
 // ignore_for_file: unnecessary_brace_in_string_interps,no_leading_underscores_for_local_identifiers,unused_element
 
-class _ForgotPassWordApiService implements ForgotPassWordApiService {
-  _ForgotPassWordApiService(
+class _CategoryApiService implements CategoryApiService {
+  _CategoryApiService(
     this._dio, {
     this.baseUrl,
     this.errorLogger,
@@ -24,21 +24,20 @@ class _ForgotPassWordApiService implements ForgotPassWordApiService {
   final ParseErrorLogger? errorLogger;
 
   @override
-  Future<ForgotPassWordModel> forgotPassword(
-      Map<String, dynamic> resetPass) async {
+  Future<CategoryModel> addCategory(Map<String, dynamic> categoryData) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
-    _data.addAll(resetPass);
-    final _options = _setStreamType<ForgotPassWordModel>(Options(
-      method: 'PATCH',
+    _data.addAll(categoryData);
+    final _options = _setStreamType<CategoryModel>(Options(
+      method: 'POST',
       headers: _headers,
       extra: _extra,
     )
         .compose(
           _dio.options,
-          '/reset-password',
+          '/category',
           queryParameters: queryParameters,
           data: _data,
         )
@@ -48,9 +47,9 @@ class _ForgotPassWordApiService implements ForgotPassWordApiService {
           baseUrl,
         )));
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late ForgotPassWordModel _value;
+    late CategoryModel _value;
     try {
-      _value = ForgotPassWordModel.fromJson(_result.data!);
+      _value = CategoryModel.fromJson(_result.data!);
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);
       rethrow;
