@@ -17,18 +17,25 @@ import 'auth/signup/data/api/remote_signup_api.dart';
 import 'auth/signup/data/repository/sign_up_repository.dart';
 import 'auth/signup/data/services/sign_up_services.dart';
 import 'auth/signup/presentation/bloc/signup_bloc.dart';
+import 'dashboard/categories/data/api/category_api.dart';
+import 'dashboard/categories/data/repository/category_repository.dart';
+import 'dashboard/categories/data/service/category_service.dart';
+import 'dashboard/categories/presentation/bloc/bloc/category_bloc.dart';
 
 final serviceLocator = GetIt.instance;
 
 Future<void> initDependencies() async {
-  final SharedPreferences sharedPreferences= await SharedPreferences.getInstance();
-  serviceLocator.registerLazySingleton<SharedPreferencesService>(() => SharedPreferencesService(sharedPreferences));
+  final SharedPreferences sharedPreferences =
+      await SharedPreferences.getInstance();
+  serviceLocator.registerLazySingleton<SharedPreferencesService>(
+      () => SharedPreferencesService(sharedPreferences));
   serviceLocator.registerSingleton<AppRouter>(AppRouter());
   serviceLocator.registerLazySingleton<Dio>(() => Dio());
 
   _initSignUp();
   _initResetPassWord();
   _initLogIn();
+  _initCategory();
 }
 
 void _initSignUp() {
@@ -93,6 +100,28 @@ void _initLogIn() {
     ..registerLazySingleton<LogInBloc>(
       () => LogInBloc(
         loginRepository: serviceLocator(),
+      ),
+    );
+}
+
+void _initCategory() {
+  serviceLocator
+
+    //Api
+    ..registerLazySingleton(() => CategoryApiService(serviceLocator()))
+
+    // service
+    ..registerLazySingleton(
+        () => CategoryService(categoryApi: serviceLocator(), dio: serviceLocator()))
+
+    //Repository
+    ..registerLazySingleton(
+        () => CategoryRepository(categoryService: serviceLocator()))
+
+    // Bloc
+    ..registerLazySingleton<CategoryBloc>(
+      () => CategoryBloc(
+        repository: serviceLocator(),
       ),
     );
 }

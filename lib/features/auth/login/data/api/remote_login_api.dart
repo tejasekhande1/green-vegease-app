@@ -13,6 +13,6 @@ abstract class LoginApiService {
     String baseUrl,
   }) = _LoginApiService;
 
-  @POST("/login")
+  @POST("/auth/login")
   Future<LogInModel> logIn(@Body() Map<String, dynamic> login);
 }

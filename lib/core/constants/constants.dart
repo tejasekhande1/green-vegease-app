@@ -14,4 +14,5 @@ class Constants {
   static const kBackArrowIc = 'assets/icons/back_arrow_app_bar_ic.svg';
   static const kLogoutIc = 'assets/icons/logout_ic.svg';
   static const kLogoutImg = 'assets/images/logout_img.svg';
+  
 }

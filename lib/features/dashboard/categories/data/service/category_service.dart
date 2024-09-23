@@ -10,29 +10,89 @@ class CategoryService {
 
   CategoryService({required CategoryApiService categoryApi, required Dio dio})
       : _categoryApi = categoryApi,
-        _dio = dio;
+        _dio = dio {
+    // Add logging interceptor to Dio for debugging purposes
+    _dio.interceptors.add(Utils.getLoggingInterceptor());
+  }
 
+  // Add Category
   Future<CategoryModel> addCategory(Map<String, dynamic> body) async {
     try {
-      debugPrint("In Category Service before headers");
-
-      // Add logging interceptor for debugging API calls
-      _dio.interceptors.add(Utils.getLoggingInterceptor());
-
-      // Make the API call using the Category API service
+      debugPrint("In Category Service: Adding Category");
       final data = await _categoryApi.addCategory(body);
       return data;
     } on DioException catch (e) {
       if (e.response != null) {
         return CategoryModel(
-            success: false, message: e.response!.data['message']);
+          success: false,
+          message: e.response!.data['message'],
+        );
       } else {
-        throw Exception("Failed to add category: $e");
+        throw Exception("Failed to add category: ${e.message}");
       }
     } catch (e) {
       throw Exception("Failed to add category: $e");
     }
   }
 
-  // Similarly, you can add methods for fetching, updating, deleting categories.
+  // Get Category by ID
+  Future<CategoryModel> getCategory() async {
+    try {
+      debugPrint("In Category Service: Fetching Category with ID ");
+      final data = await _categoryApi.getCategory();
+      return data;
+    } on DioException catch (e) {
+      if (e.response != null) {
+        return CategoryModel(
+          success: false,
+          message: e.response!.data['message'],
+        );
+      } else {
+        throw Exception("Failed to fetch category: ${e.message}");
+      }
+    } catch (e) {
+      throw Exception("Failed to fetch category: $e");
+    }
+  }
+
+  // Update Category by ID
+  Future<CategoryModel> updateCategory(
+      String id, Map<String, dynamic> body) async {
+    try {
+      debugPrint("In Category Service: Updating Category with ID $id");
+      final data = await _categoryApi.updateCategory(id, body);
+      return data;
+    } on DioException catch (e) {
+      if (e.response != null) {
+        return CategoryModel(
+          success: false,
+          message: e.response!.data['message'],
+        );
+      } else {
+        throw Exception("Failed to update category: ${e.message}");
+      }
+    } catch (e) {
+      throw Exception("Failed to update category: $e");
+    }
+  }
+
+  // Delete Category by ID
+  Future<CategoryModel> deleteCategory(String id) async {
+    try {
+      debugPrint("In Category Service: Deleting Category with ID $id");
+      final data = await _categoryApi.deleteCategory(id);
+      return data;
+    } on DioException catch (e) {
+      if (e.response != null) {
+        return CategoryModel(
+          success: false,
+          message: e.response!.data['message'],
+        );
+      } else {
+        throw Exception("Failed to delete category: ${e.message}");
+      }
+    } catch (e) {
+      throw Exception("Failed to delete category: $e");
+    }
+  }
 }

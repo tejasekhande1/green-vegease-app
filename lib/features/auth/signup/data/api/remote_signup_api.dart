@@ -1,6 +1,5 @@
 import 'package:dio/dio.dart';
 import 'package:green_vegease/core/config/config.dart';
-import 'package:green_vegease/core/constants/constants.dart';
 import 'package:retrofit/http.dart';
 import 'package:retrofit/retrofit.dart';
 import '../model/signup_model.dart';
@@ -13,7 +12,7 @@ abstract class SignUpApiService {
     String baseUrl,
   }) = _SignUpApiService;
 
-  @POST("/signup")
+  @POST("/auth/signup")
   Future<SignUpModel> signUp(@Body() Map<String,dynamic> signUp);
 }
 

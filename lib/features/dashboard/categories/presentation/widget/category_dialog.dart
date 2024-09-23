@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:green_vegease/core/config/app_bloc_observer.dart';
+import 'package:green_vegease/features/dashboard/categories/presentation/bloc/bloc/category_bloc.dart';
 import '../../../../../core/theme/colors.dart';
 import '../../../../../core/theme/text_styles.dart';
 import '../../../../../core/utils/utils.dart';
+import '../bloc/bloc/category_event.dart';
 
-void showAddCategoryDialog(
-    BuildContext context, Function(String) onAddCategory) {
+void showAddCategoryDialog(BuildContext context) {
   final TextEditingController categoryController = TextEditingController();
 
   showDialog(
@@ -86,14 +89,21 @@ void showAddCategoryDialog(
                   SizedBox(width: 16.w),
                   Expanded(
                     child: GestureDetector(
-                      onTap: () {
+                      onTap: () async {
                         String category = categoryController.text.trim();
                         if (category.isNotEmpty) {
-                          onAddCategory(category); // Pass category back
+                          if (await Utils.checkInternet(context) == true) {
+                            context.read<CategoryBloc>().add(
+                                AddCategorySubmittedEvent(
+                                    categoryName: category));
+                          }
                           Navigator.of(context).pop();
                         } else {
-                          Utils.showCustomSnackBar(
-                              context, "Please enter a category name");
+                          Utils.customSnackBar(
+                              backgroundColor: kColorRed,
+                              context,
+                              "Please enter a category name",
+                              isFloatingButton: true);
                         }
                       },
                       child: Container(

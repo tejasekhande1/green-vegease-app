@@ -6,6 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:green_vegease/features/auth/forgot_password/presentation/bloc/reset_pass_bloc.dart';
 import 'package:green_vegease/features/auth/signup/presentation/bloc/signup_bloc.dart';
+import 'package:green_vegease/features/dashboard/categories/presentation/bloc/bloc/category_bloc.dart';
 import 'package:green_vegease/firebase_options.dart';
 
 import 'core/common/bloc/internet_bloc/internet_bloc.dart';
@@ -65,6 +66,10 @@ class MainApp extends StatelessWidget {
               BlocProvider(
                 create: (context) => InternetBloc()..trackConnectivityChange()
             ..checkInternet(),
+              ),
+               BlocProvider(
+                create: (context) =>
+                    CategoryBloc(repository: serviceLocator()),
               ),
             ],
             child: MaterialApp.router(

@@ -36,7 +36,7 @@ class CategoryModel {
 }
 
 class Data {
-  final int? id;
+  final String? id;
   final String? categoryName;
 
   Data({
@@ -45,7 +45,7 @@ class Data {
   });
 
   Data copyWith({
-    int? id,
+    String? id,
     String? categoryName,
   }) {
     return Data(
@@ -55,7 +55,7 @@ class Data {
   }
 
   Data.fromJson(Map<String, dynamic> json)
-      : id = json['id'] as int?,
+      : id = json['id'] as String?,
         categoryName = json['categoryName'] as String?;
 
   Map<String, dynamic> toJson() => {'id': id, 'categoryName': categoryName};
