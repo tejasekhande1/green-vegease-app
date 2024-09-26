@@ -12,6 +12,7 @@ import 'package:green_vegease/features/dashboard/drawer/presentation/pages/drawe
 import '../../../../../core/common/widgets/app_bar_widget.dart';
 import '../bloc/bloc/category_event.dart';
 import '../widget/category_dialog.dart';
+import '../widget/delete_cate_pop_up.dart';
 
 @RoutePage()
 class CategoriesPage extends StatefulWidget {
@@ -61,7 +62,18 @@ class _CategoriesPageState extends State<CategoriesPage> {
                           itemCount: categories!.length,
                           itemBuilder: (context, index) {
                             return GestureDetector(
-                              onTap: () {},
+                              onLongPress: () {
+                                showCustomDialog1(
+                                  context,
+                                  categories[index].id!,
+                                );
+                              },
+                              onTap: () {
+                                showAddCategoryDialog(context,
+                                    catName: categories[index].categoryName!,
+                                    catId: categories[index].id,
+                                    index: index);
+                              },
                               child: Container(
                                 decoration: BoxDecoration(
                                   color: kColorPrimary.withOpacity(0.05),
@@ -85,9 +97,8 @@ class _CategoriesPageState extends State<CategoriesPage> {
                     ],
                   ),
                 );
-              } else {
-                return Center(child: Text('No categories found.'));
               }
+              return const SizedBox();
             },
           ),
           BlocConsumer<CategoryBloc, CategoryState>(builder: (context, state) {
@@ -97,7 +108,8 @@ class _CategoriesPageState extends State<CategoriesPage> {
             return const SizedBox();
           }, listener: (context, state) {
             if (state is CategoryFailedState) {
-              Utils.customSnackBar(context, state.error);
+              Utils.customSnackBar(context, state.error,
+                  isFloatingButton: true);
             }
             if (state is CategoryExceptionState) {
               Utils.customSnackBar(context, "Something went wrong",

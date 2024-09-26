@@ -66,17 +66,22 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
     try {
       final response = await _repository.updateCategory(
         event.categoryId,
-        {"name": event.updatedCategoryName},
+        {"categoryName": event.updatedCategoryName},
       );
 
       if (response.success!) {
-        emit(CategorySuccessState(message: 'Category updated successfully'));
+        // emit(CategoryLoadedState(category: response));
+        emit(
+            const CategorySuccessState(message: 'Category added successfully'));
+        add(const GetCategoryRequestedEvent());
       } else {
         emit(CategoryFailedState(error: response.message!));
+        add(const GetCategoryRequestedEvent());
       }
     } catch (e) {
       log('Category update failed: $e');
       emit(CategoryExceptionState(error: e.toString()));
+      add(const GetCategoryRequestedEvent());
     }
   }
 
@@ -89,13 +94,16 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
       final response = await _repository.deleteCategory(event.categoryId);
 
       if (response.success!) {
-        emit(CategorySuccessState(message: 'Category deleted successfully'));
+        const CategorySuccessState(message: 'Category added successfully');
+        add(const GetCategoryRequestedEvent());
       } else {
         emit(CategoryFailedState(error: response.message!));
+        add(const GetCategoryRequestedEvent());
       }
     } catch (e) {
       log('Category deletion failed: $e');
       emit(CategoryExceptionState(error: e.toString()));
+      add(const GetCategoryRequestedEvent());
     }
   }
 }

@@ -19,7 +19,6 @@ class AddCategorySubmittedEvent extends CategoryEvent {
 
 // Event for fetching a category by ID
 class GetCategoryRequestedEvent extends CategoryEvent {
-
   const GetCategoryRequestedEvent();
 
   @override
@@ -30,10 +29,12 @@ class GetCategoryRequestedEvent extends CategoryEvent {
 class UpdateCategorySubmittedEvent extends CategoryEvent {
   final String categoryId;
   final String updatedCategoryName;
+  final int index;
 
   const UpdateCategorySubmittedEvent({
     required this.categoryId,
     required this.updatedCategoryName,
+    required this.index
   });
 
   @override

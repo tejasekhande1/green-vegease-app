@@ -8,9 +8,11 @@ import '../../../../../core/theme/text_styles.dart';
 import '../../../../../core/utils/utils.dart';
 import '../bloc/bloc/category_event.dart';
 
-void showAddCategoryDialog(BuildContext context) {
+void showAddCategoryDialog(BuildContext context, {String? catName,String? catId,int? index}) {
   final TextEditingController categoryController = TextEditingController();
-
+  if (catName != null) {
+    categoryController.text = catName;
+  }
   showDialog(
     context: context,
     builder: (BuildContext context) {
@@ -93,6 +95,11 @@ void showAddCategoryDialog(BuildContext context) {
                         String category = categoryController.text.trim();
                         if (category.isNotEmpty) {
                           if (await Utils.checkInternet(context) == true) {
+                            catId != null ? context.read<CategoryBloc>().add(
+                                    UpdateCategorySubmittedEvent(
+                                      index: index!,
+                                      categoryId: catId,
+                                        updatedCategoryName: category)):
                             context.read<CategoryBloc>().add(
                                 AddCategorySubmittedEvent(
                                     categoryName: category));
