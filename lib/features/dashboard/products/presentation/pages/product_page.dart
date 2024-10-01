@@ -96,7 +96,7 @@ class ProductPage extends StatelessWidget {
           )
         ],
       ),
-      drawer: const CommonDrawer(
+      drawer:  CommonDrawer(
         page: "Products",
       ),
     );

@@ -16,13 +16,12 @@ class SettingsPage extends StatelessWidget {
           preferredSize: Size(360.w, 50.h),
           child: const AppBarWidget(
             title1: "Settings",
-            isBack: true,
           )),
       body: Column(
         children: [],
       ),
-      drawer: const CommonDrawer(
-        page: "Settings",
+      drawer:  CommonDrawer(
+        page: "General Settings",
       ),
     );
   }

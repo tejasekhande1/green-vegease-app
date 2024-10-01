@@ -77,6 +77,7 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
       } else {
         emit(CategoryFailedState(error: response.message!));
         add(const GetCategoryRequestedEvent());
+        
       }
     } catch (e) {
       log('Category update failed: $e');

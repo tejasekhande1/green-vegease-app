@@ -96,7 +96,7 @@ class OrdersPage extends StatelessWidget {
           )
         ],
       ),
-      drawer: const CommonDrawer(page: "Orders"),
+      drawer: CommonDrawer(page: "Orders"),
     );
   }
 }

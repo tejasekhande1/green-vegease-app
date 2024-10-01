@@ -20,7 +20,7 @@ class CustomersPage extends StatelessWidget {
       body: Column(
         children: [],
       ),
-      drawer: const CommonDrawer(page: "Customers",),
+      drawer:  CommonDrawer(page: "App Users",),
     );
   }
 }

@@ -118,7 +118,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
           })
         ],
       ),
-      drawer: const CommonDrawer(
+      drawer:  CommonDrawer(
         page: "Categories",
       ),
       floatingActionButton: FloatingActionButton(

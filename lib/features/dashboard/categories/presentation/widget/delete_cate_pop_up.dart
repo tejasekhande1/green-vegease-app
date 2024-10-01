@@ -10,7 +10,7 @@ import '../../../../../core/theme/colors.dart';
 import '../../../../../core/theme/text_styles.dart';
 import '../../../../../core/utils/utils.dart';
 
-void showCustomDialog1(BuildContext context,String id) {
+void showCustomDialog1(BuildContext context, String id) {
   showDialog(
     context: context,
     builder: (BuildContext context) {
@@ -39,6 +39,7 @@ void showCustomDialog1(BuildContext context,String id) {
               Text('Delete Category?',
                   style: kTextStyleGilroy700.copyWith(fontSize: 20.sp)),
               SizedBox(height: 8.h),
+              
               Text(
                 'Are you sure you want to delete category?',
                 textAlign: TextAlign.center,
@@ -53,7 +54,8 @@ void showCustomDialog1(BuildContext context,String id) {
                       builder: (context, state) {
                         return GestureDetector(
                           onTap: () {
-                            context.read<CategoryBloc>().add(DeleteCategoryRequestedEvent(categoryId: id));
+                            context.read<CategoryBloc>().add(
+                                DeleteCategoryRequestedEvent(categoryId: id));
                             Navigator.of(context).pop();
                             // AutoRouter.of(context).popForced();
                             if (state.status == ConnectivityStatus.connected) {

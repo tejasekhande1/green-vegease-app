@@ -10,7 +10,7 @@ class LoaderWidget extends StatelessWidget {
     return Container(
         height: height,
         width: width,
-        color: Colors.black.withOpacity(0.4),
+        // color: Colors.black.withOpacity(0.4),
         child: const Center(child: CircularProgressIndicator()));
   }
 }

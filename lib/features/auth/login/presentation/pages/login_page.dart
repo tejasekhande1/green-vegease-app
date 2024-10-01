@@ -158,7 +158,7 @@ class _LoginPageState extends State<LoginPage> with ValidationMixin {
 
   Widget _buildSubtitle() {
     return Text(
-      "Enter your email and password",
+      "Enter your mobile number and password",
       style: kTextStyleGilroy500.copyWith(
         color: kColorGrey,
         fontSize: 16.sp,
