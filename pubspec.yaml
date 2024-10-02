@@ -33,9 +33,9 @@ dependencies:
   shared_preferences: ^2.3.2
   
 flutter_icons:
-  android: "launch_icon"
+  android: true
   ios: true
-  image_path : "assets/images/app_icon.png"
+  image_path : "assets/images/app_icon.jpg"
 
 dev_dependencies:
   flutter_test:
