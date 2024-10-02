@@ -59,6 +59,7 @@ class _CommonDrawerState extends State<CommonDrawer> {
                 GestureDetector(
                   onTap: () {
                     AutoRouter.of(context).replace(const OrdersPageRoute());
+                    AutoRouter.of(context).popForced();
                     setState(() {
                       widget.page = 'Orders';
                     });
@@ -77,6 +78,7 @@ class _CommonDrawerState extends State<CommonDrawer> {
                 GestureDetector(
                   onTap: () {
                     AutoRouter.of(context).replace(const ProductPageRoute());
+                    AutoRouter.of(context).popForced();
                     setState(() {
                       widget.page = 'Products';
                     });
@@ -95,6 +97,7 @@ class _CommonDrawerState extends State<CommonDrawer> {
                 GestureDetector(
                   onTap: () {
                     AutoRouter.of(context).replace(const CategoriesPageRoute());
+                    AutoRouter.of(context).popForced();
                     setState(() {
                       widget.page = 'Categories';
                     });

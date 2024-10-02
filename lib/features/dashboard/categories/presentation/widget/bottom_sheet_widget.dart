@@ -15,7 +15,7 @@ Future<void> showOptionBottomSheet(BuildContext context) async {
       return Container(
         decoration: BoxDecoration(
             color: kColorWhite, borderRadius: BorderRadius.circular(4)),
-        width: 360.w,
+        width: 414.w,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -62,7 +62,7 @@ Future<void> showOptionBottomSheet(BuildContext context) async {
                     child: Row(
                       children: [
                         SvgPicture.asset(
-                          "assets/images/photos_bottom_sheet.svg",
+                          "assets/icons/photos_bottom_sheet.svg",
                           width: 48.w,
                           fit: BoxFit.fill,
                         ),
@@ -73,7 +73,7 @@ Future<void> showOptionBottomSheet(BuildContext context) async {
                     ),
                   ),
                   SvgPicture.asset(
-                    "assets/images/Line 8.svg",
+                    "assets/icons/Line 8.svg",
                     height: 72.h,
                   ),
                   GestureDetector(
@@ -83,7 +83,7 @@ Future<void> showOptionBottomSheet(BuildContext context) async {
                     child: Row(
                       children: [
                         SvgPicture.asset(
-                          "assets/images/cam_bottom_sheet.svg",
+                          "assets/icons/cam_bottom_sheet.svg",
                           width: 48.w,
                           fit: BoxFit.fill,
                         ),
