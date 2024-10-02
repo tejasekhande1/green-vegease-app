@@ -52,7 +52,7 @@ class _CommonDrawerState extends State<CommonDrawer> {
               color: kColorWhite,
             ),
             SizedBox(
-              height: 30.h,
+              height: 10.h,
             ),
             Column(
               children: [
@@ -72,7 +72,7 @@ class _CommonDrawerState extends State<CommonDrawer> {
                   ),
                 ),
                 SizedBox(
-                  height: 30.h,
+                  height: 15.h,
                 ),
                 GestureDetector(
                   onTap: () {
@@ -90,7 +90,7 @@ class _CommonDrawerState extends State<CommonDrawer> {
                   ),
                 ),
                 SizedBox(
-                  height: 30.h,
+                  height: 15.h,
                 ),
                 GestureDetector(
                   onTap: () {
@@ -108,7 +108,7 @@ class _CommonDrawerState extends State<CommonDrawer> {
                   ),
                 ),
                 SizedBox(
-                  height: 30.h,
+                  height: 15.h,
                 ),
                 GestureDetector(
                   onTap: () {
@@ -130,7 +130,7 @@ class _CommonDrawerState extends State<CommonDrawer> {
                   ),
                 ),
                 SizedBox(
-                  height: 30.h,
+                  height: 15.h,
                 ),
                 GestureDetector(
                   onTap: () {
@@ -154,7 +154,7 @@ class _CommonDrawerState extends State<CommonDrawer> {
                   ),
                 ),
                 SizedBox(
-                  height: 30.h,
+                  height: 15.h,
                 ),
                 GestureDetector(
                   onTap: () {
