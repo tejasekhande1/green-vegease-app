@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../../../../../core/theme/colors.dart';
 import '../../../../../core/theme/text_styles.dart';
 
@@ -43,7 +44,6 @@ class _MenuWidgetState extends State<MenuWidget> {
             children: [
               Row(
                 children: [
-                  SizedBox(width: 5.w),
                   SizedBox(
                     height: 24.h,
                     width: 24.h,
@@ -55,7 +55,7 @@ class _MenuWidgetState extends State<MenuWidget> {
                           : kColorWhite,
                     ),
                   ),
-                  SizedBox(width: 30.w),
+                  SizedBox(width: 15.w),
                   Text(
                     widget.menuName,
                     style: kTextStyleGilroy500.copyWith(
@@ -156,7 +156,7 @@ class _MenuWidgetState extends State<MenuWidget> {
                                 color: kColorGrey.withOpacity(0.150),
                               ),
                               SizedBox(height: 10.h),
-                              Text('Terms a+nd conditions',
+                              Text('Terms and conditions',
                                   style: kTextStyleGilroy500.copyWith(
                                       fontSize: 16.sp, color: kColorPrimary)),
                               Divider(

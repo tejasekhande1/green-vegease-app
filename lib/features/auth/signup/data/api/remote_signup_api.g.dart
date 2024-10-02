@@ -14,7 +14,7 @@ class _SignUpApiService implements SignUpApiService {
     this.baseUrl,
     this.errorLogger,
   }) {
-    baseUrl ??= 'http://192.168.1.13:8000/api/v1';
+    baseUrl ??= 'http://192.168.1.12:8000/api/v1';
   }
 
   final Dio _dio;

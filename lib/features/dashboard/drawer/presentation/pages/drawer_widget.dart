@@ -52,7 +52,7 @@ class _CommonDrawerState extends State<CommonDrawer> {
               color: kColorWhite,
             ),
             SizedBox(
-              height: 30.h,
+              height: 10.h,
             ),
             Column(
               children: [
@@ -66,13 +66,13 @@ class _CommonDrawerState extends State<CommonDrawer> {
                   child:
                       // -->  Orders Menu Widget
                       MenuWidget(
-                    icon: Constants.kOrderIc,
+                    icon: Constants.kOrdersIc,
                     page: widget.page,
                     menuName: "Orders",
                   ),
                 ),
                 SizedBox(
-                  height: 30.h,
+                  height: 15.h,
                 ),
                 GestureDetector(
                   onTap: () {
@@ -90,7 +90,7 @@ class _CommonDrawerState extends State<CommonDrawer> {
                   ),
                 ),
                 SizedBox(
-                  height: 30.h,
+                  height: 15.h,
                 ),
                 GestureDetector(
                   onTap: () {
@@ -102,13 +102,13 @@ class _CommonDrawerState extends State<CommonDrawer> {
                   child:
                       // -->  Categories Menu Widget
                       MenuWidget(
-                    icon: Constants.kExploreIc,
+                    icon: Constants.kCategoryIc,
                     page: widget.page,
                     menuName: "Categories",
                   ),
                 ),
                 SizedBox(
-                  height: 30.h,
+                  height: 15.h,
                 ),
                 GestureDetector(
                   onTap: () {
@@ -130,7 +130,7 @@ class _CommonDrawerState extends State<CommonDrawer> {
                   ),
                 ),
                 SizedBox(
-                  height: 30.h,
+                  height: 15.h,
                 ),
                 GestureDetector(
                   onTap: () {
@@ -154,7 +154,7 @@ class _CommonDrawerState extends State<CommonDrawer> {
                   ),
                 ),
                 SizedBox(
-                  height: 30.h,
+                  height: 15.h,
                 ),
                 GestureDetector(
                   onTap: () {
