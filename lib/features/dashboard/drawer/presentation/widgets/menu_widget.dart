@@ -44,7 +44,6 @@ class _MenuWidgetState extends State<MenuWidget> {
             children: [
               Row(
                 children: [
-                  SizedBox(width: 5.w),
                   SizedBox(
                     height: 24.h,
                     width: 24.h,
@@ -56,7 +55,7 @@ class _MenuWidgetState extends State<MenuWidget> {
                           : kColorWhite,
                     ),
                   ),
-                  SizedBox(width: 30.w),
+                  SizedBox(width: 15.w),
                   Text(
                     widget.menuName,
                     style: kTextStyleGilroy500.copyWith(
