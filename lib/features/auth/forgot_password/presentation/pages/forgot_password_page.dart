@@ -5,15 +5,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:green_vegease/core/common/widgets/button_widget.dart';
-import 'package:green_vegease/core/common/widgets/snackbar_widget.dart';
 import 'package:green_vegease/core/theme/colors.dart';
-import 'package:green_vegease/features/auth/forgot_password/domain/reset_pass_model.dart';
 import 'package:green_vegease/features/auth/forgot_password/presentation/bloc/reset_pass_event.dart';
 import 'package:green_vegease/features/auth/forgot_password/presentation/bloc/reset_pass_state.dart';
 import '../../../../../../core/theme/text_styles.dart';
 import '../../../../../core/common/bloc/internet_bloc/internet_bloc.dart';
 import '../../../../../core/common/widgets/loader_widget.dart';
-import '../../../../../core/routes/app_router.dart';
+import '../../../../../core/utils/utils.dart';
 import '../bloc/reset_pass_bloc.dart';
 
 @RoutePage()
@@ -112,12 +110,12 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
             BlocConsumer<ResetPassBloc, ResetPassState>(
               listener: (context, state) {
                 if (state is ResetPassSuccess) {
-                  CustomSnackbar.show(context, "Password Changed Successful",
+                  Utils.customSnackBar(context, "Password Changed Successful",
                       backgroundColor: kColorPrimary);
                   AutoRouter.of(context).popForced();
                 }
                 if (state is ResetPassFailed) {
-                  CustomSnackbar.show(context, state.error,
+                  Utils.customSnackBar(context, state.error,
                       backgroundColor: kColorRed);
                 }
               },
@@ -381,34 +379,34 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                 passwordController.text.trim().isEmpty ||
                 confirmPasswordController2.text.trim().isEmpty) {
               if (emailController.text.trim().isEmpty) {
-                CustomSnackbar.show(context, "Please enter email",
+                Utils.customSnackBar(context, "Please enter email",
                     backgroundColor: kColorRed);
               } else if (passwordController.text.trim().isEmpty) {
-                CustomSnackbar.show(context, "Please enter password",
+                Utils.customSnackBar(context, "Please enter password",
                     backgroundColor: kColorRed);
               } else {
-                CustomSnackbar.show(context, "Please enter confirm password",
+                Utils.customSnackBar(context, "Please enter confirm password",
                     backgroundColor: kColorRed);
               }
-              CustomSnackbar.show(context, "Enter Valid Data",
+              Utils.customSnackBar(context, "Enter Valid Data",
                   backgroundColor: kColorRed);
             } else {
               if (passwordController.text.isEmpty ||
                   passwordController.text.length < 8) {
-                CustomSnackbar.show(
+                Utils.customSnackBar(
                     context, "Password must be at least 8 characters long.",
                     backgroundColor: kColorRed);
                 return;
               }
               if (!RegExp(r'[A-Z]').hasMatch(passwordController.text)) {
-                CustomSnackbar.show(context,
+                Utils.customSnackBar(context,
                     "Password must contain at least one capital letter.",
                     backgroundColor: kColorRed);
                 return;
               }
               if (!RegExp(r'[!@#$%^&*(),.?":{}|<>]')
                   .hasMatch(passwordController.text)) {
-                CustomSnackbar.show(context,
+                Utils.customSnackBar(context,
                     "Password must contain at least one special character.",
                     backgroundColor: kColorRed);
                 return;
@@ -416,21 +414,21 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
 
               // Confirm Password validation
               if (passwordController.text != confirmPasswordController2.text) {
-                CustomSnackbar.show(
+                Utils.customSnackBar(
                     context, "Password and Confirm Password do not match.",
                     backgroundColor: kColorRed);
                 return;
               }
               if (state.status == ConnectivityStatus.connected) {
                 context.read<ResetPassBloc>().add(ResetPassSubmitted(
-                    model: ResetPassword(
-                        email: emailController.text,
-                        oldPassword: oldPassController.text,
-                        newPassword: passwordController.text,
-                        confirmedNewPassword:
-                            confirmPasswordController2.text)));
+                    resetData:{
+                        "email": emailController.text,
+                        "oldPassword": oldPassController.text,
+                        "newPassword": passwordController.text,
+                        "confirmedNewPassword" :
+                            confirmPasswordController2.text}));
               } else {
-                CustomSnackbar.show(
+                Utils.customSnackBar(
                     context, "Please check internet connectivity",
                     backgroundColor: kColorRed);
               }

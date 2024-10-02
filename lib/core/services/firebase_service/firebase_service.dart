@@ -2,7 +2,7 @@ import 'dart:developer';
 import 'dart:io';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:green_vegease/features/injuction.dart';
+import 'package:green_vegease/features/init_dependancies.dart';
 import '../../routes/app_router.dart';
 
 class FirebaseCloudMessaging {

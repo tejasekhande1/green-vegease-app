@@ -1,5 +1,4 @@
 import 'package:equatable/equatable.dart';
-import '../../domain/model/login_model.dart';
 
 abstract class LogInEvent extends Equatable {
   const LogInEvent();
@@ -9,10 +8,10 @@ abstract class LogInEvent extends Equatable {
 }
 
 class LogInSubmitted extends LogInEvent {
-  final LogIn model;
+  final Map<String ,dynamic> loginData;
 
-  const LogInSubmitted({required this.model});
+  const LogInSubmitted({required this.loginData});
 
   @override
-  List<Object> get props => [model];
+  List<Object> get props => [loginData];
 }

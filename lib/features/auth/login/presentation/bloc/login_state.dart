@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:green_vegease/features/auth/login/data/model/login_model.dart';
 
 class LogInState extends Equatable {
   @override
@@ -7,11 +8,19 @@ class LogInState extends Equatable {
 
 class LogInLoading extends LogInState {}
 
-class LogInSuccess extends LogInState {}
+class LogInSuccess extends LogInState {
+  final LogInModel response;
+  LogInSuccess({required this.response});
+}
 
 class LogInFailed extends LogInState {
-  String error;
+  final String error;
   LogInFailed({required this.error});
 }
 
 class LogInInitial extends LogInState {}
+
+class LoginException extends LogInState {
+  final String error;
+  LoginException({required this.error});
+}

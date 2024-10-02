@@ -7,12 +7,11 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:green_vegease/core/common/bloc/internet_bloc/internet_bloc.dart';
 import 'package:green_vegease/core/common/widgets/button_widget.dart';
 import 'package:green_vegease/core/common/widgets/loader_widget.dart';
-import 'package:green_vegease/core/common/widgets/snackbar_widget.dart';
 import 'package:green_vegease/core/theme/colors.dart';
-import 'package:green_vegease/features/auth/login/domain/model/login_model.dart';
-
+import 'package:green_vegease/core/utils/validation_mixin.dart';
 import '../../../../../core/routes/app_router.dart';
 import '../../../../../core/theme/text_styles.dart';
+import '../../../../../core/utils/utils.dart';
 import '../bloc/login_bloc.dart';
 import '../bloc/login_event.dart';
 import '../bloc/login_state.dart';
@@ -25,7 +24,7 @@ class LoginPage extends StatefulWidget {
   State<LoginPage> createState() => _LoginPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _LoginPageState extends State<LoginPage> with ValidationMixin {
   final TextEditingController mobileController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   bool isPasswordVisible = false;
@@ -87,11 +86,19 @@ class _LoginPageState extends State<LoginPage> {
             BlocConsumer<LogInBloc, LogInState>(
               listener: (context, state) {
                 if (state is LogInSuccess) {
-                  CustomSnackbar.show(context, "Logged in successful",
+                  Utils.customSnackBar(context, state.response.message!,
                       backgroundColor: kColorPrimary);
+                  if (state.response.user!.role == "admin") {
+                    AutoRouter.of(context)
+                        .replaceAll([const OrdersPageRoute()]);
+                  }
                 }
                 if (state is LogInFailed) {
-                  CustomSnackbar.show(context, state.error,
+                  Utils.customSnackBar(context, state.error,
+                      backgroundColor: kColorRed);
+                }
+                if (state is LoginException) {
+                  Utils.customSnackBar(context, "Something went wrong",
                       backgroundColor: kColorRed);
                 }
               },
@@ -151,7 +158,7 @@ class _LoginPageState extends State<LoginPage> {
 
   Widget _buildSubtitle() {
     return Text(
-      "Enter your email and password",
+      "Enter your mobile number and password",
       style: kTextStyleGilroy500.copyWith(
         color: kColorGrey,
         fontSize: 16.sp,
@@ -281,33 +288,34 @@ class _LoginPageState extends State<LoginPage> {
             FocusScope.of(context).unfocus();
             if (mobileController.text.trim().isEmpty &&
                 passwordController.text.trim().isEmpty) {
-              CustomSnackbar.show(
+              Utils.customSnackBar(
                   context, "Please enter mobile number and password",
                   backgroundColor: kColorRed);
             } else if (mobileController.text.trim().isEmpty ||
                 passwordController.text.trim().isEmpty) {
               if (mobileController.text.isEmpty) {
-                CustomSnackbar.show(context, "Please enter mobile number",
+                Utils.customSnackBar(context, "Please enter mobile number",
                     backgroundColor: kColorRed);
               } else {
-                CustomSnackbar.show(context, "Please enter password",
+                Utils.customSnackBar(context, "Please enter password",
                     backgroundColor: kColorRed);
               }
             } else {
               if (passwordController.text.length <= 7) {
-                CustomSnackbar.show(context, "Password must have 8 character",
+                Utils.customSnackBar(context, "Password must have 8 character",
                     backgroundColor: kColorRed);
               } else if (mobileController.text.length < 10) {
-                CustomSnackbar.show(context, "Please enter valid mobile number",
+                Utils.customSnackBar(
+                    context, "Please enter valid mobile number",
                     backgroundColor: kColorRed);
               } else {
                 if (state.status == ConnectivityStatus.connected) {
-                  context.read<LogInBloc>().add(LogInSubmitted(
-                      model: LogIn(
-                          mobileNumber: mobileController.text,
-                          password: passwordController.text)));
+                  context.read<LogInBloc>().add(LogInSubmitted(loginData: {
+                        "mobileNumber": mobileController.text,
+                        "password": passwordController.text
+                      }));
                 } else {
-                  CustomSnackbar.show(
+                  Utils.customSnackBar(
                       context, "Please check internet connectivity",
                       backgroundColor: kColorRed);
                 }

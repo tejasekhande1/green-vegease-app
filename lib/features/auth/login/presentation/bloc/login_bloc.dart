@@ -1,13 +1,17 @@
 import 'dart:developer';
 
-import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../data/remote_login_api.dart';
+import '../../../../../core/services/firebase_service/shared_preferences_service/share_prefrences_service.dart';
+import '../../../../init_dependancies.dart';
+import '../../data/repository/login_repository.dart';
 import 'login_event.dart';
 import 'login_state.dart';
 
 class LogInBloc extends Bloc<LogInEvent, LogInState> {
-  LogInBloc() : super(LogInInitial()) {
+  final LoginRepository _repository;
+  LogInBloc({required LoginRepository loginRepository})
+      : _repository = loginRepository,
+        super(LogInInitial()) {
     on<LogInSubmitted>(_onLogIn);
   }
   void _onLogIn(LogInSubmitted event, Emitter<LogInState> emit) async {
@@ -15,21 +19,23 @@ class LogInBloc extends Bloc<LogInEvent, LogInState> {
 
     try {
       // Trigger the API call
-      await LoginService(Dio()).logIn(event.model);
       // If no error, emit success state
-      emit(LogInSuccess());
-    } on DioException catch (e) {
-      // Log detailed error information
-      if (e.response != null) {
-        emit(LogInFailed(error: e.response!.data["message"]));
+
+      final data = await _repository.loginUser(event.loginData);
+      if (data.success == false) {
+        log("@@@@@@@@@@@@@@@@@@${data.message!}");
+        emit(LogInFailed(error: data.message!));
       } else {
-        log('${e.message}');
-        emit(LogInFailed(error: "Please check details"));
+        await serviceLocator<SharedPreferencesService>()
+            .saveToken(data.user!.token!);
+        await serviceLocator<SharedPreferencesService>().saveLoginStatus(true);
+        emit(LogInSuccess(response: data));
       }
       // Emit failure state with error message
     } catch (e) {
+      log("@@@@@@@@@@@@@@@@@@$e");
       // Handle other errors
-      emit(LogInFailed(error: e.toString()));
+      emit(LoginException(error: e.toString()));
     }
   }
 }

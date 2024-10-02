@@ -3,10 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-
-import '../../../../../core/common/widgets/snackbar_widget.dart';
 import '../../../../../core/theme/colors.dart';
 import '../../../../../core/theme/text_styles.dart';
+import '../../../../../core/utils/utils.dart';
 
 @RoutePage()
 class VerificationPage extends StatelessWidget {
@@ -116,10 +115,10 @@ class VerificationPage extends StatelessWidget {
           FocusScope.of(context).unfocus();
           if (otpController.text.trim().isNotEmpty &&
               otpController.text.trim().length == 4) {
-            CustomSnackbar.show(context, "SignUp successful",
+            Utils.customSnackBar(context, "SignUp successful",
                 backgroundColor: kColorPrimary, isFloatingButton: true);
           } else {
-            CustomSnackbar.show(context, "Please enter valid otp",
+            Utils.customSnackBar(context, "Please enter valid otp",
                 backgroundColor: kColorRed, isFloatingButton: true);
           }
         },
