@@ -35,10 +35,10 @@ class _MenuWidgetState extends State<MenuWidget> {
               color:
                   widget.page == widget.menuName ? Colors.white : kColorPrimary,
               borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(25),
+                  topLeft: const Radius.circular(25),
                   bottomLeft: widget.isExpanded
-                      ? Radius.circular(0)
-                      : Radius.circular(25))),
+                      ? const Radius.circular(0)
+                      : const Radius.circular(25))),
           child: Column(
             children: [
               Row(

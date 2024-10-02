@@ -33,6 +33,7 @@ class LogInBloc extends Bloc<LogInEvent, LogInState> {
       }
       // Emit failure state with error message
     } catch (e) {
+      log("@@@@@@@@@@@@@@@@@@$e");
       // Handle other errors
       emit(LoginException(error: e.toString()));
     }

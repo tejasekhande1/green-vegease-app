@@ -34,6 +34,7 @@ void showAddCategoryDialog(BuildContext context, {String? catName,String? catId,
                 style: kTextStyleGilroy700.copyWith(fontSize: 20.sp),
               ),
               SizedBox(height: 16.h),
+              
               TextField(
                 controller: categoryController,
                 style: kTextStyleGilroy400.copyWith(
