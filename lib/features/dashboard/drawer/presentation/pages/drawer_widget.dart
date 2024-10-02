@@ -66,7 +66,7 @@ class _CommonDrawerState extends State<CommonDrawer> {
                   child:
                       // -->  Orders Menu Widget
                       MenuWidget(
-                    icon: Constants.kOrderIc,
+                    icon: Constants.kOrdersIc,
                     page: widget.page,
                     menuName: "Orders",
                   ),
@@ -102,7 +102,7 @@ class _CommonDrawerState extends State<CommonDrawer> {
                   child:
                       // -->  Categories Menu Widget
                       MenuWidget(
-                    icon: Constants.kExploreIc,
+                    icon: Constants.kCategoryIc,
                     page: widget.page,
                     menuName: "Categories",
                   ),

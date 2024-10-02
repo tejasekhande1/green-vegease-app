@@ -1,11 +1,11 @@
 import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:green_vegease/core/common/widgets/app_bar_widget.dart';
 import 'package:green_vegease/core/theme/colors.dart';
 import 'package:green_vegease/core/theme/text_styles.dart';
 import 'package:green_vegease/features/dashboard/drawer/presentation/pages/drawer_widget.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 @RoutePage()
 class OrdersPage extends StatelessWidget {
