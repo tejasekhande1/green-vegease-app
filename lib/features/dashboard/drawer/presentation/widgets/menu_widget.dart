@@ -156,7 +156,7 @@ class _MenuWidgetState extends State<MenuWidget> {
                                 color: kColorGrey.withOpacity(0.150),
                               ),
                               SizedBox(height: 10.h),
-                              Text('Terms a+nd conditions',
+                              Text('Terms and conditions',
                                   style: kTextStyleGilroy500.copyWith(
                                       fontSize: 16.sp, color: kColorPrimary)),
                               Divider(
