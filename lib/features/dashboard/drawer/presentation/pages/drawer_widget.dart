@@ -58,15 +58,19 @@ class _CommonDrawerState extends State<CommonDrawer> {
               children: [
                 GestureDetector(
                   onTap: () {
-                    AutoRouter.of(context).replace(const OrdersPageRoute());
                     AutoRouter.of(context).popForced();
+                    AutoRouter.of(context).replace(const OrdersPageRoute());
+
                     setState(() {
+                      isUserExpand = false;
+                      isSettingExpand = false;
                       widget.page = 'Orders';
                     });
                   },
                   child:
                       // -->  Orders Menu Widget
                       MenuWidget(
+                    isExpanded: false,
                     icon: Constants.kOrdersIc,
                     page: widget.page,
                     menuName: "Orders",
@@ -81,11 +85,14 @@ class _CommonDrawerState extends State<CommonDrawer> {
                     AutoRouter.of(context).popForced();
                     setState(() {
                       widget.page = 'Products';
+                      isUserExpand = false;
+                      isSettingExpand = false;
                     });
                   },
                   child:
                       // -->  Products Menu Widget
                       MenuWidget(
+                    isExpanded: false,
                     icon: Constants.kProductIc,
                     page: widget.page,
                     menuName: "Products",
@@ -105,6 +112,7 @@ class _CommonDrawerState extends State<CommonDrawer> {
                   child:
                       // -->  Categories Menu Widget
                       MenuWidget(
+                    isExpanded: false,
                     icon: Constants.kCategoryIc,
                     page: widget.page,
                     menuName: "Categories",
@@ -164,11 +172,14 @@ class _CommonDrawerState extends State<CommonDrawer> {
                     showCustomDialog(context);
                     setState(() {
                       widget.page = 'Logout';
+                      isUserExpand = false;
+                      isSettingExpand = false;
                     });
                   },
                   child:
                       // -->  Settings Menu Widget
                       MenuWidget(
+                    isExpanded: false,
                     icon: Constants.kLogoutIc,
                     page: widget.page,
                     menuName: "Logout",
