@@ -10,8 +10,9 @@ abstract class CategoryEvent extends Equatable {
 // Event for adding a category
 class AddCategorySubmittedEvent extends CategoryEvent {
   final String categoryName;
+  final String? image;
 
-  const AddCategorySubmittedEvent({required this.categoryName});
+  const AddCategorySubmittedEvent({required this.categoryName,this.image});
 
   @override
   List<Object?> get props => [categoryName];
@@ -30,12 +31,13 @@ class UpdateCategorySubmittedEvent extends CategoryEvent {
   final String categoryId;
   final String updatedCategoryName;
   final int index;
+  final String? image;
 
-  const UpdateCategorySubmittedEvent({
-    required this.categoryId,
-    required this.updatedCategoryName,
-    required this.index
-  });
+  const UpdateCategorySubmittedEvent(
+      {required this.categoryId,
+      required this.updatedCategoryName,
+      this.image,
+      required this.index});
 
   @override
   List<Object?> get props => [categoryId, updatedCategoryName];

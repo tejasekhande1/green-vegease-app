@@ -1,4 +1,7 @@
 import 'dart:developer';
+import 'dart:io';
+import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../data/repository/category_repository.dart';
 import 'category_event.dart';
@@ -22,8 +25,23 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
     emit(CategoryLoadingState());
 
     try {
-      final response =
-          await _repository.addCategory({"categoryName": event.categoryName});
+      List<MultipartFile> files = [];
+      log("${event.image}");
+      if (event.image != null) {
+        File imageFile = File(event.image!);
+        MultipartFile file = (await MultipartFile.fromFile(imageFile.path,
+            filename: imageFile.path.split('/').last));
+        files.add(file);
+      }
+
+      debugPrint(
+          "FILES TO BE UPLOADED: ${files.map((e) => print("FILE NAME: $e"))}");
+
+      FormData formData = FormData.fromMap({
+        'categoryName': event.categoryName,
+        'image': files,
+      });
+      final response = await _repository.addCategory(formData);
 
       if (response.success!) {
         emit(
@@ -77,7 +95,6 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
       } else {
         emit(CategoryFailedState(error: response.message!));
         add(const GetCategoryRequestedEvent());
-        
       }
     } catch (e) {
       log('Category update failed: $e');

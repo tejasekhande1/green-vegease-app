@@ -10,7 +10,7 @@ abstract class CategoryApiService {
 
   // Add Category
   @POST(AppConfig.category)
-  Future<CategoryModel> addCategory(@Body() Map<String, dynamic> categoryData);
+  Future<CategoryModel> addCategory(@Body() FormData categoryData);
 
   // Get a Category
   @GET(AppConfig.category)

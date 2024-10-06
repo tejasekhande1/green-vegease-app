@@ -1,13 +1,31 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 class CategoryModel {
-  final bool? success;
-  final String? message;
-  final List<Data>? data;
+  bool? success;
+  String? message;
+  List<Data>? data;
 
-  CategoryModel({
-    this.success,
-    this.message,
-    this.data,
-  });
+  CategoryModel({this.success, this.message, this.data});
+
+  CategoryModel.fromJson(Map<String, dynamic> json) {
+    success = json['success'];
+    message = json['message'];
+    if (json['data'] != null) {
+      data = <Data>[];
+      json['data'].forEach((v) {
+        data!.add(new Data.fromJson(v));
+      });
+    }
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['success'] = this.success;
+    data['message'] = this.message;
+    if (this.data != null) {
+      data['data'] = this.data!.map((v) => v.toJson()).toList();
+    }
+    return data;
+  }
 
   CategoryModel copyWith({
     bool? success,
@@ -20,43 +38,26 @@ class CategoryModel {
       data: data ?? this.data,
     );
   }
-
-  CategoryModel.fromJson(Map<String, dynamic> json)
-      : success = json['success'] as bool?,
-        message = json['message'] as String?,
-        data = (json['data'] as List?)
-            ?.map((dynamic e) => Data.fromJson(e as Map<String, dynamic>))
-            .toList();
-
-  Map<String, dynamic> toJson() => {
-        'success': success,
-        'message': message,
-        'data': data?.map((e) => e.toJson()).toList()
-      };
 }
 
 class Data {
-  final String? id;
-  final String? categoryName;
+  String? id;
+  String? categoryName;
+  String? image;
 
-  Data({
-    this.id,
-    this.categoryName,
-  });
+  Data({this.id, this.categoryName, this.image});
 
-  Data copyWith({
-    String? id,
-    String? categoryName,
-  }) {
-    return Data(
-      id: id ?? this.id,
-      categoryName: categoryName ?? this.categoryName,
-    );
+  Data.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    categoryName = json['categoryName'];
+    image = json['image'];
   }
 
-  Data.fromJson(Map<String, dynamic> json)
-      : id = json['id'] as String?,
-        categoryName = json['categoryName'] as String?;
-
-  Map<String, dynamic> toJson() => {'id': id, 'categoryName': categoryName};
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['categoryName'] = this.categoryName;
+    data['image'] = this.image;
+    return data;
+  }
 }
