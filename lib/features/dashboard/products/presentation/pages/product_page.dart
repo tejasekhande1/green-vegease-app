@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -14,7 +12,7 @@ class ProductPage extends StatefulWidget {
   const ProductPage({super.key});
 
   @override
-  _ProductPageState createState() => _ProductPageState();
+   _ProductPageState createState() => _ProductPageState();
 }
 
 class _ProductPageState extends State<ProductPage> {
