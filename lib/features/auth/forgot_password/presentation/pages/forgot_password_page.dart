@@ -110,7 +110,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
             BlocConsumer<ResetPassBloc, ResetPassState>(
               listener: (context, state) {
                 if (state is ResetPassSuccess) {
-                  Utils.customSnackBar(context, "Password Changed Successful",
+                  Utils.customSnackBar(context, "Password changed Successfully.",
                       backgroundColor: kColorPrimary);
                   AutoRouter.of(context).popForced();
                 }
