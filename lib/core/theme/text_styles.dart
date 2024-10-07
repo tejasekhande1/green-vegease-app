@@ -25,3 +25,11 @@ const kTextStyleGilroy700 = TextStyle(
 const kTextStyleGilroy800 = TextStyle(
   fontFamily: 'Gilroy-ExtraBold',
 );
+
+const kTextStyleAclonica400 = TextStyle(
+  fontFamily: 'Aclonica-Regular',
+);
+
+const kTextStyleAsap500 = TextStyle(
+  fontFamily: 'Asap-Regular',
+);

@@ -92,6 +92,10 @@ class _LoginPageState extends State<LoginPage> with ValidationMixin {
                     AutoRouter.of(context)
                         .replaceAll([const OrdersPageRoute()]);
                   }
+                  if (state.response.user!.role == "customer") {
+                    AutoRouter.of(context)
+                        .replaceAll([const HomeScreenRoute()]);
+                  }
                 }
                 if (state is LogInFailed) {
                   Utils.customSnackBar(context, state.error,

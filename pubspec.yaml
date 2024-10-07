@@ -1,10 +1,10 @@
 name: green_vegease
 description: "A new Flutter project."
-publish_to: 'none'
+publish_to: "none"
 version: 0.1.0
 
 environment:
-  sdk: '>=3.4.4 <4.0.0'
+  sdk: ">=3.4.4 <4.0.0"
 
 dependencies:
   auto_route: ^9.2.1+1
@@ -31,11 +31,11 @@ dependencies:
   retrofit: ^4.2.0
   retrofit_generator: ^8.2.1
   shared_preferences: ^2.3.2
-  
+
 flutter_icons:
   android: true
   ios: true
-  image_path : "assets/images/app_icon.jpg"
+  image_path: "assets/images/app_icon.jpg"
 
 dev_dependencies:
   flutter_test:
@@ -52,7 +52,7 @@ flutter:
         - asset: assets\fonts\Gilroy-Regular.ttf
     - family: Gilroy-Medium
       fonts:
-        - asset: assets\fonts\Gilroy-Medium.ttf 
+        - asset: assets\fonts\Gilroy-Medium.ttf
     - family: Gilroy-Bold
       fonts:
         - asset: assets\fonts\Gilroy-Bold.ttf
@@ -65,9 +65,14 @@ flutter:
     - family: Gilroy-ExtraBold
       fonts:
         - asset: assets\fonts\Gilroy-ExtraBold.ttf
-        
+    - family: Aclonica-Regular
+      fonts:
+        - asset: assets/fonts/Aclonica-Regular.ttf
+    - family: Asap-Regular
+      fonts:
+        - asset: assets/fonts/Asap-Regular.ttf
+
   generate: true
   assets:
     - assets/images/
     - assets/icons/
-

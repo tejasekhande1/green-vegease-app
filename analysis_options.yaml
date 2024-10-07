@@ -1,1 +1,6 @@
 include: package:flutter_lints/flutter.yaml
+analyzer:
+  errors:
+    must_be_immutable: ignore
+    prefer_interpolation_to_compose_strings: ignore
+    unused_import: ignore

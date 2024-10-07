@@ -16,4 +16,8 @@ class Constants {
   static const kLogoutImg = 'assets/images/logout_img.svg';
   static const kOrdersIc = 'assets/icons/orders.svg';
   static const kCategoryIc = 'assets/icons/category.svg';
+  static const kHomeIc = 'assets/images/homeapp_icon.png';
+  static const kCardaIC = 'assets/images/cardi1.png';
+  static const kCardbIC = 'assets/images/cardi2.png';
+  static const kCardcIC = 'assets/images/cardi3.png';
 }

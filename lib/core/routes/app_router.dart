@@ -1,6 +1,7 @@
 import 'package:auto_route/annotations.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:green_vegease/features/app-ui/home-screen/homescreen.dart';
 import 'package:green_vegease/features/auth/signup/presentation/pages/singup_page.dart';
 import 'package:green_vegease/features/onboarding/presentation/pages/onboard_page.dart';
 import 'package:green_vegease/features/splashscreen/presentation/pages/splash_page.dart';
@@ -33,5 +34,6 @@ class AppRouter extends RootStackRouter {
         AutoRoute(page: SettingsPageRoute.page),
         AutoRoute(page: OrdersPageRoute.page),
         AutoRoute(page: CustomersPageRoute.page),
+        AutoRoute(page: HomeScreenRoute.page),
       ];
 }

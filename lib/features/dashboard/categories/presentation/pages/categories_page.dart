@@ -86,7 +86,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
                                         .categoryName!, // Replace with actual field of category
                                     textAlign: TextAlign.center,
                                     style: kTextStyleGilroy400.copyWith(
-                                        fontSize: 16),
+                                        fontSize: 16.sp),
                                   ),
                                 ),
                               ),
@@ -118,7 +118,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
           })
         ],
       ),
-      drawer:  CommonDrawer(
+      drawer: CommonDrawer(
         page: "Categories",
       ),
       floatingActionButton: FloatingActionButton(
