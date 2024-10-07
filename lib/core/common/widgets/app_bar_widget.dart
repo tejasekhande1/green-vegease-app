@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../../constants/constants.dart';
@@ -18,6 +19,8 @@ class AppBarWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      systemOverlayStyle:
+          const SystemUiOverlayStyle(statusBarColor: kColorWhite),
       scrolledUnderElevation: 0,
       backgroundColor: kColorWhite,
       automaticallyImplyLeading: !isBack,
