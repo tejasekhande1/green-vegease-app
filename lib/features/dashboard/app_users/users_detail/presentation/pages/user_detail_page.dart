@@ -1,23 +1,22 @@
 import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:green_vegease/core/theme/colors.dart';
-import 'package:green_vegease/core/theme/text_styles.dart';
-
 import '../../../../../../core/common/widgets/app_bar_widget.dart';
+import '../widgets/users_orders_section_widget.dart';
+import '../widgets/over_view_section_widget.dart';
+import '../widgets/user_header_widget.dart';
 
 @RoutePage()
 class UserDetailPage extends StatelessWidget {
-  const UserDetailPage({Key? key}) : super(key: key);
+  const UserDetailPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    // Hardcoded customer data and order list
-    final String customerName = 'Randhir Kumar';
-    final String location = 'India';
-    final String customerForYears = '2';
-    final String profileImageUrl = 'https://example.com/profile.jpg';
-    final int orderCount = 5;
+    const String customerName = 'Randhir Kumar';
+    const String location = 'India';
+    const String customerForYears = '2';
+    const String profileImageUrl = 'https://example.com/profile.jpg';
+    const int orderCount = 5;
     final List<Map<String, String>> customerOrders = [
       {
         'orderId': '#23534D',
@@ -50,225 +49,48 @@ class UserDetailPage extends StatelessWidget {
         'price': '\$23.06'
       },
     ];
-    final String address = 'Panapur Langa, Hajipur, Vaishali, India';
-    final String email = 'randhirkip@gmail.com';
-    final String phone = '+91 8804789764';
+    const String address = 'Panapur Langa, Hajipur, Vaishali, India';
+    const String email = 'randhirkip@gmail.com';
+    const String phone = '+91 8804789764';
 
     return Scaffold(
       appBar: PreferredSize(
-          preferredSize: Size(360.w, 50.h),
-          child: const AppBarWidget(
-            title1: "User Information",
-            isBack: true,
-          )),
+        preferredSize: Size(360.w, 50.h),
+        child: const AppBarWidget(
+          title1: "User Information",
+          isBack: true,
+        ),
+      ),
       body: SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.all(16.0.w),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _buildCustomerHeader(customerName, location, customerForYears,
-                  profileImageUrl, orderCount),
+              //--------------> User information header
+             const UserHeaderWidget(
+                customerName: customerName,
+                location: location,
+                customerForYears: customerForYears,
+                profileImageUrl: profileImageUrl,
+                orderCount: orderCount,
+              ),
               SizedBox(height: 20.h),
-              _buildCustomerOrdersSection(customerOrders),
+              //--------------> Order Section Widget
+              UserOrdersSectionWidget(orders: customerOrders),
               SizedBox(height: 20.h),
-              _buildOverviewSection(address, email, phone),
+              //---------------> Over View Information 
+              const OverviewSectionWidget(
+                  address: address, email: email, phone: phone),
             ],
           ),
         ),
-      ),
-    );
-  }
-
-  Widget _buildCustomerHeader(String customerName, String location,
-      String customerForYears, String profileImageUrl, int orderCount) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        CircleAvatar(
-          radius: 35.w,
-          backgroundImage: NetworkImage(profileImageUrl),
-        ),
-        SizedBox(width: 20.w),
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                customerName,
-                style: kTextStyleGilroy300.copyWith(
-                  fontSize: 20.sp,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              Text(
-                location,
-                style: kTextStyleGilroy300.copyWith(
-                  fontSize: 14.sp,
-                  color: Colors.grey,
-                ),
-              ),
-              Text(
-                '$orderCount Orders • Customer for $customerForYears years',
-                style: kTextStyleGilroy300.copyWith(
-                  fontSize: 14.sp,
-                  color: Colors.grey,
-                ),
-              ),
-            ],
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildCustomerOrdersSection(List<Map<String, String>> customerOrders) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          "Customer Orders",
-          style: kTextStyleGilroy300.copyWith(
-            fontSize: 18.sp,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        SizedBox(height: 10.h),
-        Table(
-          border: TableBorder.all(color: Colors.grey.shade300),
-          columnWidths: const {
-            0: FlexColumnWidth(1.2),
-            1: FlexColumnWidth(1.2),
-            2: FlexColumnWidth(1.5),
-            3: FlexColumnWidth(1),
-          },
-          children: [
-            _buildTableHeader(),
-            for (var order in customerOrders) _buildTableRow(order),
-          ],
-        ),
-      ],
-    );
-  }
-
-  TableRow _buildTableHeader() {
-    return TableRow(
-      children: [
-        _buildTableHeaderCell("Order"),
-        _buildTableHeaderCell("Date"),
-        _buildTableHeaderCell("Order Status"),
-        _buildTableHeaderCell("Price"),
-      ],
-    );
-  }
-
-  TableRow _buildTableRow(Map<String, String> order) {
-    return TableRow(
-      children: [
-        Padding(
-          padding: EdgeInsets.all(8.0),
-          child: Text(order['orderId']!),
-        ),
-        Padding(
-          padding: EdgeInsets.all(8.0),
-          child: Text(
-            order['date']!,
-            style: kTextStyleGilroy400.copyWith(fontSize: 12.sp),
-          ),
-        ),
-        Padding(
-          padding: EdgeInsets.all(8.0),
-          child: Container(
-            padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
-            decoration: BoxDecoration(
-              border: Border.all(
-                color: order['status'] == 'Completed'
-                    ? kColorPrimary
-                    : kColorPending,
-              ),
-              color: order['status'] == 'Completed'
-                  ? kColorPrimary.withOpacity(0.15)
-                  : kColorPending.withOpacity(0.15),
-              borderRadius: BorderRadius.circular(4.0),
-            ),
-            child: Center(
-              child: Text(
-                order['status']!,
-                style: kTextStyleGilroy600.copyWith(
-                    color: order['status'] == 'Completed'
-                        ? kColorPrimary
-                        : kColorPending,
-                    fontSize: 12.sp),
-              ),
-            ),
-          ),
-        ),
-        Padding(
-          padding: EdgeInsets.all(8.0),
-          child: Text(order['price']!),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildTableHeaderCell(String title) {
-    return Padding(
-      padding: EdgeInsets.all(8.0),
-      child: Text(
-        title,
-        style: kTextStyleGilroy500.copyWith(fontSize: 16.sp),
-      ),
-    );
-  }
-
-  Widget _buildOverviewSection(String address, String email, String phone) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          "Overview",
-          style: kTextStyleGilroy300.copyWith(
-            fontSize: 18.sp,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        SizedBox(height: 10.h),
-        _buildOverviewDetail("Address", address),
-        _buildOverviewDetail("Email Address", email),
-        _buildOverviewDetail("Phone", phone),
-        SizedBox(height: 20.h),
-        TextButton(
-          onPressed: () {},
-          child: Text(
-            "Delete Customer",
-            style: kTextStyleGilroy300.copyWith(color: Colors.red),
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildOverviewDetail(String title, String detail) {
-    return Padding(
-      padding: EdgeInsets.symmetric(vertical: 5.h),
-      child: Row(
-        children: [
-          Expanded(
-            flex: 2,
-            child: Text(
-              title,
-              style: kTextStyleGilroy500.copyWith(),
-            ),
-          ),
-          Expanded(
-            flex: 3,
-            child: Text(
-              detail,
-              style: kTextStyleGilroy400.copyWith(fontSize: 14.sp),
-            ),
-          ),
-        ],
       ),
     );
   }
 }
+
+
+
+
+

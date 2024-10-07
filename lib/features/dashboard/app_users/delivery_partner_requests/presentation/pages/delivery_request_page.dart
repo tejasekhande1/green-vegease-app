@@ -1,11 +1,8 @@
 import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:green_vegease/core/theme/colors.dart';
-import 'package:green_vegease/core/theme/text_styles.dart';
-
+import 'package:green_vegease/features/dashboard/app_users/delivery_partner_requests/presentation/widgets/request_card_widget.dart';
 import '../../../../../../core/common/widgets/app_bar_widget.dart';
-import '../widgets/delivery_partner_approve_widget.dart';
 
 class User {
   final String firstName;
@@ -69,7 +66,7 @@ class DeliveryRequestPage extends StatelessWidget {
         itemCount: users.length,
         itemBuilder: (context, index) {
           final user = users[index];
-          return UserProfileCard(
+          return RequestCardWidget(                                                //-------------> Delivery partner request  card
             firstName: user.firstName,
             lastName: user.lastName,
             mobileNumber: user.mobileNumber,
@@ -82,103 +79,3 @@ class DeliveryRequestPage extends StatelessWidget {
   }
 }
 
-class UserProfileCard extends StatelessWidget {
-  final String firstName;
-  final String lastName;
-  final String mobileNumber;
-  final String profilePicture;
-  final String status;
-
-  const UserProfileCard({
-    Key? key,
-    required this.firstName,
-    required this.lastName,
-    required this.mobileNumber,
-    required this.profilePicture,
-    required this.status,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return const DeliveryPartnerApproveWidget();
-          },
-        );
-      },
-      child: Container(
-        margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-        decoration: BoxDecoration(
-          color: Colors.white.withOpacity(0.8), // White with some transparency
-          borderRadius: BorderRadius.circular(20),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.1),
-              blurRadius: 10,
-              spreadRadius: 1,
-              offset: const Offset(0, 3), // Shadow position
-            ),
-          ],
-        ),
-        child: Padding(
-          padding: EdgeInsets.all(10.h),
-          child: Row(
-            children: [
-              CircleAvatar(
-                radius: 30,
-                backgroundImage: NetworkImage(profilePicture),
-                backgroundColor: Colors.grey[200],
-              ),
-              SizedBox(width: 20.w),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "$firstName $lastName",
-                      style: kTextStyleGilroy400.copyWith(
-                        fontSize: 20.sp,
-                        color: Colors.teal,
-                      ),
-                    ),
-                    SizedBox(height: 5.h),
-                    Row(
-                      children: [
-                        Text(
-                          mobileNumber,
-                          style: kTextStyleGilroy400.copyWith(
-                            fontSize: 16.sp,
-                            color: Colors.grey,
-                          ),
-                        ),
-                        const Spacer(),
-                        Container(
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 6, horizontal: 12),
-                          decoration: BoxDecoration(
-                            border: Border.all(color: kColorPending),
-                            color: kColorPending.withOpacity(0.15),
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          child: Text(
-                            status,
-                            style: kTextStyleGilroy600.copyWith(
-                                color: kColorPending, fontSize: 12.sp),
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 10.h),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}

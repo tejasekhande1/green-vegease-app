@@ -22,7 +22,7 @@ class MenuWidget extends StatefulWidget {
   bool isExpanded;
 
   @override
-  _MenuWidgetState createState() => _MenuWidgetState();
+  State<MenuWidget> createState() => _MenuWidgetState();
 }
 
 class _MenuWidgetState extends State<MenuWidget> {
