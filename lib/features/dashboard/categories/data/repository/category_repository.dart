@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/widgets.dart';
 import '../model/category_model.dart'; // Replace with actual model path
 import '../service/category_service.dart'; // Replace with actual CategoryApiService path
@@ -9,7 +10,7 @@ class CategoryRepository {
       : _service = categoryService;
 
   // Add Category
-  Future<CategoryModel> addCategory(Map<String, dynamic> body) async {
+  Future<CategoryModel> addCategory(FormData body) async {
     try {
       debugPrint("In Category Repository: Adding Category");
       return await _service.addCategory(body);

@@ -7,6 +7,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:green_vegease/features/auth/forgot_password/presentation/bloc/reset_pass_bloc.dart';
 import 'package:green_vegease/features/auth/signup/presentation/bloc/signup_bloc.dart';
 import 'package:green_vegease/features/dashboard/categories/presentation/bloc/bloc/category_bloc.dart';
+import 'package:green_vegease/features/dashboard/categories/presentation/bloc/upload_photo_bloc/update_profile_bloc.dart';
 import 'package:green_vegease/firebase_options.dart';
 
 import 'core/common/bloc/internet_bloc/internet_bloc.dart';
@@ -19,11 +20,12 @@ import 'features/init_dependancies.dart';
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 }
-Future<void> main() async{
-    WidgetsFlutterBinding.ensureInitialized();
+
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   await initDependencies();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-   FirebaseMessaging messaging = FirebaseMessaging.instance;
+  FirebaseMessaging messaging = FirebaseMessaging.instance;
   await messaging.requestPermission(
     alert: true,
     announcement: true,
@@ -55,22 +57,29 @@ class MainApp extends StatelessWidget {
           return MultiBlocProvider(
             providers: [
               BlocProvider(
-                create: (context) => SignUpBloc(signUpRepository: serviceLocator()),
-              ),
-              BlocProvider(
-                create: (context) => LogInBloc(loginRepository: serviceLocator()),
-              ),
-              BlocProvider(
-                create: (context) => ResetPassBloc(forgotPassWordRepository: serviceLocator()),
-              ),
-              BlocProvider(
-                create: (context) => InternetBloc()..trackConnectivityChange()
-            ..checkInternet(),
-              ),
-               BlocProvider(
                 create: (context) =>
-                    CategoryBloc(repository: serviceLocator()),
+                    SignUpBloc(signUpRepository: serviceLocator()),
               ),
+              BlocProvider(
+                create: (context) =>
+                    LogInBloc(loginRepository: serviceLocator()),
+              ),
+              BlocProvider(
+                create: (context) =>
+                    ResetPassBloc(forgotPassWordRepository: serviceLocator()),
+              ),
+              BlocProvider(
+                create: (context) => InternetBloc()
+                  ..trackConnectivityChange()
+                  ..checkInternet(),
+              ),
+              BlocProvider(
+                create: (context) => CategoryBloc(repository: serviceLocator()),
+              ),
+              BlocProvider(
+                create: (context) => UpdateProfileBloc(),
+                child: Container(),
+              )
             ],
             child: MaterialApp.router(
               debugShowCheckedModeBanner: false,

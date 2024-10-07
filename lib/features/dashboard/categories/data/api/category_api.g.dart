@@ -14,7 +14,7 @@ class _CategoryApiService implements CategoryApiService {
     this.baseUrl,
     this.errorLogger,
   }) {
-    baseUrl ??= 'http://192.168.1.12:8000/api/v1';
+    baseUrl ??= 'http://192.168.244.60:8000/api/v1';
   }
 
   final Dio _dio;
@@ -24,12 +24,11 @@ class _CategoryApiService implements CategoryApiService {
   final ParseErrorLogger? errorLogger;
 
   @override
-  Future<CategoryModel> addCategory(Map<String, dynamic> categoryData) async {
+  Future<CategoryModel> addCategory(FormData categoryData) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
-    final _data = <String, dynamic>{};
-    _data.addAll(categoryData);
+    final _data = categoryData;
     final _options = _setStreamType<CategoryModel>(Options(
       method: 'POST',
       headers: _headers,

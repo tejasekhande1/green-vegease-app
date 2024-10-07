@@ -159,7 +159,7 @@ class _LoginPageState extends State<LoginPage> with ValidationMixin {
 // --> Login Title
   Widget _buildTitle() {
     return Text(
-      "Loging",
+      "Log In",
       style: kTextStyleGilroy600.copyWith(
         color: kColorBlack,
         fontSize: 26.sp,

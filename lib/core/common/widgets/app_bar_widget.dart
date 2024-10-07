@@ -36,7 +36,7 @@ class AppBarWidget extends StatelessWidget {
                   ? Row(
                       children: [
                         SizedBox(
-                          width: 24.w,
+                          width: 15.w,
                         ),
                         GestureDetector(
                           onTap: () {
@@ -44,10 +44,11 @@ class AppBarWidget extends StatelessWidget {
                             // AutoRouter.of(context).popForced();
                           },
                           child: SizedBox(
-                            width: 24.w,
+                            // width: 24.w,
                             child: SvgPicture.asset(
                               Constants.kBackArrowIc,
-                              width: 24.w,
+                              width: 30.h,
+                              height: 30.h,
                               fit: BoxFit.fill,
                             ),
                           ),

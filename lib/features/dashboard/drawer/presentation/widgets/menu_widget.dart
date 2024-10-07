@@ -1,7 +1,8 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:green_vegease/core/routes/app_router.dart';
 import '../../../../../core/theme/colors.dart';
 import '../../../../../core/theme/text_styles.dart';
 
@@ -11,7 +12,7 @@ class MenuWidget extends StatefulWidget {
       required this.page,
       required this.menuName,
       required this.icon,
-      this.isExpanded = false,
+      required this.isExpanded,
       this.isArrow = false});
 
   final String icon;
@@ -21,7 +22,7 @@ class MenuWidget extends StatefulWidget {
   bool isExpanded;
 
   @override
-  _MenuWidgetState createState() => _MenuWidgetState();
+  State<MenuWidget> createState() => _MenuWidgetState();
 }
 
 class _MenuWidgetState extends State<MenuWidget> {
@@ -118,23 +119,43 @@ class _MenuWidgetState extends State<MenuWidget> {
                               SizedBox(
                                 height: 5.h,
                               ),
-                              Text('Users',
-                                  style: kTextStyleGilroy500.copyWith(
-                                      fontSize: 16.sp, color: kColorPrimary)),
+                              GestureDetector(
+                                onTap: () {
+                                  AutoRouter.of(context).popForced();
+                                  AutoRouter.of(context).push(UserPageRoute());
+                                },
+                                child: Text('Users',
+                                    style: kTextStyleGilroy500.copyWith(
+                                        fontSize: 16.sp, color: kColorPrimary)),
+                              ),
                               Divider(
                                 color: kColorGrey.withOpacity(0.150),
                               ),
                               SizedBox(height: 10.h),
-                              Text('Delivery partner',
-                                  style: kTextStyleGilroy500.copyWith(
-                                      fontSize: 16.sp, color: kColorPrimary)),
+                              GestureDetector(
+                                onTap: () {
+                                  AutoRouter.of(context).popForced();
+                                  AutoRouter.of(context)
+                                      .push(DeliveryPartnerPageRoute());
+                                },
+                                child: Text('Delivery partner',
+                                    style: kTextStyleGilroy500.copyWith(
+                                        fontSize: 16.sp, color: kColorPrimary)),
+                              ),
                               Divider(
                                 color: kColorGrey.withOpacity(0.150),
                               ),
                               SizedBox(height: 10.h),
-                              Text('Delivery partner request',
-                                  style: kTextStyleGilroy500.copyWith(
-                                      fontSize: 16.sp, color: kColorPrimary)),
+                              GestureDetector(
+                                onTap: () {
+                                  AutoRouter.of(context).popForced();
+                                  AutoRouter.of(context)
+                                      .push(DeliveryRequestPageRoute());
+                                },
+                                child: Text('Delivery partner request',
+                                    style: kTextStyleGilroy500.copyWith(
+                                        fontSize: 16.sp, color: kColorPrimary)),
+                              ),
                             ],
                           )
                         : Column(
@@ -149,37 +170,72 @@ class _MenuWidgetState extends State<MenuWidget> {
                               SizedBox(
                                 height: 5.h,
                               ),
-                              Text('About us',
-                                  style: kTextStyleGilroy500.copyWith(
-                                      fontSize: 16.sp, color: kColorPrimary)),
+                              GestureDetector(
+                                onTap: () {
+                                  AutoRouter.of(context).popForced();
+                                  AutoRouter.of(context)
+                                      .push(const AboutUsPageRoute());
+                                },
+                                child: Text('About us',
+                                    style: kTextStyleGilroy500.copyWith(
+                                        fontSize: 16.sp, color: kColorPrimary)),
+                              ),
                               Divider(
                                 color: kColorGrey.withOpacity(0.150),
                               ),
                               SizedBox(height: 10.h),
-                              Text('Terms and conditions',
-                                  style: kTextStyleGilroy500.copyWith(
-                                      fontSize: 16.sp, color: kColorPrimary)),
+                              GestureDetector(
+                                onTap: () {
+                                  AutoRouter.of(context).popForced();
+                                  AutoRouter.of(context).push(
+                                      const TermsAndConditionsPageRoute());
+                                },
+                                child: Text('Terms and conditions',
+                                    style: kTextStyleGilroy500.copyWith(
+                                        fontSize: 16.sp, color: kColorPrimary)),
+                              ),
                               Divider(
                                 color: kColorGrey.withOpacity(0.150),
                               ),
                               SizedBox(height: 10.h),
-                              Text('Privacy policy',
-                                  style: kTextStyleGilroy500.copyWith(
-                                      fontSize: 16.sp, color: kColorPrimary)),
+                              GestureDetector(
+                                onTap: () {
+                                  AutoRouter.of(context).popForced();
+                                  AutoRouter.of(context)
+                                      .push(const PrivacyPolicyPageRoute());
+                                },
+                                child: Text('Privacy policy',
+                                    style: kTextStyleGilroy500.copyWith(
+                                        fontSize: 16.sp, color: kColorPrimary)),
+                              ),
                               Divider(
                                 color: kColorGrey.withOpacity(0.150),
                               ),
                               SizedBox(height: 10.h),
-                              Text('Cancellation policy',
-                                  style: kTextStyleGilroy500.copyWith(
-                                      fontSize: 16.sp, color: kColorPrimary)),
+                              GestureDetector(
+                                onTap: () {
+                                  AutoRouter.of(context).popForced();
+                                  AutoRouter.of(context).push(
+                                      const CancellationPolicyPageRoute());
+                                },
+                                child: Text('Cancellation policy',
+                                    style: kTextStyleGilroy500.copyWith(
+                                        fontSize: 16.sp, color: kColorPrimary)),
+                              ),
                               Divider(
                                 color: kColorGrey.withOpacity(0.150),
                               ),
                               SizedBox(height: 10.h),
-                              Text('Refund policy',
-                                  style: kTextStyleGilroy500.copyWith(
-                                      fontSize: 16.sp, color: kColorPrimary)),
+                              GestureDetector(
+                                onTap: () {
+                                  AutoRouter.of(context).popForced();
+                                  AutoRouter.of(context)
+                                      .push(const RefundPolicyPageRoute());
+                                },
+                                child: Text('Refund policy',
+                                    style: kTextStyleGilroy500.copyWith(
+                                        fontSize: 16.sp, color: kColorPrimary)),
+                              ),
                             ],
                           ), // Empty when not expanded
                   ),
