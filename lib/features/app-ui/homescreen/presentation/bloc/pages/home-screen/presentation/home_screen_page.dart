@@ -3,17 +3,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:green_vegease/core/theme/text_styles.dart';
 
-import '../../../../../../../core/constants/constants.dart';
+import '../../../../../../../../core/constants/constants.dart';
 
 @RoutePage()
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+class HomeScreenPage extends StatefulWidget {
+  const HomeScreenPage({super.key});
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  State<HomeScreenPage> createState() => _HomeScreenPageState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _HomeScreenPageState extends State<HomeScreenPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,6 +47,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ],
               ),
+              TextField(),
               Container(
                 width: 364.w,
                 height: 51.57.h,
@@ -87,7 +88,7 @@ class Card extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: 368.2.w,
       height: 114.99.h,
       child: Stack(children: [
