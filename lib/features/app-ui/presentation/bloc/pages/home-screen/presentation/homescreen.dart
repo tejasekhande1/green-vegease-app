@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:green_vegease/core/theme/text_styles.dart';
 
-import '../../../core/constants/constants.dart';
+import '../../../../../../../core/constants/constants.dart';
 
 @RoutePage()
 class HomeScreen extends StatefulWidget {
@@ -65,7 +65,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     Text(
                       'Search Store',
                       style: kTextStyleGilroy600.copyWith(
-                        fontSize: 14,
+                        fontSize: 14.sp,
                         color: const Color.fromRGBO(124, 124, 124, 1),
                       ),
                     ),
@@ -106,12 +106,12 @@ class Card extends StatelessWidget {
               children: [
                 Text(
                   'Fresh Vegetables',
-                  style: kTextStyleAclonica400.copyWith(fontSize: 20),
+                  style: kTextStyleAclonica400.copyWith(fontSize: 20.sp),
                 ),
                 Text(
                   'Get Up To 40% OFF',
                   style: kTextStyleAsap500.copyWith(
-                    fontSize: 14,
+                    fontSize: 14.sp,
                     color: const Color.fromRGBO(83, 177, 117, 1),
                   ),
                 ),
@@ -129,7 +129,13 @@ class Card extends StatelessWidget {
 // font-weight: 400;
 // line-height: 22.67px;
 // text-align: center;
-//background: rgba(83, 177, 117, 1);
+// background: rgba(83, 177, 117, 1);
+// 
+
+//folder structure
+//branch creation
+//
+
 
 
 
