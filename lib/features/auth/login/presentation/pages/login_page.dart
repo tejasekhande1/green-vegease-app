@@ -9,11 +9,13 @@ import 'package:green_vegease/core/common/widgets/button_widget.dart';
 import 'package:green_vegease/core/common/widgets/loader_widget.dart';
 import 'package:green_vegease/core/theme/colors.dart';
 import 'package:green_vegease/core/utils/validation_mixin.dart';
+import 'package:green_vegease/features/dashboard/products/presentation/pages/product_page.dart';
 import '../../../../../core/routes/app_router.dart';
 import '../../../../../core/theme/text_styles.dart';
 import '../../../../../core/utils/utils.dart';
 import '../bloc/login_bloc.dart';
 import '../bloc/login_event.dart';
+import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import '../bloc/login_state.dart';
 
 @RoutePage()
@@ -49,68 +51,77 @@ class _LoginPageState extends State<LoginPage> with ValidationMixin {
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-      statusBarIconBrightness: Brightness.dark,
-      statusBarColor: kColorTransparent, //or set color with: Color(0xFF0000FF)
-    ));
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      backgroundColor: kColorWhite,
-      body: SingleChildScrollView(
-        child: Stack(
-          children: [
-            _buildBackgroundImage(),
-            Padding(
-              padding: EdgeInsets.all(25.w),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  _buildLogo(),
-                  SizedBox(height: 100.h),
-                  _buildTitle(),
-                  SizedBox(height: 15.h),
-                  _buildSubtitle(),
-                  SizedBox(height: 24.h),
-                  _buildEmailField(),
-                  SizedBox(height: 30.h),
-                  _buildPasswordField(),
-                  SizedBox(height: 20.h),
-                  _buildForgotPasswordText(),
-                  SizedBox(height: 30.h),
-                  _buildLogInButton(),
-                  SizedBox(height: 25.h),
-                  _buildSignUpPrompt(),
-                ],
-              ),
+    return AnnotatedRegion<SystemUiOverlayStyle>(
+      value: const SystemUiOverlayStyle(
+        statusBarIconBrightness: Brightness.dark, // For Android: dark icons
+        statusBarBrightness:
+            Brightness.light, // For iOS: dark icons on light background
+        statusBarColor: kColorWhite, // Transparent status bar color
+      ),
+      child: Scaffold(
+        resizeToAvoidBottomInset: false,
+        backgroundColor: kColorWhite,
+        body: KeyboardVisibilityBuilder(builder: (context, isKeyboardVisible) {
+          return SingleChildScrollView(
+            child: Stack(
+              children: [
+                _buildBackgroundImage(),
+                Padding(
+                  padding: EdgeInsets.all(25.w),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      _buildLogo(),
+                      SizedBox(height: 100.h),
+                      _buildTitle(),
+                      SizedBox(height: 15.h),
+                      _buildSubtitle(),
+                      SizedBox(height: 24.h),
+                      _buildEmailField(),
+                      SizedBox(height: 30.h),
+                      _buildPasswordField(),
+                      SizedBox(height: 20.h),
+                      _buildForgotPasswordText(),
+                      SizedBox(height: 30.h),
+                      _buildLogInButton(),
+                      SizedBox(height: 25.h),
+                      _buildSignUpPrompt(),
+                      SizedBox(
+                        height: isKeyboardVisible ? 280.h : 1.h,
+                      )
+                    ],
+                  ),
+                ),
+                BlocConsumer<LogInBloc, LogInState>(
+                  listener: (context, state) {
+                    if (state is LogInSuccess) {
+                      Utils.customSnackBar(context, state.response.message!,
+                          backgroundColor: kColorPrimary);
+                      if (state.response.user!.role == "admin") {
+                        AutoRouter.of(context)
+                            .replaceAll([const OrdersPageRoute()]);
+                      }
+                    }
+                    if (state is LogInFailed) {
+                      Utils.customSnackBar(context, state.error,
+                          backgroundColor: kColorRed);
+                    }
+                    if (state is LoginException) {
+                      Utils.customSnackBar(context, "Something went wrong",
+                          backgroundColor: kColorRed);
+                    }
+                  },
+                  builder: (context, state) {
+                    if (state is LogInLoading) {
+                      return const LoaderWidget();
+                    }
+                    return const SizedBox();
+                  },
+                ),
+              ],
             ),
-            BlocConsumer<LogInBloc, LogInState>(
-              listener: (context, state) {
-                if (state is LogInSuccess) {
-                  Utils.customSnackBar(context, state.response.message!,
-                      backgroundColor: kColorPrimary);
-                  if (state.response.user!.role == "admin") {
-                    AutoRouter.of(context)
-                        .replaceAll([const OrdersPageRoute()]);
-                  }
-                }
-                if (state is LogInFailed) {
-                  Utils.customSnackBar(context, state.error,
-                      backgroundColor: kColorRed);
-                }
-                if (state is LoginException) {
-                  Utils.customSnackBar(context, "Something went wrong",
-                      backgroundColor: kColorRed);
-                }
-              },
-              builder: (context, state) {
-                if (state is LogInLoading) {
-                  return const LoaderWidget();
-                }
-                return const SizedBox();
-              },
-            )
-          ],
-        ),
+          );
+        }),
       ),
     );
   }

@@ -45,110 +45,114 @@ class _SingupPageState extends State<SingupPage> {
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-      statusBarIconBrightness: Brightness.dark,
-      statusBarColor: kColorTransparent, //or set color with: Color(0xFF0000FF)
-    ));
     return Scaffold(
       backgroundColor: kColorWhite,
-      body: Stack(
-        children: [
-          Image.asset(
-            "assets/images/login_background.png",
-            width: 414.w,
-            height: 896.h,
-            fit: BoxFit.fill,
-          ),
-          SingleChildScrollView(
-            child: Padding(
-              padding: EdgeInsets.all(25.w),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(height: 40.h),
-                  _buildLogo(),
-                  SizedBox(height: 50.h),
-                  _buildTitle(),
-                  SizedBox(height: 15.h),
-                  _buildSubtitle(),
-                  SizedBox(height: 24.h),
-                  TextFieldWidget(
-                      label: "Mobile Number",
-                      hint: "Enter mobile number",
-                      controller: mobileNumberController),
-                  SizedBox(height: 24.h),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: TextFieldWidget(
-                            label: "Firstname",
-                            hint: "Enter firstname",
-                            controller: firstNameController),
-                      ),
-                      SizedBox(
-                        width: 15.w,
-                      ),
-                      Expanded(
-                        child: TextFieldWidget(
-                            label: "Lastname",
-                            hint: "Enter lastname",
-                            controller: lastNameController),
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 24.h),
-                  TextFieldWidget(
-                      label: "Username",
-                      hint: "Enter username",
-                      controller: usernameController),
-                  SizedBox(height: 30.h),
-                  TextFieldWidget(
-                      label: "Email",
-                      hint: "Enter email id",
-                      controller: emailController),
-                  SizedBox(height: 20.h),
-                  PasswordTextFieldWidget(
-                      controller: passwordController, title: "Password"),
-                  SizedBox(height: 20.h),
-                  PasswordTextFieldWidget(
-                      controller: confirmPasswordController,
-                      title: "Confirm Password"),
-                  SizedBox(height: 20.h),
-                  _buildTermsText(),
-                  SizedBox(height: 30.h),
-                  SignupButtonWidget(
-                      firstNameController: firstNameController,
-                      lastNameController: lastNameController,
-                      mobileController: mobileNumberController,
-                      confirmPasswordController: confirmPasswordController,
-                      emailController: emailController,
-                      passwordController: passwordController,
-                      usernameController: usernameController),
-                  SizedBox(height: 25.h),
-                  _buildLoginOption(),
-                ],
+      body: AnnotatedRegion<SystemUiOverlayStyle>(
+        value: const SystemUiOverlayStyle(
+          statusBarIconBrightness: Brightness.dark, // For Android: dark icons
+          statusBarBrightness:
+              Brightness.light, // For iOS: dark icons on light background
+          statusBarColor: kColorWhite, // Transparent status bar color
+        ),
+        child: Stack(
+          children: [
+            Image.asset(
+              "assets/images/login_background.png",
+              width: 414.w,
+              height: 896.h,
+              fit: BoxFit.fill,
+            ),
+            SingleChildScrollView(
+              child: Padding(
+                padding: EdgeInsets.all(25.w),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(height: 40.h),
+                    _buildLogo(),
+                    SizedBox(height: 50.h),
+                    _buildTitle(),
+                    SizedBox(height: 15.h),
+                    _buildSubtitle(),
+                    SizedBox(height: 24.h),
+                    TextFieldWidget(
+                        label: "Mobile Number",
+                        hint: "Enter mobile number",
+                        controller: mobileNumberController),
+                    SizedBox(height: 24.h),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: TextFieldWidget(
+                              label: "Firstname",
+                              hint: "Enter firstname",
+                              controller: firstNameController),
+                        ),
+                        SizedBox(
+                          width: 15.w,
+                        ),
+                        Expanded(
+                          child: TextFieldWidget(
+                              label: "Lastname",
+                              hint: "Enter lastname",
+                              controller: lastNameController),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 24.h),
+                    TextFieldWidget(
+                        label: "Username",
+                        hint: "Enter username",
+                        controller: usernameController),
+                    SizedBox(height: 30.h),
+                    TextFieldWidget(
+                        label: "Email",
+                        hint: "Enter email id",
+                        controller: emailController),
+                    SizedBox(height: 20.h),
+                    PasswordTextFieldWidget(
+                        controller: passwordController, title: "Password"),
+                    SizedBox(height: 20.h),
+                    PasswordTextFieldWidget(
+                        controller: confirmPasswordController,
+                        title: "Confirm Password"),
+                    SizedBox(height: 20.h),
+                    _buildTermsText(),
+                    SizedBox(height: 30.h),
+                    SignupButtonWidget(
+                        firstNameController: firstNameController,
+                        lastNameController: lastNameController,
+                        mobileController: mobileNumberController,
+                        confirmPasswordController: confirmPasswordController,
+                        emailController: emailController,
+                        passwordController: passwordController,
+                        usernameController: usernameController),
+                    SizedBox(height: 25.h),
+                    _buildLoginOption(),
+                  ],
+                ),
               ),
             ),
-          ),
-          BlocConsumer<SignUpBloc, SignUpState>(listener: (context, state) {
-            if (state is SignUpFailed) {
-              Utils.customSnackBar(context, state.error,
-                  backgroundColor: kColorRed);
-            }
-            if (state is SignUpSuccess) {
-              AutoRouter.of(context)
-                  .push(VerificationPageRoute())
-                  .then((value) {
-                clearControllers();
-              });
-            }
-          }, builder: (context, state) {
-            if (state is SignUpLoading) {
-              return const LoaderWidget();
-            }
-            return const SizedBox();
-          })
-        ],
+            BlocConsumer<SignUpBloc, SignUpState>(listener: (context, state) {
+              if (state is SignUpFailed) {
+                Utils.customSnackBar(context, state.error,
+                    backgroundColor: kColorRed);
+              }
+              if (state is SignUpSuccess) {
+                AutoRouter.of(context)
+                    .push(VerificationPageRoute())
+                    .then((value) {
+                  clearControllers();
+                });
+              }
+            }, builder: (context, state) {
+              if (state is SignUpLoading) {
+                return const LoaderWidget();
+              }
+              return const SizedBox();
+            })
+          ],
+        ),
       ),
     );
   }
