@@ -188,7 +188,7 @@ class _HomeScreenPageState extends State<HomeScreenPage> {
             ),
           ),
           SizedBox(
-            height: 500,
+            height: 500.h,
             child: ListView.builder(
               itemCount: products.length,
               itemBuilder: (context, index) {
