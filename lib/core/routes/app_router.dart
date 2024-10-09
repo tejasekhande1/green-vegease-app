@@ -1,7 +1,12 @@
 import 'package:auto_route/annotations.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:green_vegease/features/app-ui/account/presentation/pages/account_page.dart';
+import 'package:green_vegease/features/app-ui/cart/presentation/pages/cart_page.dart';
+import 'package:green_vegease/features/app-ui/explore/presentation/pages/explore_page.dart';
+import 'package:green_vegease/features/app-ui/favourite/presentation/pages/favourite_page.dart';
 import 'package:green_vegease/features/app-ui/homescreen/presentation/pages/home_screen_page.dart';
+import 'package:green_vegease/features/app-ui/homescreen/presentation/pages/product_detail.dart';
 import 'package:green_vegease/features/auth/signup/presentation/pages/singup_page.dart';
 import 'package:green_vegease/features/onboarding/presentation/pages/onboard_page.dart';
 import 'package:green_vegease/features/splashscreen/presentation/pages/splash_page.dart';
@@ -34,6 +39,11 @@ class AppRouter extends RootStackRouter {
         AutoRoute(page: SettingsPageRoute.page),
         AutoRoute(page: OrdersPageRoute.page),
         AutoRoute(page: CustomersPageRoute.page),
-        AutoRoute(page: HomeScreenRoute.page),
+        AutoRoute(page: HomeScreenPageRoute.page),
+        AutoRoute(page: ProductDetailPageRoute.page),
+        AutoRoute(page: AccountPageRoute.page),
+        AutoRoute(page: CartPageRoute.page),
+        AutoRoute(page: ExplorePageRoute.page),
+        AutoRoute(page: FavouritePageRoute.page),
       ];
 }

@@ -94,7 +94,7 @@ class _LoginPageState extends State<LoginPage> with ValidationMixin {
                   }
                   if (state.response.user!.role == "customer") {
                     AutoRouter.of(context)
-                        .replaceAll([const HomeScreenRoute()]);
+                        .replaceAll([const HomeScreenPageRoute()]);
                   }
                 }
                 if (state is LogInFailed) {

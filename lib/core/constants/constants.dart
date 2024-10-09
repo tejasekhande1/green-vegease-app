@@ -21,4 +21,5 @@ class Constants {
   static const kCardbIC = 'assets/images/cardi2.png';
   static const kCardcIC = 'assets/images/cardi3.png';
   static const kBananaIC = 'assets/images/banana.png';
+  static const kPulsesIc = 'assets/images/pulses.png';
 }

@@ -1,6 +1,8 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:green_vegease/core/routes/app_router.dart';
 import 'package:green_vegease/core/theme/text_styles.dart';
 
 class ProductCard extends StatelessWidget {
@@ -12,6 +14,8 @@ class ProductCard extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.only(left: 20.0.w),
       child: GestureDetector(
+        onTap: () =>
+            AutoRouter.of(context).push(const ProductDetailPageRoute()),
         child: Container(
           height: 248.51.h,
           width: 173.32.w,

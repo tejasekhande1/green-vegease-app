@@ -10,6 +10,44 @@
 part of 'app_router.dart';
 
 /// generated route for
+/// [AccountPage]
+class AccountPageRoute extends PageRouteInfo<void> {
+  const AccountPageRoute({List<PageRouteInfo>? children})
+      : super(
+          AccountPageRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'AccountPageRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const AccountPage();
+    },
+  );
+}
+
+/// generated route for
+/// [CartPage]
+class CartPageRoute extends PageRouteInfo<void> {
+  const CartPageRoute({List<PageRouteInfo>? children})
+      : super(
+          CartPageRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'CartPageRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const CartPage();
+    },
+  );
+}
+
+/// generated route for
 /// [CategoriesPage]
 class CategoriesPageRoute extends PageRouteInfo<void> {
   const CategoriesPageRoute({List<PageRouteInfo>? children})
@@ -48,6 +86,44 @@ class CustomersPageRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [ExplorePage]
+class ExplorePageRoute extends PageRouteInfo<void> {
+  const ExplorePageRoute({List<PageRouteInfo>? children})
+      : super(
+          ExplorePageRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'ExplorePageRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const ExplorePage();
+    },
+  );
+}
+
+/// generated route for
+/// [FavouritePage]
+class FavouritePageRoute extends PageRouteInfo<void> {
+  const FavouritePageRoute({List<PageRouteInfo>? children})
+      : super(
+          FavouritePageRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'FavouritePageRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const FavouritePage();
+    },
+  );
+}
+
+/// generated route for
 /// [ForgotPasswordPage]
 class ForgotPasswordPageRoute extends PageRouteInfo<void> {
   const ForgotPasswordPageRoute({List<PageRouteInfo>? children})
@@ -68,14 +144,14 @@ class ForgotPasswordPageRoute extends PageRouteInfo<void> {
 
 /// generated route for
 /// [HomeScreenPage]
-class HomeScreenRoute extends PageRouteInfo<void> {
-  const HomeScreenRoute({List<PageRouteInfo>? children})
+class HomeScreenPageRoute extends PageRouteInfo<void> {
+  const HomeScreenPageRoute({List<PageRouteInfo>? children})
       : super(
-          HomeScreenRoute.name,
+          HomeScreenPageRoute.name,
           initialChildren: children,
         );
 
-  static const String name = 'HomeScreenRoute';
+  static const String name = 'HomeScreenPageRoute';
 
   static PageInfo page = PageInfo(
     name,
@@ -138,6 +214,25 @@ class OrdersPageRoute extends PageRouteInfo<void> {
     name,
     builder: (data) {
       return const OrdersPage();
+    },
+  );
+}
+
+/// generated route for
+/// [ProductDetailPage]
+class ProductDetailPageRoute extends PageRouteInfo<void> {
+  const ProductDetailPageRoute({List<PageRouteInfo>? children})
+      : super(
+          ProductDetailPageRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'ProductDetailPageRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const ProductDetailPage();
     },
   );
 }
