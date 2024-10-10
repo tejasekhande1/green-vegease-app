@@ -162,9 +162,9 @@ class _HomeScreenPageState extends State<HomeScreenPage> {
               decoration: InputDecoration(
                   border: InputBorder.none,
                   prefixIcon: Icon(
-                    Icons.search,
-                    color: const Color.fromRGBO(124, 124, 124, 1),
-                    size: 36.sp,
+                    Icons.search_outlined,
+                    color: const Color.fromRGBO(24, 25, 27, 1),
+                    size: 18.21.sp,
                   ),
                   hintText: 'Search Store',
                   hintStyle: kTextStyleGilroy600.copyWith(
@@ -208,6 +208,7 @@ class _HomeScreenPageState extends State<HomeScreenPage> {
           ),
         ],
       ),
+      bottomNavigationBar: const Bottomnavigation(),
     );
   }
 }
