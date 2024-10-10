@@ -180,9 +180,10 @@ class _HomeScreenPageState extends State<HomeScreenPage> {
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                  SizedBox(
+                  Container(
+                    margin: EdgeInsets.only(left: 23.5.w, right: 23.5.w),
                     height: 114.99.h,
-                    child: ListView.builder(
+                    child: ListView.separated(
                       scrollDirection: Axis.horizontal,
                       shrinkWrap: true,
                       itemCount: offercradList.length,
@@ -193,6 +194,11 @@ class _HomeScreenPageState extends State<HomeScreenPage> {
                         cardtitle: offercradList[index]['Cardtitle']!,
                         cardoffer: offercradList[index]['Cardoffer']!,
                       ),
+                      separatorBuilder: (BuildContext context, int index) {
+                        return SizedBox(
+                          width: 23.5.w,
+                        );
+                      },
                     ),
                   ),
                   BannerCard(

@@ -20,54 +20,51 @@ class OfferCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.only(left: 23.5.w),
-      child: SizedBox(
-        width: 368.2.w,
-        height: 114.99.h,
-        child: Stack(children: [
-          Image.asset(
-            cardBgImage,
-            width: 368.2.w,
-            height: 114.99.h,
-            fit: BoxFit.cover,
-          ),
-          Image.asset(
-            cardouterimage,
-            width: 368.2.w,
-            height: 114.99.h,
-            fit: BoxFit.cover,
-          ),
-          Row(
-            children: [
-              SizedBox(width: 7.w),
-              Image.asset(
-                cardimage,
-                height: 105.12.h,
-                width: 122.36.w,
-                fit: BoxFit.cover,
-              ),
-              SizedBox(width: 19.w),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    cardtitle,
-                    style: kTextStyleAclonica400.copyWith(fontSize: 20.sp),
+    return SizedBox(
+      width: 368.2.w,
+      height: 114.99.h,
+      child: Stack(children: [
+        Image.asset(
+          cardBgImage,
+          width: 368.2.w,
+          height: 114.99.h,
+          fit: BoxFit.cover,
+        ),
+        Image.asset(
+          cardouterimage,
+          width: 368.2.w,
+          height: 114.99.h,
+          fit: BoxFit.cover,
+        ),
+        Row(
+          children: [
+            SizedBox(width: 7.w),
+            Image.asset(
+              cardimage,
+              height: 105.12.h,
+              width: 122.36.w,
+              fit: BoxFit.cover,
+            ),
+            SizedBox(width: 19.w),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  cardtitle,
+                  style: kTextStyleAclonica400.copyWith(fontSize: 20.sp),
+                ),
+                Text(
+                  cardoffer,
+                  style: kTextStyleAsap500.copyWith(
+                    fontSize: 14.sp,
+                    color: const Color.fromRGBO(83, 177, 117, 1),
                   ),
-                  Text(
-                    cardoffer,
-                    style: kTextStyleAsap500.copyWith(
-                      fontSize: 14.sp,
-                      color: const Color.fromRGBO(83, 177, 117, 1),
-                    ),
-                  ),
-                ],
-              )
-            ],
-          ),
-        ]),
-      ),
+                ),
+              ],
+            )
+          ],
+        ),
+      ]),
     );
   }
 }

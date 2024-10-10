@@ -17,20 +17,26 @@ class BannerCard extends StatelessWidget {
       children: [
         SizedBox(height: 30.h),
         Padding(
-          padding: EdgeInsets.only(left: 20.0.w),
+          padding: EdgeInsets.only(left: 23.5.w),
           child: Text(
             productcardname,
             style: kTextStyleGilroy600.copyWith(
                 fontSize: 24.sp, color: const Color.fromRGBO(24, 23, 37, 1)),
           ),
         ),
-        SizedBox(
+        Container(
+          margin: EdgeInsets.only(left: 23.5.w, right: 23.5.w),
           height: 248.51.h,
-          child: ListView.builder(
+          child: ListView.separated(
             scrollDirection: Axis.horizontal,
             itemCount: products.length,
             itemBuilder: (context, index) =>
                 ProductCard(productInfo: products[index]),
+            separatorBuilder: (BuildContext context, int index) {
+              return SizedBox(
+                width: 23.5.w,
+              );
+            },
           ),
         )
       ],
