@@ -20,7 +20,7 @@ class ProductCard extends StatelessWidget {
           height: 248.51.h,
           width: 173.32.w,
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(18),
+            borderRadius: BorderRadius.circular(18.sp),
             border: Border.all(
               color: const Color.fromRGBO(226, 226, 226, 1),
             ),
@@ -36,8 +36,8 @@ class ProductCard extends StatelessWidget {
               SizedBox(height: 36.21.h),
               Image.asset(
                 productInfo['ProductImage'],
-                height: 79.43,
-                width: 99.89,
+                height: 79.43.h,
+                width: 99.89.w,
                 fit: BoxFit.cover,
               ),
               SizedBox(
