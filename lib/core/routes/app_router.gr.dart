@@ -10,6 +10,44 @@
 part of 'app_router.dart';
 
 /// generated route for
+/// [AboutUsPage]
+class AboutUsPageRoute extends PageRouteInfo<void> {
+  const AboutUsPageRoute({List<PageRouteInfo>? children})
+      : super(
+          AboutUsPageRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'AboutUsPageRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const AboutUsPage();
+    },
+  );
+}
+
+/// generated route for
+/// [CancellationPolicyPage]
+class CancellationPolicyPageRoute extends PageRouteInfo<void> {
+  const CancellationPolicyPageRoute({List<PageRouteInfo>? children})
+      : super(
+          CancellationPolicyPageRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'CancellationPolicyPageRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const CancellationPolicyPage();
+    },
+  );
+}
+
+/// generated route for
 /// [CategoriesPage]
 class CategoriesPageRoute extends PageRouteInfo<void> {
   const CategoriesPageRoute({List<PageRouteInfo>? children})
@@ -45,6 +83,97 @@ class CustomersPageRoute extends PageRouteInfo<void> {
       return const CustomersPage();
     },
   );
+}
+
+/// generated route for
+/// [DeliveryPartnerDetailPage]
+class DeliveryPartnerDetailPageRoute extends PageRouteInfo<void> {
+  const DeliveryPartnerDetailPageRoute({List<PageRouteInfo>? children})
+      : super(
+          DeliveryPartnerDetailPageRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'DeliveryPartnerDetailPageRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const DeliveryPartnerDetailPage();
+    },
+  );
+}
+
+/// generated route for
+/// [DeliveryPartnerPage]
+class DeliveryPartnerPageRoute
+    extends PageRouteInfo<DeliveryPartnerPageRouteArgs> {
+  DeliveryPartnerPageRoute({
+    Key? key,
+    List<PageRouteInfo>? children,
+  }) : super(
+          DeliveryPartnerPageRoute.name,
+          args: DeliveryPartnerPageRouteArgs(key: key),
+          initialChildren: children,
+        );
+
+  static const String name = 'DeliveryPartnerPageRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      final args = data.argsAs<DeliveryPartnerPageRouteArgs>(
+          orElse: () => const DeliveryPartnerPageRouteArgs());
+      return DeliveryPartnerPage(key: args.key);
+    },
+  );
+}
+
+class DeliveryPartnerPageRouteArgs {
+  const DeliveryPartnerPageRouteArgs({this.key});
+
+  final Key? key;
+
+  @override
+  String toString() {
+    return 'DeliveryPartnerPageRouteArgs{key: $key}';
+  }
+}
+
+/// generated route for
+/// [DeliveryRequestPage]
+class DeliveryRequestPageRoute
+    extends PageRouteInfo<DeliveryRequestPageRouteArgs> {
+  DeliveryRequestPageRoute({
+    Key? key,
+    List<PageRouteInfo>? children,
+  }) : super(
+          DeliveryRequestPageRoute.name,
+          args: DeliveryRequestPageRouteArgs(key: key),
+          initialChildren: children,
+        );
+
+  static const String name = 'DeliveryRequestPageRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      final args = data.argsAs<DeliveryRequestPageRouteArgs>(
+          orElse: () => const DeliveryRequestPageRouteArgs());
+      return DeliveryRequestPage(key: args.key);
+    },
+  );
+}
+
+class DeliveryRequestPageRouteArgs {
+  const DeliveryRequestPageRouteArgs({this.key});
+
+  final Key? key;
+
+  @override
+  String toString() {
+    return 'DeliveryRequestPageRouteArgs{key: $key}';
+  }
 }
 
 /// generated route for
@@ -124,6 +253,25 @@ class OrdersPageRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [PrivacyPolicyPage]
+class PrivacyPolicyPageRoute extends PageRouteInfo<void> {
+  const PrivacyPolicyPageRoute({List<PageRouteInfo>? children})
+      : super(
+          PrivacyPolicyPageRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'PrivacyPolicyPageRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const PrivacyPolicyPage();
+    },
+  );
+}
+
+/// generated route for
 /// [ProductPage]
 class ProductPageRoute extends PageRouteInfo<void> {
   const ProductPageRoute({List<PageRouteInfo>? children})
@@ -165,17 +313,20 @@ class ResetPasswordPageRoute extends PageRouteInfo<void> {
 /// [SettingsPage]
 class SettingsPageRoute extends PageRouteInfo<void> {
   const SettingsPageRoute({List<PageRouteInfo>? children})
+/// [RefundPolicyPage]
+class RefundPolicyPageRoute extends PageRouteInfo<void> {
+  const RefundPolicyPageRoute({List<PageRouteInfo>? children})
       : super(
-          SettingsPageRoute.name,
+          RefundPolicyPageRoute.name,
           initialChildren: children,
         );
 
-  static const String name = 'SettingsPageRoute';
+  static const String name = 'RefundPolicyPageRoute';
 
   static PageInfo page = PageInfo(
     name,
     builder: (data) {
-      return const SettingsPage();
+      return const RefundPolicyPage();
     },
   );
 }
@@ -216,6 +367,79 @@ class SplashPageRoute extends PageRouteInfo<void> {
       return const SplashPage();
     },
   );
+}
+
+/// generated route for
+/// [TermsAndConditionsPage]
+class TermsAndConditionsPageRoute extends PageRouteInfo<void> {
+  const TermsAndConditionsPageRoute({List<PageRouteInfo>? children})
+      : super(
+          TermsAndConditionsPageRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'TermsAndConditionsPageRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const TermsAndConditionsPage();
+    },
+  );
+}
+
+/// generated route for
+/// [UserDetailPage]
+class UserDetailPageRoute extends PageRouteInfo<void> {
+  const UserDetailPageRoute({List<PageRouteInfo>? children})
+      : super(
+          UserDetailPageRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'UserDetailPageRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const UserDetailPage();
+    },
+  );
+}
+
+/// generated route for
+/// [UserPage]
+class UserPageRoute extends PageRouteInfo<UserPageRouteArgs> {
+  UserPageRoute({
+    Key? key,
+    List<PageRouteInfo>? children,
+  }) : super(
+          UserPageRoute.name,
+          args: UserPageRouteArgs(key: key),
+          initialChildren: children,
+        );
+
+  static const String name = 'UserPageRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      final args = data.argsAs<UserPageRouteArgs>(
+          orElse: () => const UserPageRouteArgs());
+      return UserPage(key: args.key);
+    },
+  );
+}
+
+class UserPageRouteArgs {
+  const UserPageRouteArgs({this.key});
+
+  final Key? key;
+
+  @override
+  String toString() {
+    return 'UserPageRouteArgs{key: $key}';
+  }
 }
 
 /// generated route for

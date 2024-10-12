@@ -9,11 +9,13 @@ import 'package:green_vegease/core/common/widgets/button_widget.dart';
 import 'package:green_vegease/core/common/widgets/loader_widget.dart';
 import 'package:green_vegease/core/theme/colors.dart';
 import 'package:green_vegease/core/utils/validation_mixin.dart';
+import 'package:green_vegease/features/dashboard/products/presentation/pages/product_page.dart';
 import '../../../../../core/routes/app_router.dart';
 import '../../../../../core/theme/text_styles.dart';
 import '../../../../../core/utils/utils.dart';
 import '../bloc/login_bloc.dart';
 import '../bloc/login_event.dart';
+import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import '../bloc/login_state.dart';
 
 @RoutePage()
@@ -101,6 +103,7 @@ class _LoginPageState extends State<LoginPage> with ValidationMixin {
             ),
           ],
         ),
+
       ),
     );
   }
@@ -144,7 +147,9 @@ class _LoginPageState extends State<LoginPage> with ValidationMixin {
 // --> Login Title
   Widget _buildTitle() {
     return Text(
-      "Login",
+
+      "Log In",
+
       style: kTextStyleGilroy600.copyWith(
         color: kColorBlack,
         fontSize: 26.sp,
