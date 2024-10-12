@@ -1,12 +1,15 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:green_vegease/core/common/widgets/button_widget.dart';
+import 'package:green_vegease/core/common/widgets/custom_textfield_widget.dart';
+import 'package:green_vegease/core/routes/app_router.dart';
 import 'package:green_vegease/core/theme/colors.dart';
-import 'package:green_vegease/features/auth/forgot_password/presentation/bloc/reset_pass_event.dart';
+import 'package:green_vegease/core/utils/validation_mixin.dart';
 import 'package:green_vegease/features/auth/forgot_password/presentation/bloc/reset_pass_state.dart';
 import '../../../../../../core/theme/text_styles.dart';
 import '../../../../../core/common/bloc/internet_bloc/internet_bloc.dart';
@@ -22,13 +25,11 @@ class ForgotPasswordPage extends StatefulWidget {
   State<ForgotPasswordPage> createState() => _ForgotPasswordPageState();
 }
 
-class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
+class _ForgotPasswordPageState extends State<ForgotPasswordPage>
+    with ValidationMixin {
   final TextEditingController emailController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
-  final TextEditingController confirmPasswordController2 =
-      TextEditingController();
-  final TextEditingController oldPassController = TextEditingController();
   bool isPasswordVisible = false;
+  final numberKey = GlobalKey<FormState>();
 
   void togglePasswordVisibility() {
     setState(() {
@@ -60,75 +61,102 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // resizeToAvoidBottomInset: false,
+      resizeToAvoidBottomInset: false,
       backgroundColor: kColorWhite,
-      body: SingleChildScrollView(
-        child: Stack(
-          children: [
-            _buildBackgroundImage(),
-            Padding(
-              padding: EdgeInsets.all(25.w),
-              child: SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(
-                      height: 35.h,
-                    ),
-                    GestureDetector(
-                        onTap: () {
-                          AutoRouter.of(context).popForced();
-                        },
-                        child: SvgPicture.asset(
-                          "assets/icons/back_arrow.svg",
-                          height: 18.h,
-                          width: 10.w,
-                          fit: BoxFit.fill,
-                        )),
-                    _buildLogo(),
-                    SizedBox(height: 50.h),
-                    _buildTitle(),
-                    SizedBox(height: 15.h),
-                    _buildSubtitle(),
-                    SizedBox(height: 24.h),
-                    _buildEmailField(),
-                    SizedBox(height: 25.h),
-                    _buildOtpField(),
-                    SizedBox(height: 30.h),
-                    _buildPasswordField(),
-                    SizedBox(height: 30.h),
-                    _buildPasswordField2(),
-                    SizedBox(height: 20.h),
-                    _buildLogInButton(),
-                    SizedBox(
-                      height: 20.h,
-                    ),
-                  ],
+      body: KeyboardVisibilityBuilder(builder: (context, isKeyboardVisible) {
+        return SingleChildScrollView(
+          child: Stack(
+            children: [
+              _buildBackgroundImage(),
+              Padding(
+                padding: EdgeInsets.all(25.w),
+                child: SingleChildScrollView(
+                  physics: const ScrollPhysics(),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(
+                        height: 35.h,
+                      ),
+                      GestureDetector(
+                          onTap: () {
+                            AutoRouter.of(context).popForced();
+                          },
+                          child: SizedBox(
+                            height: 18.h,
+                            width: 10.w,
+                            child: SvgPicture.asset(
+                              "assets/icons/back_arrow.svg",
+                              height: 18.h,
+                              width: 10.w,
+                              fit: BoxFit.fill,
+                            ),
+                          )),
+                      _buildLogo(),
+                      SizedBox(height: 90.h),
+                      _buildTitle(),
+                      _buildSubtitle(),
+                      SizedBox(
+                        height: 40.h,
+                      ),
+                      Form(
+                        key: numberKey,
+                        child: CustomTextfieldWidget(
+                          style: kTextStyleGilroy400.copyWith(
+                              color: kColorTextHint,
+                              fontSize: 16.sp,
+                              height: 4.h),
+                          textInputType: TextInputType.phone,
+                          inputFormatters: [
+                            FilteringTextInputFormatter.digitsOnly,
+                            LengthLimitingTextInputFormatter(10),
+                          ],
+                          labelText: "Mobile Number",
+                          hintText: "Enter mobile number",
+                          hintStyle: kTextStyleGilroy400.copyWith(
+                              color: kColorTextHint,
+                              fontSize: 16.sp,
+                              height: 3.5.h),
+                          controller: emailController,
+                          validator: validatedPhoneNumber,
+                        ),
+                      ),
+                      // _buildEmailField(),
+                      SizedBox(height: 80.h),
+                      _buildLogInButton(),
+                      SizedBox(
+                        height: 20.h,
+                      ),
+                      SizedBox(
+                        height: isKeyboardVisible ? 180.h : 1.h,
+                      )
+                    ],
+                  ),
                 ),
               ),
-            ),
-            BlocConsumer<ResetPassBloc, ResetPassState>(
-              listener: (context, state) {
-                if (state is ResetPassSuccess) {
-                  Utils.customSnackBar(context, "Password Changed Successful",
-                      backgroundColor: kColorPrimary);
-                  AutoRouter.of(context).popForced();
-                }
-                if (state is ResetPassFailed) {
-                  Utils.customSnackBar(context, state.error,
-                      backgroundColor: kColorRed);
-                }
-              },
-              builder: (context, state) {
-                if (state is ResetPassLoading) {
-                  return const LoaderWidget();
-                }
-                return const SizedBox();
-              },
-            )
-          ],
-        ),
-      ),
+              BlocConsumer<ResetPassBloc, ResetPassState>(
+                listener: (context, state) {
+                  if (state is ResetPassSuccess) {
+                    Utils.customSnackBar(context, "Password Changed Successful",
+                        backgroundColor: kColorPrimary);
+                    AutoRouter.of(context).popForced();
+                  }
+                  if (state is ResetPassFailed) {
+                    Utils.customSnackBar(context, state.error,
+                        backgroundColor: kColorRed);
+                  }
+                },
+                builder: (context, state) {
+                  if (state is ResetPassLoading) {
+                    return const LoaderWidget();
+                  }
+                  return const SizedBox();
+                },
+              )
+            ],
+          ),
+        );
+      }),
     );
   }
 
@@ -150,11 +178,15 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            SvgPicture.asset(
-              "assets/images/colored_carrot.svg",
+            SizedBox(
               height: 55.h,
-              fit: BoxFit.fill,
               width: 48.w,
+              child: SvgPicture.asset(
+                "assets/images/colored_carrot.svg",
+                height: 55.h,
+                fit: BoxFit.fill,
+                width: 48.w,
+              ),
             ),
           ],
         ),
@@ -183,54 +215,14 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
     );
   }
 
-  Widget _buildOtpField() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          "Old Password",
-          style: kTextStyleGilroy600.copyWith(
-            color: kColorGrey,
-            fontSize: 16.sp,
-          ),
-        ),
-        Container(
-          decoration: const BoxDecoration(
-            border: Border(
-              bottom: BorderSide(color: kColorTextFieldBorder),
-            ),
-          ),
-          child: TextFormField(
-            keyboardType: TextInputType.text,
-            // inputFormatters: [
-            //   FilteringTextInputFormatter.digitsOnly,
-            //   LengthLimitingTextInputFormatter(4),
-            // ],
-            controller: oldPassController,
-            cursorHeight: 25,
-            style: kTextStyleGilroy500.copyWith(
-              fontSize: 18.sp,
-              color: kColorBlack,
-            ),
-            decoration: InputDecoration(
-              hintText: "Enter old password",
-              hintStyle: kTextStyleGilroy400.copyWith(
-                color: kColorTextHint,
-                fontSize: 16.sp,
-              ),
-              border: InputBorder.none,
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-
 // --> Email TextField
   Widget _buildEmailField() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        SizedBox(
+          height: 30.h,
+        ),
         Text(
           "Mobile Number",
           style: kTextStyleGilroy600.copyWith(
@@ -280,161 +272,18 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
     );
   }
 
-// --> Password TextField1
-  Widget _buildPasswordField() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          "New Password",
-          style: kTextStyleGilroy600.copyWith(
-            color: kColorGrey,
-            fontSize: 16.sp,
-          ),
-        ),
-        Container(
-          decoration: const BoxDecoration(
-            border: Border(
-              bottom: BorderSide(color: kColorTextFieldBorder),
-            ),
-          ),
-          child: TextFormField(
-            controller: passwordController,
-            obscureText: !isPasswordVisible,
-            cursorHeight: 25,
-            style: kTextStyleGilroy500.copyWith(
-              fontSize: 18.sp,
-              color: kColorBlack,
-            ),
-            decoration: InputDecoration(
-              hintText: "Enter new password",
-              hintStyle: kTextStyleGilroy400.copyWith(
-                color: kColorTextHint,
-                fontSize: 16.sp,
-              ),
-              border: InputBorder.none,
-              suffixIcon: GestureDetector(
-                onTap: togglePasswordVisibility,
-                child: toggleIcon,
-              ),
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-
-  // --> Password TextField2
-  Widget _buildPasswordField2() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          "Confirm New Password",
-          style: kTextStyleGilroy600.copyWith(
-            color: kColorGrey,
-            fontSize: 16.sp,
-          ),
-        ),
-        Container(
-          decoration: const BoxDecoration(
-            border: Border(
-              bottom: BorderSide(color: kColorTextFieldBorder),
-            ),
-          ),
-          child: TextFormField(
-            controller: confirmPasswordController2,
-            obscureText: !isPasswordVisible1,
-            cursorHeight: 25,
-            style: kTextStyleGilroy500.copyWith(
-              fontSize: 18.sp,
-              color: kColorBlack,
-            ),
-            decoration: InputDecoration(
-              hintText: "Enter confirm password",
-              hintStyle: kTextStyleGilroy400.copyWith(
-                color: kColorTextHint,
-                fontSize: 16.sp,
-              ),
-              border: InputBorder.none,
-              suffixIcon: GestureDetector(
-                onTap: togglePasswordVisibility1,
-                child: toggleIcon1,
-              ),
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-
 // --> Login Button
   Widget _buildLogInButton() {
     return BlocBuilder<InternetBloc, InternetStatus>(
       builder: (context, state) {
         return GestureDetector(
           onTap: () {
-            FocusScope.of(context).unfocus();
-            if (emailController.text.trim().isEmpty ||
-                passwordController.text.trim().isEmpty ||
-                confirmPasswordController2.text.trim().isEmpty) {
-              if (emailController.text.trim().isEmpty) {
-                Utils.customSnackBar(context, "Please enter email",
-                    backgroundColor: kColorRed);
-              } else if (passwordController.text.trim().isEmpty) {
-                Utils.customSnackBar(context, "Please enter password",
-                    backgroundColor: kColorRed);
-              } else {
-                Utils.customSnackBar(context, "Please enter confirm password",
-                    backgroundColor: kColorRed);
-              }
-              Utils.customSnackBar(context, "Enter Valid Data",
-                  backgroundColor: kColorRed);
-            } else {
-              if (passwordController.text.isEmpty ||
-                  passwordController.text.length < 8) {
-                Utils.customSnackBar(
-                    context, "Password must be at least 8 characters long.",
-                    backgroundColor: kColorRed);
-                return;
-              }
-              if (!RegExp(r'[A-Z]').hasMatch(passwordController.text)) {
-                Utils.customSnackBar(context,
-                    "Password must contain at least one capital letter.",
-                    backgroundColor: kColorRed);
-                return;
-              }
-              if (!RegExp(r'[!@#$%^&*(),.?":{}|<>]')
-                  .hasMatch(passwordController.text)) {
-                Utils.customSnackBar(context,
-                    "Password must contain at least one special character.",
-                    backgroundColor: kColorRed);
-                return;
-              }
-
-              // Confirm Password validation
-              if (passwordController.text != confirmPasswordController2.text) {
-                Utils.customSnackBar(
-                    context, "Password and Confirm Password do not match.",
-                    backgroundColor: kColorRed);
-                return;
-              }
-              if (state.status == ConnectivityStatus.connected) {
-                context.read<ResetPassBloc>().add(ResetPassSubmitted(
-                    resetData:{
-                        "email": emailController.text,
-                        "oldPassword": oldPassController.text,
-                        "newPassword": passwordController.text,
-                        "confirmedNewPassword" :
-                            confirmPasswordController2.text}));
-              } else {
-                Utils.customSnackBar(
-                    context, "Please check internet connectivity",
-                    backgroundColor: kColorRed);
-              }
+            if (numberKey.currentState!.validate()) {
+              AutoRouter.of(context).push(VerificationPageRoute());
             }
+            FocusScope.of(context).unfocus();
           },
-          child: const ButtonWidget(title: "Changed Password"),
+          child: const ButtonWidget(title: "Proceed"),
         );
       },
     );
