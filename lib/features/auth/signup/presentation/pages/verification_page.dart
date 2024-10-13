@@ -1,10 +1,10 @@
 import 'dart:async';
+import 'dart:developer';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:green_vegease/features/auth/forgot_password/presentation/pages/reset_password_page.dart';
 import '../../../../../core/routes/app_router.dart';
 import '../../../../../core/theme/colors.dart';
 import '../../../../../core/theme/text_styles.dart';
@@ -12,7 +12,8 @@ import '../../../../../core/utils/utils.dart';
 
 @RoutePage()
 class VerificationPage extends StatefulWidget {
-  VerificationPage({super.key});
+  const VerificationPage({super.key, this.isResetPass = false});
+  final bool isResetPass;
 
   @override
   _VerificationPageState createState() => _VerificationPageState();
@@ -28,6 +29,7 @@ class _VerificationPageState extends State<VerificationPage> {
   void initState() {
     super.initState();
     startTimer();
+    log("${widget.isResetPass}dfgddfgdffd");
   }
 
   @override
@@ -169,9 +171,14 @@ class _VerificationPageState extends State<VerificationPage> {
           FocusScope.of(context).unfocus();
           if (otpController.text.trim().isNotEmpty &&
               otpController.text.trim().length == 4) {
-            Utils.customSnackBar(context, "SignUp successful",
-                backgroundColor: kColorPrimary, isFloatingButton: true);
-            AutoRouter.of(context).push(const ResetPasswordPageRoute());
+            if (!widget.isResetPass) {
+              Utils.customSnackBar(context, "SignUp successful",
+                  backgroundColor: kColorPrimary, isFloatingButton: true);
+            }
+
+            if (widget.isResetPass) {
+              AutoRouter.of(context).push(const ResetPasswordPageRoute());
+            }
           } else {
             Utils.customSnackBar(context, "Please enter valid otp",
                 backgroundColor: kColorRed, isFloatingButton: true);

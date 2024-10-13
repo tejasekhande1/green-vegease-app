@@ -9,6 +9,7 @@ import 'package:green_vegease/core/common/widgets/button_widget.dart';
 import 'package:green_vegease/core/common/widgets/loader_widget.dart';
 import 'package:green_vegease/core/theme/colors.dart';
 import 'package:green_vegease/core/utils/validation_mixin.dart';
+import '../../../../../core/common/widgets/custom_textfield_widget.dart';
 import 'package:green_vegease/features/dashboard/products/presentation/pages/product_page.dart';
 import '../../../../../core/routes/app_router.dart';
 import '../../../../../core/theme/text_styles.dart';
@@ -29,6 +30,7 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> with ValidationMixin {
   final TextEditingController mobileController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+  final GlobalKey<FormState> loginKey = GlobalKey<FormState>();
   bool isPasswordVisible = false;
   double? height;
   double? width;
@@ -36,12 +38,6 @@ class _LoginPageState extends State<LoginPage> with ValidationMixin {
   void clearController() {
     mobileController.clear();
     passwordController.clear();
-  }
-
-  void togglePasswordVisibility() {
-    setState(() {
-      isPasswordVisible = !isPasswordVisible;
-    });
   }
 
   Icon get toggleIcon => Icon(
@@ -56,54 +52,120 @@ class _LoginPageState extends State<LoginPage> with ValidationMixin {
     width = MediaQuery.of(context).size.width;
     height = MediaQuery.of(context).size.height;
 
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      backgroundColor: kColorWhite,
-      body: SizedBox(
-        width: width,
-        height: height, // Ensure the container takes the full screen size
-        child: Stack(
-          children: [
-            _buildBackgroundImage(),
-            SingleChildScrollView(
-              child: Padding(
-                padding: EdgeInsets.all(25.w),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    _buildLogo(),
-                    SizedBox(height: 100.h),
-                    _buildTitle(),
-                    SizedBox(height: 15.h),
-                    _buildSubtitle(),
-                    SizedBox(height: 24.h),
-                    _buildEmailField(),
-                    SizedBox(height: 30.h),
-                    _buildPasswordField(),
-                    SizedBox(height: 20.h),
-                    _buildForgotPasswordText(),
-                    SizedBox(height: 30.h),
-                    _buildLogInButton(),
-                    SizedBox(height: 25.h),
-                    _buildSignUpPrompt(),
-                  ],
+    return AnnotatedRegion<SystemUiOverlayStyle>(
+      value: const SystemUiOverlayStyle(
+        statusBarIconBrightness: Brightness.dark, // For Android: dark icons
+        statusBarBrightness:
+            Brightness.light, // For iOS: dark icons on light background
+        statusBarColor: kColorTransparent, // Transparent status bar color
+      ),
+      child: Scaffold(
+        resizeToAvoidBottomInset: false,
+        backgroundColor: kColorWhite,
+        body: SizedBox(
+          width: width,
+          height: height, // Ensure the container takes the full screen size
+          child: Stack(
+            children: [
+              _buildBackgroundImage(),
+              SingleChildScrollView(
+                child: Padding(
+                  padding: EdgeInsets.all(25.w),
+                  child: Form(
+                    key: loginKey,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        _buildLogo(),
+                        SizedBox(height: 100.h),
+                        _buildTitle(),
+                        SizedBox(height: 15.h),
+                        _buildSubtitle(),
+                        SizedBox(height: 24.h),
+                        CustomTextfieldWidget(
+                          style: kTextStyleGilroy400.copyWith(
+                              color: kColorTextHint,
+                              fontSize: 16.sp,
+                              height: 4.h),
+                          textInputType: TextInputType.phone,
+                          inputFormatters: [
+                            FilteringTextInputFormatter.digitsOnly,
+                            LengthLimitingTextInputFormatter(10),
+                          ],
+                          labelText: "Mobile Number",
+                          hintText: "Enter mobile number",
+                          hintStyle: kTextStyleGilroy400.copyWith(
+                              color: kColorTextHint,
+                              fontSize: 16.sp,
+                              height: 3.5.h),
+                          controller: mobileController,
+                          validator: validatedPhoneNumber,
+                        ),
+                        SizedBox(height: 30.h),
+                        CustomTextfieldWidget(
+                          isPassword: !isPasswordVisible,
+                          maxLines: 1,
+                          suffixIcon: GestureDetector(
+                            onTap: () {
+                              isPasswordVisible = !isPasswordVisible;
+                              setState(() {});
+                            },
+                            child: toggleIcon,
+                          ),
+                          style: kTextStyleGilroy400.copyWith(
+                              color: kColorTextHint,
+                              fontSize: 16.sp,
+                              height: 4.h),
+                          labelText: "Password",
+                          hintText: "Enter password",
+                          hintStyle: kTextStyleGilroy400.copyWith(
+                              color: kColorTextHint,
+                              fontSize: 16.sp,
+                              height: 3.5.h),
+                          controller: passwordController,
+                          validator: validatedPassword,
+                        ),
+                        SizedBox(height: 20.h),
+                        _buildForgotPasswordText(),
+                        SizedBox(height: 30.h),
+                        _buildLogInButton(),
+                        SizedBox(height: 25.h),
+                        _buildSignUpPrompt(),
+                      ],
+                    ),
+                  ),
                 ),
               ),
-            ),
-            BlocConsumer<LogInBloc, LogInState>(
-              listener: (context, state) {
-                // Your listener code...
-              },
-              builder: (context, state) {
-                if (state is LogInLoading) {
-                  return const LoaderWidget();
-                }
-                return const SizedBox();
-              },
-            ),
-          ],
-        ),
+              BlocConsumer<LogInBloc, LogInState>(
+                listener: (context, state) {
+                  if (state is LogInSuccess) {
+                    Utils.customSnackBar(context, state.response.message!,
+                        backgroundColor: kColorPrimary);
+                    if (state.response.user!.role == "admin") {
+                      AutoRouter.of(context)
+                          .replaceAll([const OrdersPageRoute()]);
+                    }
+                  }
 
+                  if (state is LogInFailed) {
+                    Utils.customSnackBar(context, state.error,
+                        backgroundColor: kColorRed);
+                  }
+                  if (state is LoginException) {
+                    Utils.customSnackBar(context, "Something went wrong",
+                        backgroundColor: kColorRed);
+                  }
+                },
+                builder: (context, state) {
+                  if (state is LogInLoading) {
+                    return const LoaderWidget();
+                  }
+                  return const SizedBox();
+                },
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
@@ -211,50 +273,6 @@ class _LoginPageState extends State<LoginPage> with ValidationMixin {
     );
   }
 
-// --> Password TextField
-  Widget _buildPasswordField() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          "Password",
-          style: kTextStyleGilroy600.copyWith(
-            color: kColorGrey,
-            fontSize: 16.sp,
-          ),
-        ),
-        Container(
-          decoration: const BoxDecoration(
-            border: Border(
-              bottom: BorderSide(color: kColorTextFieldBorder),
-            ),
-          ),
-          child: TextFormField(
-            controller: passwordController,
-            obscureText: !isPasswordVisible,
-            cursorHeight: 25,
-            style: kTextStyleGilroy500.copyWith(
-              fontSize: 18.sp,
-              color: kColorBlack,
-            ),
-            decoration: InputDecoration(
-              hintText: "Enter password",
-              hintStyle: kTextStyleGilroy400.copyWith(
-                color: kColorTextHint,
-                fontSize: 16.sp,
-              ),
-              border: InputBorder.none,
-              suffixIcon: GestureDetector(
-                onTap: togglePasswordVisibility,
-                child: toggleIcon,
-              ),
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-
 // --> Forgot password Button
   Widget _buildForgotPasswordText() {
     return Row(
@@ -287,39 +305,17 @@ class _LoginPageState extends State<LoginPage> with ValidationMixin {
         return GestureDetector(
           onTap: () {
             FocusScope.of(context).unfocus();
-            if (mobileController.text.trim().isEmpty &&
-                passwordController.text.trim().isEmpty) {
-              Utils.customSnackBar(
-                  context, "Please enter mobile number and password",
-                  backgroundColor: kColorRed);
-            } else if (mobileController.text.trim().isEmpty ||
-                passwordController.text.trim().isEmpty) {
-              if (mobileController.text.isEmpty) {
-                Utils.customSnackBar(context, "Please enter mobile number",
-                    backgroundColor: kColorRed);
+
+            if (loginKey.currentState!.validate()) {
+              if (state.status == ConnectivityStatus.connected) {
+                context.read<LogInBloc>().add(LogInSubmitted(loginData: {
+                      "mobileNumber": mobileController.text,
+                      "password": passwordController.text
+                    }));
               } else {
-                Utils.customSnackBar(context, "Please enter password",
-                    backgroundColor: kColorRed);
-              }
-            } else {
-              if (passwordController.text.length <= 7) {
-                Utils.customSnackBar(context, "Password must have 8 character",
-                    backgroundColor: kColorRed);
-              } else if (mobileController.text.length < 10) {
                 Utils.customSnackBar(
-                    context, "Please enter valid mobile number",
+                    context, "Please check internet connectivity",
                     backgroundColor: kColorRed);
-              } else {
-                if (state.status == ConnectivityStatus.connected) {
-                  context.read<LogInBloc>().add(LogInSubmitted(loginData: {
-                        "mobileNumber": mobileController.text,
-                        "password": passwordController.text
-                      }));
-                } else {
-                  Utils.customSnackBar(
-                      context, "Please check internet connectivity",
-                      backgroundColor: kColorRed);
-                }
               }
             }
           },

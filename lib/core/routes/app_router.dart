@@ -1,4 +1,3 @@
-import 'package:auto_route/annotations.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:green_vegease/features/auth/forgot_password/presentation/pages/reset_password_page.dart';
@@ -19,6 +18,7 @@ import '../../features/dashboard/categories/presentation/pages/categories_page.d
 import '../../features/dashboard/customers/presentation/customers_page.dart';
 import '../../features/dashboard/orders/presentation/pages/orders_page.dart';
 import '../../features/dashboard/products/presentation/pages/product_page.dart';
+import '../../features/dashboard/settings/presentation/settings_page.dart';
 import '../../features/dashboard/settings/privacy_policy/presentation/pages/privacy_policy_page.dart';
 import '../../features/dashboard/settings/refund_policy/presentation/pages/refund_policy_page.dart';
 import '../../features/dashboard/settings/terms_and_conditions/presentation/pages/terms_and_conditions_page.dart';
@@ -50,8 +50,7 @@ class AppRouter extends RootStackRouter {
         AutoRoute(page: RefundPolicyPageRoute.page),
         AutoRoute(page: TermsAndConditionsPageRoute.page),
         AutoRoute(page: CustomersPageRoute.page),
-        AutoRoute(page: ResetPasswordPageRoute.page)
-
+        AutoRoute(page: ResetPasswordPageRoute.page),
          AutoRoute(page: DeliveryRequestPageRoute.page),
          AutoRoute(page: DeliveryPartnerPageRoute.page),
          AutoRoute(page: UserDetailPageRoute.page),

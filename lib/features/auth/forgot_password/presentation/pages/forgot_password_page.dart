@@ -280,7 +280,8 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage>
         return GestureDetector(
           onTap: () {
             if (numberKey.currentState!.validate()) {
-              AutoRouter.of(context).push(VerificationPageRoute());
+              AutoRouter.of(context)
+                  .push(VerificationPageRoute(isResetPass: true));
             }
             FocusScope.of(context).unfocus();
           },

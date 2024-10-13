@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:green_vegease/core/theme/colors.dart';
 
 class LoaderWidget extends StatelessWidget {
   const LoaderWidget({super.key});
@@ -8,9 +9,9 @@ class LoaderWidget extends StatelessWidget {
     final height = MediaQuery.sizeOf(context).height;
     final width = MediaQuery.sizeOf(context).width;
     return Container(
+        color: kColorTransparent,
         height: height,
         width: width,
-        // color: Colors.black.withOpacity(0.4),
         child: const Center(child: CircularProgressIndicator()));
   }
 }

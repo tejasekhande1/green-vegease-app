@@ -23,7 +23,6 @@ class LogInBloc extends Bloc<LogInEvent, LogInState> {
 
       final data = await _repository.loginUser(event.loginData);
       if (data.success == false) {
-        log("@@@@@@@@@@@@@@@@@@${data.message!}");
         emit(LogInFailed(error: data.message!));
       } else {
         await serviceLocator<SharedPreferencesService>()
@@ -34,7 +33,6 @@ class LogInBloc extends Bloc<LogInEvent, LogInState> {
       // Emit failure state with error message
     } catch (e) {
       log("@@@@@@@@@@@@@@@@@@$e");
-      // Handle other errors
       emit(LoginException(error: e.toString()));
     }
   }

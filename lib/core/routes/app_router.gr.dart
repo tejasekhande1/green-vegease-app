@@ -291,6 +291,25 @@ class ProductPageRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [RefundPolicyPage]
+class RefundPolicyPageRoute extends PageRouteInfo<void> {
+  const RefundPolicyPageRoute({List<PageRouteInfo>? children})
+      : super(
+          RefundPolicyPageRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'RefundPolicyPageRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const RefundPolicyPage();
+    },
+  );
+}
+
+/// generated route for
 /// [ResetPasswordPage]
 class ResetPasswordPageRoute extends PageRouteInfo<void> {
   const ResetPasswordPageRoute({List<PageRouteInfo>? children})
@@ -313,20 +332,17 @@ class ResetPasswordPageRoute extends PageRouteInfo<void> {
 /// [SettingsPage]
 class SettingsPageRoute extends PageRouteInfo<void> {
   const SettingsPageRoute({List<PageRouteInfo>? children})
-/// [RefundPolicyPage]
-class RefundPolicyPageRoute extends PageRouteInfo<void> {
-  const RefundPolicyPageRoute({List<PageRouteInfo>? children})
       : super(
-          RefundPolicyPageRoute.name,
+          SettingsPageRoute.name,
           initialChildren: children,
         );
 
-  static const String name = 'RefundPolicyPageRoute';
+  static const String name = 'SettingsPageRoute';
 
   static PageInfo page = PageInfo(
     name,
     builder: (data) {
-      return const RefundPolicyPage();
+      return const SettingsPage();
     },
   );
 }
@@ -447,10 +463,14 @@ class UserPageRouteArgs {
 class VerificationPageRoute extends PageRouteInfo<VerificationPageRouteArgs> {
   VerificationPageRoute({
     Key? key,
+    bool isResetPass = false,
     List<PageRouteInfo>? children,
   }) : super(
           VerificationPageRoute.name,
-          args: VerificationPageRouteArgs(key: key),
+          args: VerificationPageRouteArgs(
+            key: key,
+            isResetPass: isResetPass,
+          ),
           initialChildren: children,
         );
 
@@ -461,18 +481,26 @@ class VerificationPageRoute extends PageRouteInfo<VerificationPageRouteArgs> {
     builder: (data) {
       final args = data.argsAs<VerificationPageRouteArgs>(
           orElse: () => const VerificationPageRouteArgs());
-      return VerificationPage(key: args.key);
+      return VerificationPage(
+        key: args.key,
+        isResetPass: args.isResetPass,
+      );
     },
   );
 }
 
 class VerificationPageRouteArgs {
-  const VerificationPageRouteArgs({this.key});
+  const VerificationPageRouteArgs({
+    this.key,
+    this.isResetPass = false,
+  });
 
   final Key? key;
 
+  final bool isResetPass;
+
   @override
   String toString() {
-    return 'VerificationPageRouteArgs{key: $key}';
+    return 'VerificationPageRouteArgs{key: $key, isResetPass: $isResetPass}';
   }
 }

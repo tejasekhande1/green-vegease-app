@@ -6,8 +6,8 @@ import 'package:green_vegease/features/dashboard/drawer/presentation/pages/drawe
 import '../../../../core/common/widgets/app_bar_widget.dart';
 
 @RoutePage()
-class CustomersPage extends StatelessWidget {
-  const CustomersPage({super.key});
+class SettingsPage extends StatelessWidget {
+  const SettingsPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -15,12 +15,14 @@ class CustomersPage extends StatelessWidget {
       appBar: PreferredSize(
           preferredSize: Size(360.w, 50.h),
           child: const AppBarWidget(
-            title1: "Customers",
+            title1: "Settings",
           )),
       body: const Column(
         children: [],
       ),
-      drawer:  CommonDrawer(page: "App Users",),
+      drawer:  CommonDrawer(
+        page: "General Settings",
+      ),
     );
   }
 }
