@@ -8,10 +8,10 @@ class OverviewDetailWidget extends StatelessWidget {
   final String detail;
 
   const OverviewDetailWidget({
-    Key? key,
+    super.key,
     required this.title,
     required this.detail,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

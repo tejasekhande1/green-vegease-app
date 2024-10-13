@@ -17,7 +17,7 @@ class SettingsPage extends StatelessWidget {
           child: const AppBarWidget(
             title1: "Settings",
           )),
-      body: const Column(
+       body: const Column(
         children: [],
       ),
       drawer:  CommonDrawer(

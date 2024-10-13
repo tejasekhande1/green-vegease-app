@@ -91,7 +91,7 @@ class _BottomSheetWidgetState extends State<BottomSheetWidget> {
                       right: 0,
                       child: Container(
                         padding: EdgeInsets.all(4.w),
-                        decoration: BoxDecoration(
+                        decoration: const BoxDecoration(
                           shape: BoxShape.circle,
                           color: kColorPrimary,
                         ),
@@ -128,7 +128,7 @@ class _BottomSheetWidgetState extends State<BottomSheetWidget> {
                       color: Colors.grey.withOpacity(0.5),
                       spreadRadius: 2,
                       blurRadius: 5,
-                      offset: Offset(0, 3),
+                      offset: const Offset(0, 3),
                     ),
                   ],
                 ),

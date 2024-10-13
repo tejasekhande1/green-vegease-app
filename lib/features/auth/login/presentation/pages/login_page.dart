@@ -10,13 +10,11 @@ import 'package:green_vegease/core/common/widgets/loader_widget.dart';
 import 'package:green_vegease/core/theme/colors.dart';
 import 'package:green_vegease/core/utils/validation_mixin.dart';
 import '../../../../../core/common/widgets/custom_textfield_widget.dart';
-import 'package:green_vegease/features/dashboard/products/presentation/pages/product_page.dart';
 import '../../../../../core/routes/app_router.dart';
 import '../../../../../core/theme/text_styles.dart';
 import '../../../../../core/utils/utils.dart';
 import '../bloc/login_bloc.dart';
 import '../bloc/login_event.dart';
-import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import '../bloc/login_state.dart';
 
 @RoutePage()
@@ -51,6 +49,7 @@ class _LoginPageState extends State<LoginPage> with ValidationMixin {
   Widget build(BuildContext context) {
     width = MediaQuery.of(context).size.width;
     height = MediaQuery.of(context).size.height;
+    bool isKeyboardVisible = MediaQuery.of(context).viewInsets.bottom != 0;
 
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: const SystemUiOverlayStyle(
@@ -131,6 +130,9 @@ class _LoginPageState extends State<LoginPage> with ValidationMixin {
                         _buildLogInButton(),
                         SizedBox(height: 25.h),
                         _buildSignUpPrompt(),
+                        SizedBox(
+                          height: isKeyboardVisible ? 220.h : 0.h,
+                        )
                       ],
                     ),
                   ),
@@ -209,9 +211,7 @@ class _LoginPageState extends State<LoginPage> with ValidationMixin {
 // --> Login Title
   Widget _buildTitle() {
     return Text(
-
       "Log In",
-
       style: kTextStyleGilroy600.copyWith(
         color: kColorBlack,
         fontSize: 26.sp,

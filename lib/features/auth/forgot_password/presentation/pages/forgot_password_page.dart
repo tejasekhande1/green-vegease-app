@@ -1,5 +1,5 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
+// import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -60,11 +60,12 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage>
 
   @override
   Widget build(BuildContext context) {
+    bool isKeyboardVisible = MediaQuery.of(context).viewInsets.bottom != 0;
+
     return Scaffold(
-      resizeToAvoidBottomInset: false,
-      backgroundColor: kColorWhite,
-      body: KeyboardVisibilityBuilder(builder: (context, isKeyboardVisible) {
-        return SingleChildScrollView(
+        resizeToAvoidBottomInset: false,
+        backgroundColor: kColorWhite,
+        body: SingleChildScrollView(
           child: Stack(
             children: [
               _buildBackgroundImage(),
@@ -121,7 +122,6 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage>
                           validator: validatedPhoneNumber,
                         ),
                       ),
-                      // _buildEmailField(),
                       SizedBox(height: 80.h),
                       _buildLogInButton(),
                       SizedBox(
@@ -155,10 +155,9 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage>
               )
             ],
           ),
+        )
+        // }
         );
-      }),
-
-    );
   }
 
 // -->  background Image
