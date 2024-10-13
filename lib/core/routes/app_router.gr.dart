@@ -291,6 +291,25 @@ class ProductPageRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [RefundPolicyPage]
+class RefundPolicyPageRoute extends PageRouteInfo<void> {
+  const RefundPolicyPageRoute({List<PageRouteInfo>? children})
+      : super(
+          RefundPolicyPageRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'RefundPolicyPageRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const RefundPolicyPage();
+    },
+  );
+}
+
+/// generated route for
 /// [ResetPasswordPage]
 class ResetPasswordPageRoute extends PageRouteInfo<void> {
   const ResetPasswordPageRoute({List<PageRouteInfo>? children})
@@ -313,20 +332,17 @@ class ResetPasswordPageRoute extends PageRouteInfo<void> {
 /// [SettingsPage]
 class SettingsPageRoute extends PageRouteInfo<void> {
   const SettingsPageRoute({List<PageRouteInfo>? children})
-/// [RefundPolicyPage]
-class RefundPolicyPageRoute extends PageRouteInfo<void> {
-  const RefundPolicyPageRoute({List<PageRouteInfo>? children})
       : super(
-          RefundPolicyPageRoute.name,
+          SettingsPageRoute.name,
           initialChildren: children,
         );
 
-  static const String name = 'RefundPolicyPageRoute';
+  static const String name = 'SettingsPageRoute';
 
   static PageInfo page = PageInfo(
     name,
     builder: (data) {
-      return const RefundPolicyPage();
+      return const SettingsPage();
     },
   );
 }
