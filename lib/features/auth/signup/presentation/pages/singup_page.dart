@@ -1,20 +1,20 @@
-import 'package:auto_route/annotations.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:green_vegease/core/common/widgets/custom_textfield_widget.dart';
 import 'package:green_vegease/core/common/widgets/loader_widget.dart';
 import 'package:green_vegease/core/routes/app_router.dart';
 import 'package:green_vegease/core/theme/colors.dart';
+import 'package:green_vegease/core/utils/validation_mixin.dart';
 import 'package:green_vegease/features/auth/signup/presentation/bloc/signup_bloc.dart';
 import 'package:green_vegease/features/auth/signup/presentation/bloc/signup_state.dart';
-import 'package:green_vegease/features/auth/signup/presentation/widgets/password_text_field_widget.dart';
 import 'package:green_vegease/features/auth/signup/presentation/widgets/signup_button_widget.dart';
 import '../../../../../core/theme/text_styles.dart';
 import '../../../../../core/utils/utils.dart';
-import '../widgets/text_field_widget.dart';
 
 @RoutePage()
 class SingupPage extends StatefulWidget {
@@ -24,7 +24,7 @@ class SingupPage extends StatefulWidget {
   State<SingupPage> createState() => _SingupPageState();
 }
 
-class _SingupPageState extends State<SingupPage> {
+class _SingupPageState extends State<SingupPage> with ValidationMixin {
   final TextEditingController usernameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
@@ -33,6 +33,25 @@ class _SingupPageState extends State<SingupPage> {
   final TextEditingController lastNameController = TextEditingController();
   final TextEditingController confirmPasswordController =
       TextEditingController();
+  bool unShowPass = true;
+  final signKey = GlobalKey<FormState>();
+
+  Icon _toggleIcon1() {
+    return Icon(
+      size: 24.sp,
+      unShowPass ? Icons.remove_red_eye_outlined : Icons.remove_red_eye,
+    );
+  }
+
+  bool unShowPass2 = true;
+
+  Icon _toggleIcon2() {
+    return Icon(
+      size: 24.sp,
+      unShowPass2 ? Icons.remove_red_eye_outlined : Icons.remove_red_eye,
+    );
+  }
+
   void clearControllers() {
     usernameController.clear();
     emailController.clear();
@@ -64,75 +83,184 @@ class _SingupPageState extends State<SingupPage> {
                 child: SingleChildScrollView(
                   child: Padding(
                     padding: EdgeInsets.all(25.w),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        SizedBox(height: 40.h),
-                        _buildLogo(),
-                        SizedBox(height: 50.h),
-                        _buildTitle(),
-                        SizedBox(height: 15.h),
-                        _buildSubtitle(),
-                        SizedBox(height: 24.h),
-                        TextFieldWidget(
-                            label: "Mobile Number",
-                            hint: "Enter mobile number",
-                            controller: mobileNumberController),
-                        SizedBox(height: 24.h),
-                        Row(
-                          children: [
-                            Expanded(
-                              child: TextFieldWidget(
-                                  label: "Firstname",
-                                  hint: "Enter firstname",
-                                  controller: firstNameController),
+                    child: Form(
+                      key: signKey,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(height: 40.h),
+                          _buildLogo(),
+                          SizedBox(height: 50.h),
+                          _buildTitle(),
+                          SizedBox(height: 15.h),
+                          _buildSubtitle(),
+                          SizedBox(height: 24.h),
+                          CustomTextfieldWidget(
+                            style: kTextStyleGilroy400.copyWith(
+                                color: kColorTextHint,
+                                fontSize: 16.sp,
+                                height: 4.h),
+                            textInputType: TextInputType.phone,
+                            inputFormatters: [
+                              FilteringTextInputFormatter.digitsOnly,
+                              LengthLimitingTextInputFormatter(10),
+                            ],
+                            labelText: "Mobile Number",
+                            hintText: "Enter mobile number",
+                            hintStyle: kTextStyleGilroy400.copyWith(
+                                color: kColorTextHint,
+                                fontSize: 16.sp,
+                                height: 3.5.h),
+                            controller: mobileNumberController,
+                            validator: validatedPhoneNumber,
+                          ),
+                          SizedBox(height: 24.h),
+                          Row(
+                            children: [
+                              Expanded(
+                                child: CustomTextfieldWidget(
+                                  style: kTextStyleGilroy400.copyWith(
+                                      color: kColorTextHint,
+                                      fontSize: 16.sp,
+                                      height: 4.h),
+                                  labelText: "Firstname",
+                                  hintText: "Enter firstname",
+                                  hintStyle: kTextStyleGilroy400.copyWith(
+                                      color: kColorTextHint,
+                                      fontSize: 16.sp,
+                                      height: 3.5.h),
+                                  controller: firstNameController,
+                                  validator: validatedName,
+                                ),
+                              ),
+                              SizedBox(
+                                width: 15.w,
+                              ),
+                              Expanded(
+                                child: CustomTextfieldWidget(
+                                  style: kTextStyleGilroy400.copyWith(
+                                      color: kColorTextHint,
+                                      fontSize: 16.sp,
+                                      height: 4.h),
+                                  labelText: "Lastname",
+                                  hintText: "Enter lastname",
+                                  hintStyle: kTextStyleGilroy400.copyWith(
+                                      color: kColorTextHint,
+                                      fontSize: 16.sp,
+                                      height: 3.5.h),
+                                  controller: lastNameController,
+                                  validator: validatedName,
+                                ),
+                              )
+                            ],
+                          ),
+                          SizedBox(height: 24.h),
+                          CustomTextfieldWidget(
+                            style: kTextStyleGilroy400.copyWith(
+                                color: kColorTextHint,
+                                fontSize: 16.sp,
+                                height: 4.h),
+                            labelText: "Username",
+                            hintText: "Enter username",
+                            hintStyle: kTextStyleGilroy400.copyWith(
+                                color: kColorTextHint,
+                                fontSize: 16.sp,
+                                height: 3.5.h),
+                            controller: usernameController,
+                            validator: validatedName,
+                          ),
+                          SizedBox(height: 30.h),
+                          CustomTextfieldWidget(
+                            style: kTextStyleGilroy400.copyWith(
+                                color: kColorTextHint,
+                                fontSize: 16.sp,
+                                height: 4.h),
+                            textInputType: TextInputType.emailAddress,
+                            labelText: "Email",
+                            hintText: "Enter email id",
+                            hintStyle: kTextStyleGilroy400.copyWith(
+                                color: kColorTextHint,
+                                fontSize: 16.sp,
+                                height: 3.5.h),
+                            controller: emailController,
+                            validator: validatedEmail,
+                          ),
+                          SizedBox(height: 20.h),
+                          CustomTextfieldWidget(
+                            isPassword: unShowPass,
+                            maxLines: 1,
+                            suffixIcon: GestureDetector(
+                              onTap: () {
+                                unShowPass = !unShowPass;
+                                setState(() {});
+                              },
+                              child: _toggleIcon1(),
                             ),
-                            SizedBox(
-                              width: 15.w,
+                            style: kTextStyleGilroy400.copyWith(
+                                color: kColorTextHint,
+                                fontSize: 16.sp,
+                                height: 4.h),
+                            labelText: "Password",
+                            hintText: "Enter password",
+                            hintStyle: kTextStyleGilroy400.copyWith(
+                                color: kColorTextHint,
+                                fontSize: 16.sp,
+                                height: 3.5.h),
+                            controller: passwordController,
+                            validator: validatedPassword,
+                          ),
+                          SizedBox(height: 20.h),
+                          CustomTextfieldWidget(
+                            isPassword: unShowPass2,
+                            maxLines: 1,
+                            suffixIcon: GestureDetector(
+                              onTap: () {
+                                unShowPass2 = !unShowPass2;
+                                setState(() {});
+                              },
+                              child: _toggleIcon2(),
                             ),
-                            Expanded(
-                              child: TextFieldWidget(
-                                  label: "Lastname",
-                                  hint: "Enter lastname",
-                                  controller: lastNameController),
-                            ),
-                          ],
-                        ),
-                        SizedBox(height: 24.h),
-                        TextFieldWidget(
-                            label: "Username",
-                            hint: "Enter username",
-                            controller: usernameController),
-                        SizedBox(height: 30.h),
-                        TextFieldWidget(
-                            label: "Email",
-                            hint: "Enter email id",
-                            controller: emailController),
-                        SizedBox(height: 20.h),
-                        PasswordTextFieldWidget(
-                            controller: passwordController, title: "Password"),
-                        SizedBox(height: 20.h),
-                        PasswordTextFieldWidget(
+                            style: kTextStyleGilroy400.copyWith(
+                                color: kColorTextHint,
+                                fontSize: 16.sp,
+                                height: 4.h),
+                            labelText: "Confirm Password",
+                            hintText: "Re-enter password",
+                            hintStyle: kTextStyleGilroy400.copyWith(
+                                color: kColorTextHint,
+                                fontSize: 16.sp,
+                                height: 3.5.h),
                             controller: confirmPasswordController,
-                            title: "Confirm Password"),
-                        SizedBox(height: 20.h),
-                        _buildTermsText(),
-                        SizedBox(height: 30.h),
-                        SignupButtonWidget(
-                            firstNameController: firstNameController,
-                            lastNameController: lastNameController,
-                            mobileController: mobileNumberController,
-                            confirmPasswordController:
-                                confirmPasswordController,
-                            emailController: emailController,
-                            passwordController: passwordController,
-                            usernameController: usernameController),
-                        SizedBox(height: 25.h),
-                        _buildLoginOption(),
-                        SizedBox(
-                          height: isKeyboardVisible ? 300.h : 1.h,
-                        )
-                      ],
+                            validator: (value) {
+                              if (validatedPassword(value) != null) {
+                                return validatedPassword(value);
+                              } else if (passwordController.text !=
+                                  confirmPasswordController.text) {
+                                return "Password not match";
+                              }
+                              return null;
+                            },
+                          ),
+                          SizedBox(height: 20.h),
+                          _buildTermsText(),
+                          SizedBox(height: 30.h),
+                          SignupButtonWidget(
+                              signKey: signKey,
+                              firstNameController: firstNameController,
+                              lastNameController: lastNameController,
+                              mobileController: mobileNumberController,
+                              confirmPasswordController:
+                                  confirmPasswordController,
+                              emailController: emailController,
+                              passwordController: passwordController,
+                              usernameController: usernameController),
+                          SizedBox(height: 25.h),
+                          _buildLoginOption(),
+                          SizedBox(
+                            height: isKeyboardVisible ? 300.h : 1.h,
+                          )
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -144,7 +272,7 @@ class _SingupPageState extends State<SingupPage> {
                 }
                 if (state is SignUpSuccess) {
                   AutoRouter.of(context)
-                      .push(VerificationPageRoute())
+                      .push(VerificationPageRoute(isResetPass: false))
                       .then((value) {
                     clearControllers();
                   });

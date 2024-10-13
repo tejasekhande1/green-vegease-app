@@ -223,10 +223,14 @@ class SplashPageRoute extends PageRouteInfo<void> {
 class VerificationPageRoute extends PageRouteInfo<VerificationPageRouteArgs> {
   VerificationPageRoute({
     Key? key,
+    bool isResetPass = false,
     List<PageRouteInfo>? children,
   }) : super(
           VerificationPageRoute.name,
-          args: VerificationPageRouteArgs(key: key),
+          args: VerificationPageRouteArgs(
+            key: key,
+            isResetPass: isResetPass,
+          ),
           initialChildren: children,
         );
 
@@ -237,18 +241,26 @@ class VerificationPageRoute extends PageRouteInfo<VerificationPageRouteArgs> {
     builder: (data) {
       final args = data.argsAs<VerificationPageRouteArgs>(
           orElse: () => const VerificationPageRouteArgs());
-      return VerificationPage(key: args.key);
+      return VerificationPage(
+        key: args.key,
+        isResetPass: args.isResetPass,
+      );
     },
   );
 }
 
 class VerificationPageRouteArgs {
-  const VerificationPageRouteArgs({this.key});
+  const VerificationPageRouteArgs({
+    this.key,
+    this.isResetPass = false,
+  });
 
   final Key? key;
 
+  final bool isResetPass;
+
   @override
   String toString() {
-    return 'VerificationPageRouteArgs{key: $key}';
+    return 'VerificationPageRouteArgs{key: $key, isResetPass: $isResetPass}';
   }
 }

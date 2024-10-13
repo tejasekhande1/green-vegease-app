@@ -23,10 +23,16 @@ mixin ValidationMixin {
   }
 
   String? validatedName(String? value) {
-    if (value == null || value.isEmpty) {
+    if (value != null) {
+      value = value.trim();
+    }
+
+    if (value == null || value.trim().isEmpty) {
       return 'Please enter a name';
-    } else if (!RegExp(r'^[a-zA-Z\s]+$').hasMatch(value)) {
+    } else if (!RegExp(r'^[a-zA-Z]+(\s[a-zA-Z]+)*$').hasMatch(value)) {
       return 'Please enter a valid name';
+    } else if (value.startsWith(' ')) {
+      return 'Name cannot have leading or trailing spaces';
     } else if (value.length > 50) {
       return 'Name cannot be longer than 50 characters';
     } else {

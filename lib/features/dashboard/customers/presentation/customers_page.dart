@@ -17,7 +17,7 @@ class CustomersPage extends StatelessWidget {
           child: const AppBarWidget(
             title1: "Customers",
           )),
-      body: Column(
+      body: const Column(
         children: [],
       ),
       drawer:  CommonDrawer(page: "App Users",),

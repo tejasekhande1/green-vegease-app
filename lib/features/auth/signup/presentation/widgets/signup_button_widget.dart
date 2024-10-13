@@ -15,8 +15,10 @@ class SignupButtonWidget extends StatelessWidget {
   final TextEditingController passwordController;
   final TextEditingController emailController;
   final TextEditingController confirmPasswordController;
+  final GlobalKey<FormState> signKey;
   const SignupButtonWidget(
       {super.key,
+      required this.signKey,
       required this.firstNameController,
       required this.lastNameController,
       required this.mobileController,
@@ -31,59 +33,14 @@ class SignupButtonWidget extends StatelessWidget {
       builder: (context, state) {
         return GestureDetector(
           onTap: () {
-            FocusScope.of(context).unfocus();
+            if(signKey.currentState!.validate()){
+                          FocusScope.of(context).unfocus();
             String mobile = mobileController.text.trim();
             String username = usernameController.text.trim();
             String password = passwordController.text.trim();
             String email = emailController.text.trim();
             String confirmPassword = confirmPasswordController.text
                 .trim(); // Make sure to create and assign this controller.
-            if (mobile.isEmpty || mobile.length < 10) {
-              Utils.customSnackBar(context, "Please enter valid mobile number",
-                  backgroundColor: kColorRed);
-              return;
-            }
-            // Username validation
-            if (username.isEmpty || username.length < 5) {
-              Utils.customSnackBar(
-                  context, "Username must be at least 5 characters long.",
-                  backgroundColor: kColorRed);
-              return;
-            }
-            // email validation
-            final RegExp emailRegExp = RegExp(
-              r'^[a-zA-Z0-9._]+@[a-zA-Z0-9]+\.[a-zA-Z]+',
-            );
-
-            if (email.isEmpty) {
-              Utils.customSnackBar(context, "Please enter your email",
-                  backgroundColor: kColorRed);
-              return;
-            } else if (!emailRegExp.hasMatch(email)) {
-              Utils.customSnackBar(
-                  context, "Please enter a valid email address",
-                  backgroundColor: kColorRed);
-              return;
-            }
-            // Password validation
-            if (password.isEmpty || password.length < 8) {
-              Utils.customSnackBar(
-                  context, "Password must be at least 8 characters long.",
-                  backgroundColor: kColorRed);
-              return;
-            }
-            if (!RegExp(r'[A-Z]').hasMatch(password)) {
-              Utils.customSnackBar(
-                  context, "Password must contain at least one capital letter.",
-                  backgroundColor: kColorRed);
-              return;
-            }
-            if (!RegExp(r'[!@#$%^&*(),.?":{}|<>]').hasMatch(password)) {
-              Utils.customSnackBar(context,
-                  "Password must contain at least one special character.",
-                  backgroundColor: kColorRed);
-              return;
-            }
 
             // Confirm Password validation
             if (password != confirmPassword) {
@@ -100,7 +57,6 @@ class SignupButtonWidget extends StatelessWidget {
                 confirmPassword.isEmpty) {
               Utils.customSnackBar(context, "Enter valid data.",
                   backgroundColor: kColorRed);
-            } else {
               if (state.status == ConnectivityStatus.connected) {
                 context.read<SignUpBloc>().add(SignUpSubmitted(
                     signUpData: {
@@ -116,6 +72,8 @@ class SignupButtonWidget extends StatelessWidget {
                     context, "Please check internet connectivity",
                     backgroundColor: kColorRed);
               }
+            }
+  
 
               // Proceed with the sign-up logic
               // e.g., API call, etc.

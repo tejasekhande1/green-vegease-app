@@ -70,7 +70,7 @@ void showCustomDialog1(BuildContext context, String id) {
                             decoration: const BoxDecoration(
                               color: kColorRed,
                               borderRadius:
-                                  const BorderRadius.all(Radius.circular(4)),
+                                  BorderRadius.all(Radius.circular(4)),
                             ),
                             child: Center(
                               child: Text(

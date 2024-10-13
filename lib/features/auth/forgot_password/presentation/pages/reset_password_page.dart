@@ -6,10 +6,12 @@ import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:green_vegease/core/common/widgets/button_widget.dart';
 import 'package:green_vegease/core/theme/colors.dart';
+import 'package:green_vegease/core/utils/validation_mixin.dart';
 import 'package:green_vegease/features/auth/forgot_password/presentation/bloc/reset_pass_event.dart';
 import 'package:green_vegease/features/auth/forgot_password/presentation/bloc/reset_pass_state.dart';
 import '../../../../../../core/theme/text_styles.dart';
 import '../../../../../core/common/bloc/internet_bloc/internet_bloc.dart';
+import '../../../../../core/common/widgets/custom_textfield_widget.dart';
 import '../../../../../core/common/widgets/loader_widget.dart';
 import '../../../../../core/utils/utils.dart';
 import '../bloc/reset_pass_bloc.dart';
@@ -22,12 +24,14 @@ class ResetPasswordPage extends StatefulWidget {
   State<ResetPasswordPage> createState() => _ResetPasswordPageState();
 }
 
-class _ResetPasswordPageState extends State<ResetPasswordPage> {
+class _ResetPasswordPageState extends State<ResetPasswordPage>
+    with ValidationMixin {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
-  final TextEditingController confirmPasswordController2 =
+  final TextEditingController confirmPasswordController =
       TextEditingController();
   bool isPasswordVisible = false;
+  final resetPassKey = GlobalKey<FormState>();
 
   void togglePasswordVisibility() {
     setState(() {
@@ -56,6 +60,25 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
             : Icons.remove_red_eye_outlined,
       );
 
+  bool unShowPass = true;
+  final signKey = GlobalKey<FormState>();
+
+  Icon _toggleIcon1() {
+    return Icon(
+      size: 24.sp,
+      unShowPass ? Icons.remove_red_eye_outlined : Icons.remove_red_eye,
+    );
+  }
+
+  bool unShowPass2 = true;
+
+  Icon _toggleIcon2() {
+    return Icon(
+      size: 24.sp,
+      unShowPass2 ? Icons.remove_red_eye_outlined : Icons.remove_red_eye,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -73,42 +96,98 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                   child: Column(
                     children: [
                       // Spacer to push the form down, this prevents the background from overlapping form elements
-                      SizedBox(height: 50.h),
+                      SizedBox(height: 20.h),
                       Padding(
                         padding: EdgeInsets.symmetric(horizontal: 25.w),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            // Back button
-                            GestureDetector(
-                              onTap: () {
-                                AutoRouter.of(context).popForced();
-                              },
-                              child: SizedBox(
-                                height: 18.h,
-                                width: 10.w,
-                                child: SvgPicture.asset(
-                                  "assets/icons/back_arrow.svg",
-                                  fit: BoxFit.fill,
+                        child: Form(
+                          key: resetPassKey,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              // Back button
+                              GestureDetector(
+                                onTap: () {
+                                  AutoRouter.of(context).popForced();
+                                },
+                                child: SizedBox(
+                                  height: 18.h,
+                                  width: 10.w,
+                                  child: SvgPicture.asset(
+                                    "assets/icons/back_arrow.svg",
+                                    fit: BoxFit.fill,
+                                  ),
                                 ),
                               ),
-                            ),
-                            SizedBox(height: 35.h),
-                            // Logo, Titles, Password fields, etc.
-                            _buildLogo(),
-                            SizedBox(height: 100.h),
-                            _buildTitle(),
-                            _buildSubtitle(),
-                            SizedBox(height: 30.h),
-                            _buildPasswordField(),
-                            SizedBox(height: 30.h),
-                            _buildPasswordField2(),
-                            SizedBox(height: 70.h),
-                            _buildLogInButton(),
-                            SizedBox(
-                              height: isKeyboardVisible ? 300.h : 1.h,
-                            )
-                          ],
+                              SizedBox(height: 35.h),
+                              // Logo, Titles, Password fields, etc.
+                              _buildLogo(),
+                              SizedBox(height: 100.h),
+                              _buildTitle(),
+                              _buildSubtitle(),
+                              SizedBox(height: 30.h),
+                              CustomTextfieldWidget(
+                                isPassword: unShowPass,
+                                maxLines: 1,
+                                suffixIcon: GestureDetector(
+                                  onTap: () {
+                                    unShowPass = !unShowPass;
+                                    setState(() {});
+                                  },
+                                  child: _toggleIcon1(),
+                                ),
+                                style: kTextStyleGilroy400.copyWith(
+                                    color: kColorTextHint,
+                                    fontSize: 16.sp,
+                                    height: 4.h),
+                                labelText: "New Password",
+                                hintText: "Enter password",
+                                hintStyle: kTextStyleGilroy400.copyWith(
+                                    color: kColorTextHint,
+                                    fontSize: 16.sp,
+                                    height: 3.5.h),
+                                controller: passwordController,
+                                validator: validatedPassword,
+                              ),
+                              SizedBox(height: 20.h),
+                              CustomTextfieldWidget(
+                                isPassword: unShowPass2,
+                                maxLines: 1,
+                                suffixIcon: GestureDetector(
+                                  onTap: () {
+                                    unShowPass2 = !unShowPass2;
+                                    setState(() {});
+                                  },
+                                  child: _toggleIcon2(),
+                                ),
+                                style: kTextStyleGilroy400.copyWith(
+                                    color: kColorTextHint,
+                                    fontSize: 16.sp,
+                                    height: 4.h),
+                                labelText: "Confirm New Password",
+                                hintText: "Re-enter password",
+                                hintStyle: kTextStyleGilroy400.copyWith(
+                                    color: kColorTextHint,
+                                    fontSize: 16.sp,
+                                    height: 3.5.h),
+                                controller: confirmPasswordController,
+                                validator: (value) {
+                                  if (validatedPassword(value) != null) {
+                                    return validatedPassword(value);
+                                  } else if (passwordController.text !=
+                                      confirmPasswordController.text) {
+                                    return "Password not match";
+                                  }
+                                  return null;
+                                },
+                              ),
+
+                              SizedBox(height: 70.h),
+                              _buildLogInButton(),
+                              SizedBox(
+                                height: isKeyboardVisible ? 300.h : 1.h,
+                              )
+                            ],
+                          ),
                         ),
                       ),
                     ],
@@ -292,50 +371,6 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
     );
   }
 
-  // --> Password TextField2
-  Widget _buildPasswordField2() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          "Confirm New Password",
-          style: kTextStyleGilroy600.copyWith(
-            color: kColorGrey,
-            fontSize: 16.sp,
-          ),
-        ),
-        Container(
-          decoration: const BoxDecoration(
-            border: Border(
-              bottom: BorderSide(color: kColorTextFieldBorder),
-            ),
-          ),
-          child: TextFormField(
-            controller: confirmPasswordController2,
-            obscureText: !isPasswordVisible1,
-            cursorHeight: 25,
-            style: kTextStyleGilroy500.copyWith(
-              fontSize: 18.sp,
-              color: kColorBlack,
-            ),
-            decoration: InputDecoration(
-              hintText: "Enter confirm password",
-              hintStyle: kTextStyleGilroy400.copyWith(
-                color: kColorTextHint,
-                fontSize: 16.sp,
-              ),
-              border: InputBorder.none,
-              suffixIcon: GestureDetector(
-                onTap: togglePasswordVisibility1,
-                child: toggleIcon1,
-              ),
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-
 // --> Login Button
   Widget _buildLogInButton() {
     return BlocBuilder<InternetBloc, InternetStatus>(
@@ -343,57 +378,14 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
         return GestureDetector(
           onTap: () {
             FocusScope.of(context).unfocus();
-            if (emailController.text.trim().isEmpty ||
-                passwordController.text.trim().isEmpty ||
-                confirmPasswordController2.text.trim().isEmpty) {
-              if (emailController.text.trim().isEmpty) {
-                Utils.customSnackBar(context, "Please enter email",
-                    backgroundColor: kColorRed);
-              } else if (passwordController.text.trim().isEmpty) {
-                Utils.customSnackBar(context, "Please enter password",
-                    backgroundColor: kColorRed);
-              } else {
-                Utils.customSnackBar(context, "Please enter confirm password",
-                    backgroundColor: kColorRed);
-              }
-              Utils.customSnackBar(context, "Enter Valid Data",
-                  backgroundColor: kColorRed);
-            } else {
-              if (passwordController.text.isEmpty ||
-                  passwordController.text.length < 8) {
-                Utils.customSnackBar(
-                    context, "Password must be at least 8 characters long.",
-                    backgroundColor: kColorRed);
-                return;
-              }
-              if (!RegExp(r'[A-Z]').hasMatch(passwordController.text)) {
-                Utils.customSnackBar(context,
-                    "Password must contain at least one capital letter.",
-                    backgroundColor: kColorRed);
-                return;
-              }
-              if (!RegExp(r'[!@#$%^&*(),.?":{}|<>]')
-                  .hasMatch(passwordController.text)) {
-                Utils.customSnackBar(context,
-                    "Password must contain at least one special character.",
-                    backgroundColor: kColorRed);
-                return;
-              }
-
-              // Confirm Password validation
-              if (passwordController.text != confirmPasswordController2.text) {
-                Utils.customSnackBar(
-                    context, "Password and Confirm Password do not match.",
-                    backgroundColor: kColorRed);
-                return;
-              }
+            if (resetPassKey.currentState!.validate()) {
               if (state.status == ConnectivityStatus.connected) {
                 context
                     .read<ResetPassBloc>()
                     .add(ResetPassSubmitted(resetData: {
                       "email": emailController.text,
                       "newPassword": passwordController.text,
-                      "confirmedNewPassword": confirmPasswordController2.text
+                      "confirmedNewPassword": confirmPasswordController.text
                     }));
               } else {
                 Utils.customSnackBar(
@@ -401,6 +393,7 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                     backgroundColor: kColorRed);
               }
             }
+          
           },
           child: const ButtonWidget(title: "Reset"),
         );

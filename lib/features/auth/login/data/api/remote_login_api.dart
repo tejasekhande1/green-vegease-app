@@ -1,6 +1,5 @@
 import 'package:dio/dio.dart';
 import 'package:green_vegease/core/config/config.dart';
-import 'package:retrofit/http.dart';
 import 'package:retrofit/retrofit.dart';
 import '../model/login_model.dart';
 
