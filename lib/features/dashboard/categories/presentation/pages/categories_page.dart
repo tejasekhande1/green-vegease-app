@@ -47,7 +47,8 @@ class _CategoriesPageState extends State<CategoriesPage> {
                     .data; // Assuming `data` holds the list of categories
 
                 return Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding:
+                      EdgeInsets.symmetric(vertical: 15.h, horizontal: 8.h),
                   child: Column(
                     children: [
                       Expanded(
@@ -57,7 +58,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
                             crossAxisCount: 3, // 3 columns
                             crossAxisSpacing: 8.0,
                             mainAxisSpacing: 8.0,
-                            childAspectRatio: 1.0, // Adjust the ratio as needed
+                            childAspectRatio: 1, // Adjust the ratio as needed
                           ),
                           itemCount: categories!.length,
                           itemBuilder: (context, index) {
@@ -72,23 +73,32 @@ class _CategoriesPageState extends State<CategoriesPage> {
                                 showAddCategoryDialog(context,
                                     catName: categories[index].categoryName!,
                                     catId: categories[index].id,
-                                    index: index);
+                                    index: index,
+                                    image: categories[index].image!);
                               },
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  color: kColorPrimary.withOpacity(0.05),
-                                  border: Border.all(color: kColorPrimary),
-                                  borderRadius: BorderRadius.circular(8.0),
-                                ),
-                                child: Center(
-                                  child: Text(
+                              child: Column(
+                                children: [
+                                  Container(
+                                    height: 93.h,
+                                    decoration: BoxDecoration(
+                                      image: DecorationImage(
+                                          fit: BoxFit.fill,
+                                          image: Image.network(
+                                                  categories[index].image!)
+                                              .image),
+                                      color: kColorPrimary.withOpacity(0.05),
+                                      border: Border.all(color: kColorPrimary),
+                                      borderRadius: BorderRadius.circular(8.0),
+                                    ),
+                                  ),
+                                  Text(
                                     categories[index]
                                         .categoryName!, // Replace with actual field of category
                                     textAlign: TextAlign.center,
                                     style: kTextStyleGilroy400.copyWith(
                                         fontSize: 16),
                                   ),
-                                ),
+                                ],
                               ),
                             );
                           },
@@ -118,7 +128,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
           })
         ],
       ),
-      drawer:  CommonDrawer(
+      drawer: CommonDrawer(
         page: "Categories",
       ),
       floatingActionButton: FloatingActionButton(

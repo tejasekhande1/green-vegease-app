@@ -16,7 +16,7 @@ class CategoryService {
   }
 
   // Add Category
-  Future<CategoryModel> addCategory(Map<String, dynamic> body) async {
+  Future<CategoryModel> addCategory(FormData body) async {
     try {
       debugPrint("In Category Service: Adding Category");
       final data = await _categoryApi.addCategory(body);

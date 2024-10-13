@@ -12,3 +12,4 @@ const kColorRed = Colors.red;
 const kColorTransparent = Colors.transparent;
 const kColorBlurRadius = Color.fromRGBO(41, 0, 0, 0);
 const kColorBackground = Color.fromARGB(255, 246, 246, 246);
+const kColorPending = Colors.orange;

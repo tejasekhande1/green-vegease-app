@@ -287,6 +287,7 @@ class _SingupPageState extends State<SingupPage> with ValidationMixin {
           ),
         );
       }),
+
     );
   }
 

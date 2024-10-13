@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../../constants/constants.dart';
@@ -18,6 +19,8 @@ class AppBarWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      systemOverlayStyle:
+          const SystemUiOverlayStyle(statusBarColor: kColorWhite),
       scrolledUnderElevation: 0,
       backgroundColor: kColorWhite,
       automaticallyImplyLeading: !isBack,
@@ -33,7 +36,7 @@ class AppBarWidget extends StatelessWidget {
                   ? Row(
                       children: [
                         SizedBox(
-                          width: 24.w,
+                          width: 15.w,
                         ),
                         GestureDetector(
                           onTap: () {
@@ -41,10 +44,11 @@ class AppBarWidget extends StatelessWidget {
                             // AutoRouter.of(context).popForced();
                           },
                           child: SizedBox(
-                            width: 24.w,
+                            // width: 24.w,
                             child: SvgPicture.asset(
                               Constants.kBackArrowIc,
-                              width: 24.w,
+                              width: 30.h,
+                              height: 30.h,
                               fit: BoxFit.fill,
                             ),
                           ),
