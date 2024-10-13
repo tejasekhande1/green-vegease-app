@@ -56,8 +56,12 @@ class _SplashPageState extends State<SplashPage> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                SvgPicture.asset("assets/images/carrot.svg",
-                    height: 63.h, width: 54.w, fit: BoxFit.fill),
+                SizedBox(
+                  height: 63.h,
+                  width: 54.w,
+                  child: SvgPicture.asset("assets/images/carrot.svg",
+                      fit: BoxFit.fill),
+                ),
                 SizedBox(
                   width: 18.w,
                 ),

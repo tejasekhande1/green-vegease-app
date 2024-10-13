@@ -291,6 +291,28 @@ class ProductPageRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [ResetPasswordPage]
+class ResetPasswordPageRoute extends PageRouteInfo<void> {
+  const ResetPasswordPageRoute({List<PageRouteInfo>? children})
+      : super(
+          ResetPasswordPageRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'ResetPasswordPageRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const ResetPasswordPage();
+    },
+  );
+}
+
+/// generated route for
+/// [SettingsPage]
+class SettingsPageRoute extends PageRouteInfo<void> {
+  const SettingsPageRoute({List<PageRouteInfo>? children})
 /// [RefundPolicyPage]
 class RefundPolicyPageRoute extends PageRouteInfo<void> {
   const RefundPolicyPageRoute({List<PageRouteInfo>? children})

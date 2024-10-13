@@ -6,7 +6,8 @@ import '../../../../../core/theme/text_styles.dart';
 class PasswordTextFieldWidget extends StatefulWidget {
   final TextEditingController controller;
   final String title;
-  const PasswordTextFieldWidget({super.key, required this.controller,required this.title});
+  const PasswordTextFieldWidget(
+      {super.key, required this.controller, required this.title});
 
   @override
   State<PasswordTextFieldWidget> createState() =>
@@ -18,7 +19,7 @@ class _PasswordTextFieldWidgetState extends State<PasswordTextFieldWidget> {
 
   Icon _toggleIcon1() {
     return Icon(
-      size: 24.h,
+      size: 24.sp,
       unShowPass ? Icons.remove_red_eye_outlined : Icons.remove_red_eye,
     );
   }

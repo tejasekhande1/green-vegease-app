@@ -30,6 +30,8 @@ class _LoginPageState extends State<LoginPage> with ValidationMixin {
   final TextEditingController mobileController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   bool isPasswordVisible = false;
+  double? height;
+  double? width;
 
   void clearController() {
     mobileController.clear();
@@ -43,7 +45,7 @@ class _LoginPageState extends State<LoginPage> with ValidationMixin {
   }
 
   Icon get toggleIcon => Icon(
-        size: 24.h,
+        size: 24.sp,
         isPasswordVisible
             ? Icons.remove_red_eye
             : Icons.remove_red_eye_outlined,
@@ -51,88 +53,70 @@ class _LoginPageState extends State<LoginPage> with ValidationMixin {
 
   @override
   Widget build(BuildContext context) {
-    return AnnotatedRegion<SystemUiOverlayStyle>(
-      value: const SystemUiOverlayStyle(
-        statusBarIconBrightness: Brightness.dark, // For Android: dark icons
-        statusBarBrightness:
-            Brightness.light, // For iOS: dark icons on light background
-        statusBarColor: kColorWhite, // Transparent status bar color
-      ),
-      child: Scaffold(
-        resizeToAvoidBottomInset: false,
-        backgroundColor: kColorWhite,
-        body: KeyboardVisibilityBuilder(builder: (context, isKeyboardVisible) {
-          return SingleChildScrollView(
-            child: Stack(
-              children: [
-                _buildBackgroundImage(),
-                Padding(
-                  padding: EdgeInsets.all(25.w),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      _buildLogo(),
-                      SizedBox(height: 100.h),
-                      _buildTitle(),
-                      SizedBox(height: 15.h),
-                      _buildSubtitle(),
-                      SizedBox(height: 24.h),
-                      _buildEmailField(),
-                      SizedBox(height: 30.h),
-                      _buildPasswordField(),
-                      SizedBox(height: 20.h),
-                      _buildForgotPasswordText(),
-                      SizedBox(height: 30.h),
-                      _buildLogInButton(),
-                      SizedBox(height: 25.h),
-                      _buildSignUpPrompt(),
-                      SizedBox(
-                        height: isKeyboardVisible ? 280.h : 1.h,
-                      )
-                    ],
-                  ),
+    width = MediaQuery.of(context).size.width;
+    height = MediaQuery.of(context).size.height;
+
+    return Scaffold(
+      resizeToAvoidBottomInset: false,
+      backgroundColor: kColorWhite,
+      body: SizedBox(
+        width: width,
+        height: height, // Ensure the container takes the full screen size
+        child: Stack(
+          children: [
+            _buildBackgroundImage(),
+            SingleChildScrollView(
+              child: Padding(
+                padding: EdgeInsets.all(25.w),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    _buildLogo(),
+                    SizedBox(height: 100.h),
+                    _buildTitle(),
+                    SizedBox(height: 15.h),
+                    _buildSubtitle(),
+                    SizedBox(height: 24.h),
+                    _buildEmailField(),
+                    SizedBox(height: 30.h),
+                    _buildPasswordField(),
+                    SizedBox(height: 20.h),
+                    _buildForgotPasswordText(),
+                    SizedBox(height: 30.h),
+                    _buildLogInButton(),
+                    SizedBox(height: 25.h),
+                    _buildSignUpPrompt(),
+                  ],
                 ),
-                BlocConsumer<LogInBloc, LogInState>(
-                  listener: (context, state) {
-                    if (state is LogInSuccess) {
-                      Utils.customSnackBar(context, state.response.message!,
-                          backgroundColor: kColorPrimary);
-                      if (state.response.user!.role == "admin") {
-                        AutoRouter.of(context)
-                            .replaceAll([const OrdersPageRoute()]);
-                      }
-                    }
-                    if (state is LogInFailed) {
-                      Utils.customSnackBar(context, state.error,
-                          backgroundColor: kColorRed);
-                    }
-                    if (state is LoginException) {
-                      Utils.customSnackBar(context, "Something went wrong",
-                          backgroundColor: kColorRed);
-                    }
-                  },
-                  builder: (context, state) {
-                    if (state is LogInLoading) {
-                      return const LoaderWidget();
-                    }
-                    return const SizedBox();
-                  },
-                ),
-              ],
+              ),
             ),
-          );
-        }),
+            BlocConsumer<LogInBloc, LogInState>(
+              listener: (context, state) {
+                // Your listener code...
+              },
+              builder: (context, state) {
+                if (state is LogInLoading) {
+                  return const LoaderWidget();
+                }
+                return const SizedBox();
+              },
+            ),
+          ],
+        ),
+
       ),
     );
   }
 
 // -->  background Image
   Widget _buildBackgroundImage() {
-    return Image.asset(
-      "assets/images/login_background.png",
-      width: 414.w,
-      height: 896.h,
-      fit: BoxFit.fill,
+    return SizedBox(
+      width: MediaQuery.of(context).size.width,
+      height: MediaQuery.of(context).size.height,
+      child: Image.asset(
+        "assets/images/login_background.png",
+        fit: BoxFit.fill, // Ensures the image covers the screen
+      ),
     );
   }
 
@@ -144,11 +128,15 @@ class _LoginPageState extends State<LoginPage> with ValidationMixin {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            SvgPicture.asset(
-              "assets/images/colored_carrot.svg",
+            SizedBox(
               height: 55.h,
-              fit: BoxFit.fill,
               width: 48.w,
+              child: SvgPicture.asset(
+                "assets/images/colored_carrot.svg",
+                // height: 55.h,
+                fit: BoxFit.fill,
+                // width: 48.w,
+              ),
             ),
           ],
         ),
@@ -159,7 +147,9 @@ class _LoginPageState extends State<LoginPage> with ValidationMixin {
 // --> Login Title
   Widget _buildTitle() {
     return Text(
+
       "Log In",
+
       style: kTextStyleGilroy600.copyWith(
         color: kColorBlack,
         fontSize: 26.sp,
