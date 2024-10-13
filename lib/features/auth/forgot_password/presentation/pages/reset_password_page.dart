@@ -2,7 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
+// import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:green_vegease/core/common/widgets/button_widget.dart';
 import 'package:green_vegease/core/theme/colors.dart';
@@ -81,11 +81,12 @@ class _ResetPasswordPageState extends State<ResetPasswordPage>
 
   @override
   Widget build(BuildContext context) {
+    bool isKeyboardVisible = MediaQuery.of(context).viewInsets.bottom != 0;
+
     return Scaffold(
-      resizeToAvoidBottomInset: false,
-      backgroundColor: kColorWhite,
-      body: KeyboardVisibilityBuilder(builder: (context, isKeyboardVisible) {
-        return SizedBox(
+        resizeToAvoidBottomInset: false,
+        backgroundColor: kColorWhite,
+        body: SizedBox(
           width: 414.w,
           height: MediaQuery.of(context).size.height,
           child: Stack(
@@ -215,9 +216,9 @@ class _ResetPasswordPageState extends State<ResetPasswordPage>
               )
             ],
           ),
+        )
+        // }),
         );
-      }),
-    );
   }
 
 // -->  background Image
@@ -393,7 +394,6 @@ class _ResetPasswordPageState extends State<ResetPasswordPage>
                     backgroundColor: kColorRed);
               }
             }
-          
           },
           child: const ButtonWidget(title: "Reset"),
         );
