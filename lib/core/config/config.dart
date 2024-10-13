@@ -9,4 +9,9 @@ class AppConfig {
 
   //-> api
   static const String category = '/category';
+
+  //---> Authentication
+  static const String resetPassword = '/auth/reset-password';
+  static const String login = '/auth/login';
+  static const String signUp = '/auth/signup';
 }

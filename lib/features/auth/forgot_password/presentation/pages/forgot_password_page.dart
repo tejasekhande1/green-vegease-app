@@ -11,11 +11,16 @@ import 'package:green_vegease/core/routes/app_router.dart';
 import 'package:green_vegease/core/theme/colors.dart';
 import 'package:green_vegease/core/utils/validation_mixin.dart';
 import 'package:green_vegease/features/auth/forgot_password/presentation/bloc/reset_pass_state.dart';
+import 'package:green_vegease/features/auth/forgot_password/presentation/widgets/proceed_button_widget.dart';
 import '../../../../../../core/theme/text_styles.dart';
 import '../../../../../core/common/bloc/internet_bloc/internet_bloc.dart';
 import '../../../../../core/common/widgets/loader_widget.dart';
 import '../../../../../core/utils/utils.dart';
 import '../bloc/reset_pass_bloc.dart';
+import '../widgets/background_img_widget.dart';
+import '../widgets/logo_widget.dart';
+import '../widgets/subtitle_widget.dart';
+import '../widgets/title_widget.dart';
 
 @RoutePage()
 class ForgotPasswordPage extends StatefulWidget {
@@ -68,7 +73,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage>
         body: SingleChildScrollView(
           child: Stack(
             children: [
-              _buildBackgroundImage(),
+              const BackgroundImgWidget(),
               Padding(
                 padding: EdgeInsets.all(25.w),
                 child: SingleChildScrollView(
@@ -93,10 +98,10 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage>
                               fit: BoxFit.fill,
                             ),
                           )),
-                      _buildLogo(),
+                      const LogoWidget(),
                       SizedBox(height: 90.h),
-                      _buildTitle(),
-                      _buildSubtitle(),
+                      const TitleWidget(label: "Forgot Password",),
+                      const SubtitleWidget(title: "Enter details to reset password",),
                       SizedBox(
                         height: 40.h,
                       ),
@@ -123,7 +128,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage>
                         ),
                       ),
                       SizedBox(height: 80.h),
-                      _buildLogInButton(),
+                      ProceedButtonWidget(numberKey: numberKey),
                       SizedBox(
                         height: 20.h,
                       ),
@@ -158,135 +163,5 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage>
         )
         // }
         );
-  }
-
-// -->  background Image
-  Widget _buildBackgroundImage() {
-    return Image.asset(
-      "assets/images/login_background.png",
-      width: 414.w,
-      height: 896.h,
-      fit: BoxFit.fill,
-    );
-  }
-
-// -- > Carrot Logo
-  Widget _buildLogo() {
-    return Column(
-      children: [
-        SizedBox(height: 40.25.h),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SizedBox(
-              height: 55.h,
-              width: 48.w,
-              child: SvgPicture.asset(
-                "assets/images/colored_carrot.svg",
-                height: 55.h,
-                fit: BoxFit.fill,
-                width: 48.w,
-              ),
-            ),
-          ],
-        ),
-      ],
-    );
-  }
-
-// --> Login Title
-  Widget _buildTitle() {
-    return Text(
-      "Forgot Password",
-      style: kTextStyleGilroy600.copyWith(
-        color: kColorBlack,
-        fontSize: 26.sp,
-      ),
-    );
-  }
-
-  Widget _buildSubtitle() {
-    return Text(
-      "Enter details to reset password",
-      style: kTextStyleGilroy500.copyWith(
-        color: kColorGrey,
-        fontSize: 16.sp,
-      ),
-    );
-  }
-
-// --> Email TextField
-  Widget _buildEmailField() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        SizedBox(
-          height: 30.h,
-        ),
-        Text(
-          "Mobile Number",
-          style: kTextStyleGilroy600.copyWith(
-            color: kColorGrey,
-            fontSize: 16.sp,
-          ),
-        ),
-        Container(
-          decoration: const BoxDecoration(
-            border: Border(
-              bottom: BorderSide(color: kColorTextFieldBorder),
-            ),
-          ),
-          child: TextFormField(
-            keyboardType: TextInputType.phone,
-            // inputFormatters: [
-            //   FilteringTextInputFormatter.digitsOnly,
-            //   LengthLimitingTextInputFormatter(10),
-            // ],
-            controller: emailController,
-            cursorHeight: 25,
-            style: kTextStyleGilroy500.copyWith(
-              fontSize: 18.sp,
-              color: kColorBlack,
-            ),
-            decoration: InputDecoration(
-              hintText: "Enter mobile number",
-              hintStyle: kTextStyleGilroy400.copyWith(
-                color: kColorTextHint,
-                fontSize: 16.sp,
-              ),
-              border: InputBorder.none,
-            ),
-          ),
-        ),
-        // SizedBox(
-        //   height: 8.h,
-        // ),
-        // GestureDetector(
-        //     onTap: () {},
-        //     child: Text(
-        //       "Get Otp",
-        //       style: kTextStyleGilroy400.copyWith(
-        //           height: 1, fontSize: 12, color: kColorPrimary),
-        //     ))
-      ],
-    );
-  }
-
-// --> Login Button
-  Widget _buildLogInButton() {
-    return BlocBuilder<InternetBloc, InternetStatus>(
-      builder: (context, state) {
-        return GestureDetector(
-          onTap: () {
-            if (numberKey.currentState!.validate()) {
-              AutoRouter.of(context)
-                  .push(VerificationPageRoute(isResetPass: true));
-            }
-            FocusScope.of(context).unfocus();
-          },
-          child: const ButtonWidget(title: "Proceed"),
-        );
-      },
-    );
   }
 }

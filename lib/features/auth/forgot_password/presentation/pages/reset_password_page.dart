@@ -2,19 +2,20 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-// import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:green_vegease/core/common/widgets/button_widget.dart';
 import 'package:green_vegease/core/theme/colors.dart';
 import 'package:green_vegease/core/utils/validation_mixin.dart';
-import 'package:green_vegease/features/auth/forgot_password/presentation/bloc/reset_pass_event.dart';
 import 'package:green_vegease/features/auth/forgot_password/presentation/bloc/reset_pass_state.dart';
 import '../../../../../../core/theme/text_styles.dart';
-import '../../../../../core/common/bloc/internet_bloc/internet_bloc.dart';
 import '../../../../../core/common/widgets/custom_textfield_widget.dart';
 import '../../../../../core/common/widgets/loader_widget.dart';
 import '../../../../../core/utils/utils.dart';
 import '../bloc/reset_pass_bloc.dart';
+import '../widgets/background_img_widget.dart';
+import '../widgets/logo_widget.dart';
+import '../widgets/reset_password_button_widget.dart';
+import '../widgets/subtitle_widget.dart';
+import '../widgets/title_widget.dart';
 
 @RoutePage()
 class ResetPasswordPage extends StatefulWidget {
@@ -91,7 +92,7 @@ class _ResetPasswordPageState extends State<ResetPasswordPage>
           height: MediaQuery.of(context).size.height,
           child: Stack(
             children: [
-              _buildBackgroundImage(),
+              const BackgroundImgWidget(),
               SafeArea(
                 child: SingleChildScrollView(
                   child: Column(
@@ -121,10 +122,13 @@ class _ResetPasswordPageState extends State<ResetPasswordPage>
                               ),
                               SizedBox(height: 35.h),
                               // Logo, Titles, Password fields, etc.
-                              _buildLogo(),
+                              const LogoWidget(),
                               SizedBox(height: 100.h),
-                              _buildTitle(),
-                              _buildSubtitle(),
+                              const TitleWidget(
+                                label: "Reset Password",
+                              ),
+                              const SubtitleWidget(
+                                  title: "Enter a new and strong password"),
                               SizedBox(height: 30.h),
                               CustomTextfieldWidget(
                                 isPassword: unShowPass,
@@ -183,7 +187,12 @@ class _ResetPasswordPageState extends State<ResetPasswordPage>
                               ),
 
                               SizedBox(height: 70.h),
-                              _buildLogInButton(),
+                              ResetPasswordButtonWidget(
+                                  resetPassKey: resetPassKey,
+                                  emailController: emailController,
+                                  passwordController: passwordController,
+                                  confirmPasswordController:
+                                      confirmPasswordController),
                               SizedBox(
                                 height: isKeyboardVisible ? 300.h : 1.h,
                               )
@@ -221,183 +230,4 @@ class _ResetPasswordPageState extends State<ResetPasswordPage>
         );
   }
 
-// -->  background Image
-  Widget _buildBackgroundImage() {
-    return Image.asset(
-      "assets/images/login_background.png",
-      width: 414.w,
-      height: 896.h,
-      fit: BoxFit.fill,
-    );
-  }
-
-// -- > Carrot Logo
-  Widget _buildLogo() {
-    return Column(
-      children: [
-        SizedBox(height: 40.25.h),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SizedBox(
-              height: 55.h,
-              width: 48.w,
-              child: SvgPicture.asset(
-                "assets/images/colored_carrot.svg",
-                fit: BoxFit.fill,
-              ),
-            ),
-          ],
-        ),
-      ],
-    );
-  }
-
-// --> Login Title
-  Widget _buildTitle() {
-    return Text(
-      "Reset Password",
-      style: kTextStyleGilroy600.copyWith(
-        color: kColorBlack,
-        fontSize: 26.sp,
-      ),
-    );
-  }
-
-  Widget _buildSubtitle() {
-    return Text(
-      "Enter a new and strong password",
-      style: kTextStyleGilroy500.copyWith(
-        color: kColorGrey,
-        fontSize: 16.sp,
-      ),
-    );
-  }
-
-// --> Email TextField
-  Widget _buildEmailField() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          "Mobile Number",
-          style: kTextStyleGilroy600.copyWith(
-            color: kColorGrey,
-            fontSize: 16.sp,
-          ),
-        ),
-        Container(
-          decoration: const BoxDecoration(
-            border: Border(
-              bottom: BorderSide(color: kColorTextFieldBorder),
-            ),
-          ),
-          child: TextFormField(
-            keyboardType: TextInputType.phone,
-            // inputFormatters: [
-            //   FilteringTextInputFormatter.digitsOnly,
-            //   LengthLimitingTextInputFormatter(10),
-            // ],
-            controller: emailController,
-            cursorHeight: 25,
-            style: kTextStyleGilroy500.copyWith(
-              fontSize: 18.sp,
-              color: kColorBlack,
-            ),
-            decoration: InputDecoration(
-              hintText: "Enter mobile number",
-              hintStyle: kTextStyleGilroy400.copyWith(
-                color: kColorTextHint,
-                fontSize: 16.sp,
-              ),
-              border: InputBorder.none,
-            ),
-          ),
-        ),
-        // SizedBox(
-        //   height: 8.h,
-        // ),
-        // GestureDetector(
-        //     onTap: () {},
-        //     child: Text(
-        //       "Get Otp",
-        //       style: kTextStyleGilroy400.copyWith(
-        //           height: 1, fontSize: 12, color: kColorPrimary),
-        //     ))
-      ],
-    );
-  }
-
-// --> Password TextField1
-  Widget _buildPasswordField() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          "New Password",
-          style: kTextStyleGilroy600.copyWith(
-            color: kColorGrey,
-            fontSize: 16.sp,
-          ),
-        ),
-        Container(
-          decoration: const BoxDecoration(
-            border: Border(
-              bottom: BorderSide(color: kColorTextFieldBorder),
-            ),
-          ),
-          child: TextFormField(
-            controller: passwordController,
-            obscureText: !isPasswordVisible,
-            cursorHeight: 25,
-            style: kTextStyleGilroy500.copyWith(
-              fontSize: 18.sp,
-              color: kColorBlack,
-            ),
-            decoration: InputDecoration(
-              hintText: "Enter new password",
-              hintStyle: kTextStyleGilroy400.copyWith(
-                color: kColorTextHint,
-                fontSize: 16.sp,
-              ),
-              border: InputBorder.none,
-              suffixIcon: GestureDetector(
-                onTap: togglePasswordVisibility,
-                child: toggleIcon,
-              ),
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-
-// --> Login Button
-  Widget _buildLogInButton() {
-    return BlocBuilder<InternetBloc, InternetStatus>(
-      builder: (context, state) {
-        return GestureDetector(
-          onTap: () {
-            FocusScope.of(context).unfocus();
-            if (resetPassKey.currentState!.validate()) {
-              if (state.status == ConnectivityStatus.connected) {
-                context
-                    .read<ResetPassBloc>()
-                    .add(ResetPassSubmitted(resetData: {
-                      "email": emailController.text,
-                      "newPassword": passwordController.text,
-                      "confirmedNewPassword": confirmPasswordController.text
-                    }));
-              } else {
-                Utils.customSnackBar(
-                    context, "Please check internet connectivity",
-                    backgroundColor: kColorRed);
-              }
-            }
-          },
-          child: const ButtonWidget(title: "Reset"),
-        );
-      },
-    );
-  }
 }

@@ -12,6 +12,6 @@ abstract class LoginApiService {
     String baseUrl,
   }) = _LoginApiService;
 
-  @POST("/auth/login")
+  @POST(AppConfig.login)
   Future<LogInModel> logIn(@Body() Map<String, dynamic> login);
 }

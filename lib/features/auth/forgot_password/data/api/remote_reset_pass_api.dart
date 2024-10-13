@@ -13,7 +13,7 @@ abstract class ForgotPassWordApiService {
     String baseUrl,
   }) = _ForgotPassWordApiService;
 
-  @PATCH("/auth/reset-password")
+  @PATCH(AppConfig.resetPassword)
   Future<ForgotPassWordModel> forgotPassword(
       @Body() Map<String, dynamic> resetPass);
 }

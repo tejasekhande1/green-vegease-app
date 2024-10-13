@@ -11,7 +11,7 @@ abstract class SignUpApiService {
     String baseUrl,
   }) = _SignUpApiService;
 
-  @POST("/auth/signup")
+  @POST(AppConfig.signUp)
   Future<SignUpModel> signUp(@Body() Map<String,dynamic> signUp);
 }
 

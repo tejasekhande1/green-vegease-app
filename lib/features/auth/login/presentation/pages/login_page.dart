@@ -3,19 +3,22 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:green_vegease/core/common/bloc/internet_bloc/internet_bloc.dart';
-import 'package:green_vegease/core/common/widgets/button_widget.dart';
 import 'package:green_vegease/core/common/widgets/loader_widget.dart';
 import 'package:green_vegease/core/theme/colors.dart';
 import 'package:green_vegease/core/utils/validation_mixin.dart';
+import 'package:green_vegease/features/auth/login/presentation/widgets/background_img_widget.dart';
+import 'package:green_vegease/features/auth/login/presentation/widgets/forgot_password_text_widget.dart';
+import 'package:green_vegease/features/auth/login/presentation/widgets/log_in_button_widget.dart';
+import 'package:green_vegease/features/auth/login/presentation/widgets/sign_up_prompt_widget.dart';
+import 'package:green_vegease/features/auth/login/presentation/widgets/subtitle_widget.dart';
+import 'package:green_vegease/features/auth/login/presentation/widgets/title_widget.dart';
 import '../../../../../core/common/widgets/custom_textfield_widget.dart';
 import '../../../../../core/routes/app_router.dart';
 import '../../../../../core/theme/text_styles.dart';
 import '../../../../../core/utils/utils.dart';
 import '../bloc/login_bloc.dart';
-import '../bloc/login_event.dart';
 import '../bloc/login_state.dart';
+import '../widgets/logo_widget.dart';
 
 @RoutePage()
 class LoginPage extends StatefulWidget {
@@ -66,7 +69,7 @@ class _LoginPageState extends State<LoginPage> with ValidationMixin {
           height: height, // Ensure the container takes the full screen size
           child: Stack(
             children: [
-              _buildBackgroundImage(),
+              const BackgroundImgWidget(),
               SingleChildScrollView(
                 child: Padding(
                   padding: EdgeInsets.all(25.w),
@@ -75,11 +78,11 @@ class _LoginPageState extends State<LoginPage> with ValidationMixin {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        _buildLogo(),
+                        const LogoWidget(),
                         SizedBox(height: 100.h),
-                        _buildTitle(),
+                        const TitleWidget(),
                         SizedBox(height: 15.h),
-                        _buildSubtitle(),
+                        const SubtitleWidget(),
                         SizedBox(height: 24.h),
                         CustomTextfieldWidget(
                           style: kTextStyleGilroy400.copyWith(
@@ -125,11 +128,19 @@ class _LoginPageState extends State<LoginPage> with ValidationMixin {
                           validator: validatedPassword,
                         ),
                         SizedBox(height: 20.h),
-                        _buildForgotPasswordText(),
+                        ForgotPasswordTextWidget(
+                            mobileNumberController: mobileController,
+                            passwordController: passwordController),
                         SizedBox(height: 30.h),
-                        _buildLogInButton(),
+                        LogInButtonWidget(
+                          loginKey: loginKey,
+                          mobileController: mobileController,
+                          passwordController: passwordController,
+                        ),
                         SizedBox(height: 25.h),
-                        _buildSignUpPrompt(),
+                        SignUpPromptWidget(
+                            mobileNumberController: mobileController,
+                            passwordController: passwordController),
                         SizedBox(
                           height: isKeyboardVisible ? 220.h : 0.h,
                         )
@@ -169,190 +180,6 @@ class _LoginPageState extends State<LoginPage> with ValidationMixin {
           ),
         ),
       ),
-    );
-  }
-
-// -->  background Image
-  Widget _buildBackgroundImage() {
-    return SizedBox(
-      width: MediaQuery.of(context).size.width,
-      height: MediaQuery.of(context).size.height,
-      child: Image.asset(
-        "assets/images/login_background.png",
-        fit: BoxFit.fill, // Ensures the image covers the screen
-      ),
-    );
-  }
-
-// -- > Carrot Logo
-  Widget _buildLogo() {
-    return Column(
-      children: [
-        SizedBox(height: 77.25.h),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SizedBox(
-              height: 55.h,
-              width: 48.w,
-              child: SvgPicture.asset(
-                "assets/images/colored_carrot.svg",
-                // height: 55.h,
-                fit: BoxFit.fill,
-                // width: 48.w,
-              ),
-            ),
-          ],
-        ),
-      ],
-    );
-  }
-
-// --> Login Title
-  Widget _buildTitle() {
-    return Text(
-      "Log In",
-      style: kTextStyleGilroy600.copyWith(
-        color: kColorBlack,
-        fontSize: 26.sp,
-      ),
-    );
-  }
-
-  Widget _buildSubtitle() {
-    return Text(
-      "Enter your mobile number and password",
-      style: kTextStyleGilroy500.copyWith(
-        color: kColorGrey,
-        fontSize: 16.sp,
-      ),
-    );
-  }
-
-// --> Email TextField
-  Widget _buildEmailField() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          "Mobile Number",
-          style: kTextStyleGilroy600.copyWith(
-            color: kColorGrey,
-            fontSize: 16.sp,
-          ),
-        ),
-        Container(
-          decoration: const BoxDecoration(
-            border: Border(
-              bottom: BorderSide(color: kColorTextFieldBorder),
-            ),
-          ),
-          child: TextFormField(
-            keyboardType: TextInputType.phone,
-            controller: mobileController,
-            inputFormatters: [
-              FilteringTextInputFormatter.digitsOnly,
-              LengthLimitingTextInputFormatter(10),
-            ],
-            cursorHeight: 25,
-            style: kTextStyleGilroy500.copyWith(
-              fontSize: 18.sp,
-              color: kColorBlack,
-            ),
-            decoration: InputDecoration(
-              hintText: "Enter mobile number",
-              hintStyle: kTextStyleGilroy400.copyWith(
-                color: kColorTextHint,
-                fontSize: 16.sp,
-              ),
-              border: InputBorder.none,
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-
-// --> Forgot password Button
-  Widget _buildForgotPasswordText() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.end,
-      children: [
-        GestureDetector(
-          onTap: () {
-            AutoRouter.of(context)
-                .push(const ForgotPasswordPageRoute())
-                .then((onValue) {
-              clearController();
-            });
-          },
-          child: Text(
-            "Forgot Password?",
-            style: kTextStyleGilroy500.copyWith(
-              fontSize: 14.sp,
-              color: kColorBlack,
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-
-// --> Login Button
-  Widget _buildLogInButton() {
-    return BlocBuilder<InternetBloc, InternetStatus>(
-      builder: (context, state) {
-        return GestureDetector(
-          onTap: () {
-            FocusScope.of(context).unfocus();
-
-            if (loginKey.currentState!.validate()) {
-              if (state.status == ConnectivityStatus.connected) {
-                context.read<LogInBloc>().add(LogInSubmitted(loginData: {
-                      "mobileNumber": mobileController.text,
-                      "password": passwordController.text
-                    }));
-              } else {
-                Utils.customSnackBar(
-                    context, "Please check internet connectivity",
-                    backgroundColor: kColorRed);
-              }
-            }
-          },
-          child: const ButtonWidget(title: "Log In"),
-        );
-      },
-    );
-  }
-
-//--> Sign-Up Button for Registration
-  Widget _buildSignUpPrompt() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Text(
-          "Don’t have an account? ",
-          style: kTextStyleGilroy600.copyWith(
-            fontSize: 14.sp,
-            color: kColorBlack,
-          ),
-        ),
-        GestureDetector(
-          onTap: () {
-            FocusScope.of(context).unfocus();
-            AutoRouter.of(context).push(const SingupPageRoute()).then((value) {
-              clearController();
-            });
-          },
-          child: Text(
-            "Signup",
-            style: kTextStyleGilroy600.copyWith(
-              fontSize: 14.sp,
-              color: kColorPrimary,
-            ),
-          ),
-        ),
-      ],
     );
   }
 }
