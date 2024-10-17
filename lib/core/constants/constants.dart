@@ -17,4 +17,8 @@ class Constants {
   static const kOrdersIc = 'assets/icons/orders.svg';
   static const kCategoryIc = 'assets/icons/category.svg';
   static const kApproveImg = 'assets/images/approve_img.svg';
+  static const kColoredCarrotIc = 'assets/images/colored_carrot.svg';
+  static const kShopIc = "assets/icons/shop_ic.svg";
+  static const kFavouriteIc = 'assets/icons/favourite_ic.svg';
+  static const kAccountIc = 'assets/icons/account_ic.svg';
 }

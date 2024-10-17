@@ -305,7 +305,9 @@ class _LoginPageState extends State<LoginPage> with ValidationMixin {
         return GestureDetector(
           onTap: () {
             FocusScope.of(context).unfocus();
-
+            AutoRouter.of(context)
+                .push(const 
+                CommonBottomNavigationPageRoute());
             if (loginKey.currentState!.validate()) {
               if (state.status == ConnectivityStatus.connected) {
                 context.read<LogInBloc>().add(LogInSubmitted(loginData: {
