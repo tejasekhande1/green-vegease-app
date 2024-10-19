@@ -14,4 +14,8 @@ const kColorBlurRadius = Color.fromRGBO(41, 0, 0, 0);
 const kColorBackground = Color.fromARGB(255, 246, 246, 246);
 const kColorPending = Colors.orange;
 const kColorLocBlack = Color.fromRGBO(76, 79, 77, 1);
-const kColorLiteGrey = Color.fromRGBO(242,243,242,1);
+const kColorLiteGrey = Color.fromRGBO(242, 243, 242, 1);
+const kColorCardBorderGrey = Color.fromRGBO(226, 226, 226, 1);
+const kColorCardShadow = Color.fromRGBO(0,0,0,0);
+
+

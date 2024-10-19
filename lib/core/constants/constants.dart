@@ -21,4 +21,7 @@ class Constants {
   static const kShopIc = "assets/icons/shop_ic.svg";
   static const kFavouriteIc = 'assets/icons/favourite_ic.svg';
   static const kAccountIc = 'assets/icons/account_ic.svg';
+  static const kPlusIc = 'assets/icons/plus_ic.svg';
+  static const kProductImg = 'assets/images/product_img.png';
+  static const kLocationIc = 'assets/icons/location_ic.svg';
 }
