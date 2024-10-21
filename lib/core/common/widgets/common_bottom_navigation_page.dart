@@ -83,42 +83,45 @@ class _CommonBottomNavigationPageState
               ],
               borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(15), topRight: Radius.circular(15)),
-              color: Color.fromRGBO(255, 255, 255, 1),
+              color: kColorWhite,
             ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                CustomBottomNavItem(
-                  iconPath: Constants.kShopIc,
-                  label: "Shop",
-                  isSelected: selectedIndex == 0,
-                  onTap: () => _onItemTapped(0),
-                ),
-                CustomBottomNavItem(
-                  iconPath: Constants.kExploreIc,
-                  label: "Explore",
-                  isSelected: selectedIndex == 1,
-                  onTap: () => _onItemTapped(1),
-                ),
-                CustomBottomNavItem(
-                  iconPath: Constants.kCartIc,
-                  label: "Cart",
-                  isSelected: selectedIndex == 2,
-                  onTap: () => _onItemTapped(2),
-                ),
-                CustomBottomNavItem(
-                  iconPath: Constants.kFavouriteIc,
-                  label: "Favourite",
-                  isSelected: selectedIndex == 3,
-                  onTap: () => _onItemTapped(3),
-                ),
-                CustomBottomNavItem(
-                  iconPath: Constants.kAccountIc,
-                  label: "Account",
-                  isSelected: selectedIndex == 4,
-                  onTap: () => _onItemTapped(4),
-                ),
-              ],
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 10.w),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  CustomBottomNavItem(
+                    iconPath: Constants.kShopIc,
+                    label: "Shop",
+                    isSelected: selectedIndex == 0,
+                    onTap: () => _onItemTapped(0),
+                  ),
+                  CustomBottomNavItem(
+                    iconPath: Constants.kExploreIc,
+                    label: "Explore",
+                    isSelected: selectedIndex == 1,
+                    onTap: () => _onItemTapped(1),
+                  ),
+                  CustomBottomNavItem(
+                    iconPath: Constants.kCartIc,
+                    label: "Cart",
+                    isSelected: selectedIndex == 2,
+                    onTap: () => _onItemTapped(2),
+                  ),
+                  CustomBottomNavItem(
+                    iconPath: Constants.kFavouriteIc,
+                    label: "Favourite",
+                    isSelected: selectedIndex == 3,
+                    onTap: () => _onItemTapped(3),
+                  ),
+                  CustomBottomNavItem(
+                    iconPath: Constants.kAccountIc,
+                    label: "Account",
+                    isSelected: selectedIndex == 4,
+                    onTap: () => _onItemTapped(4),
+                  ),
+                ],
+              ),
             ),
           );
         },

@@ -7,8 +7,10 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:green_vegease/core/common/bloc/internet_bloc/internet_bloc.dart';
 import 'package:green_vegease/core/common/widgets/button_widget.dart';
 import 'package:green_vegease/core/common/widgets/loader_widget.dart';
+import 'package:green_vegease/core/services/firebase_service/shared_preferences_service/share_prefrences_service.dart';
 import 'package:green_vegease/core/theme/colors.dart';
 import 'package:green_vegease/core/utils/validation_mixin.dart';
+import 'package:green_vegease/features/init_dependancies.dart';
 import '../../../../../core/common/widgets/custom_textfield_widget.dart';
 import '../../../../../core/routes/app_router.dart';
 import '../../../../../core/theme/text_styles.dart';
@@ -143,9 +145,14 @@ class _LoginPageState extends State<LoginPage> with ValidationMixin {
                   if (state is LogInSuccess) {
                     Utils.customSnackBar(context, state.response.message!,
                         backgroundColor: kColorPrimary);
-                    if (state.response.user!.role == "admin") {
+                    if (state.response.data!.user!.role == "admin") {
+                      serviceLocator<SharedPreferencesService>().setAdmin();
                       AutoRouter.of(context)
                           .replaceAll([const OrdersPageRoute()]);
+                    }
+                    if (state.response.data!.user!.role == 'customer') {
+                      AutoRouter.of(context).replaceAll(
+                          [const CommonBottomNavigationPageRoute()]);
                     }
                   }
 
@@ -198,7 +205,7 @@ class _LoginPageState extends State<LoginPage> with ValidationMixin {
               child: SvgPicture.asset(
                 "assets/images/colored_carrot.svg",
                 // height: 55.h,
-                fit: BoxFit.fill,
+                fit: BoxFit.contain,
                 // width: 48.w,
               ),
             ),
@@ -305,9 +312,8 @@ class _LoginPageState extends State<LoginPage> with ValidationMixin {
         return GestureDetector(
           onTap: () {
             FocusScope.of(context).unfocus();
-            AutoRouter.of(context)
-                .push(const 
-                CommonBottomNavigationPageRoute());
+            // AutoRouter.of(context)
+            //     .push(const CommonBottomNavigationPageRoute());
             if (loginKey.currentState!.validate()) {
               if (state.status == ConnectivityStatus.connected) {
                 context.read<LogInBloc>().add(LogInSubmitted(loginData: {

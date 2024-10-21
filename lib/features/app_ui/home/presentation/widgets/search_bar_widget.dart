@@ -5,8 +5,15 @@ import 'package:green_vegease/core/constants/constants.dart';
 import '../../../../../core/theme/colors.dart';
 import '../../../../../core/theme/text_styles.dart';
 
-class SearchBarWidget extends StatelessWidget {
+class SearchBarWidget extends StatefulWidget {
   const SearchBarWidget({super.key});
+
+  @override
+  State<SearchBarWidget> createState() => _SearchBarWidgetState();
+}
+
+class _SearchBarWidgetState extends State<SearchBarWidget> {
+  TextEditingController search = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -23,17 +30,14 @@ class SearchBarWidget extends StatelessWidget {
           SizedBox(
               height: 17.h,
               width: 17.h,
-              child: SvgPicture.asset(
-              
-                  height: 17.h,
-                  width: 17.h,
-                  fit: BoxFit.contain,
-                  Constants.kExploreIc)),
+              child:
+                  SvgPicture.asset(fit: BoxFit.contain, Constants.kExploreIc)),
           SizedBox(
             width: 10.w,
           ),
           Expanded(
             child: TextFormField(
+              controller: search,
               cursorHeight: 25.h,
               decoration: InputDecoration(
                 contentPadding: EdgeInsets.only(top: 20.h),

@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
@@ -12,7 +13,7 @@ import '../theme/text_styles.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 
 class Utils {
-static Future<String> authHeader() async {
+  static Future<String> authHeader() async {
     String basicAuth =
         'Basic ${base64Encode(utf8.encode('${AppConfig.username}:${AppConfig.password}'))}';
     return basicAuth;
@@ -40,6 +41,7 @@ static Future<String> authHeader() async {
     }
     return deviceId;
   }
+
   static Future<bool> checkInternet(BuildContext context) async {
     final internetState = context.read<InternetBloc>().state;
 
@@ -51,41 +53,45 @@ static Future<String> authHeader() async {
       return false;
     }
   }
+
   static void customSnackBar(
     BuildContext context,
     String message, {
     bool isFloatingButton = false,
-    Color backgroundColor = kColorPrimary,
-    Color textColor = kColorWhite,
-    Duration duration = const Duration(seconds: 3),
-    SnackBarAction? action,
+    Color backgroundColor = Colors.greenAccent,
+    Color textColor = Colors.white,
     double fontSize = 14.0,
-    EdgeInsetsGeometry padding = const EdgeInsets.all(16.0),
-    ShapeBorder shape = const RoundedRectangleBorder(
-        borderRadius: BorderRadius.all(Radius.circular(8))),
+    Duration duration = const Duration(seconds: 3),
+    double radius = 25.0,
+    ToastGravity gravity = ToastGravity.TOP,
   }) {
-    final snackbar = SnackBar(
-      content: Text(
-        message,
-        style: kTextStyleGilroy500.copyWith(
-            color: textColor, fontSize: fontSize.sp),
+    final fToast = FToast();
+
+    fToast.init(context);
+    Widget toast = Container(
+      padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(radius),
+        color: backgroundColor,
       ),
-      backgroundColor: backgroundColor,
-      duration: duration,
-      action: action,
-      padding: padding,
-      dismissDirection: DismissDirection.up,
-      shape: shape,
-      behavior: SnackBarBehavior.floating,
-      margin: EdgeInsets.only(
-          bottom: isFloatingButton
-              ? MediaQuery.of(context).size.height - 170
-              : MediaQuery.of(context).size.height - 100,
-          left: 10,
-          right: 10),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(
+            message,
+            style: kTextStyleGilroy400.copyWith(
+                color: textColor, fontSize: fontSize.sp),
+          ),
+        ],
+      ),
     );
 
-    ScaffoldMessenger.of(context).showSnackBar(snackbar);
+    // Show the toast
+    fToast.showToast(
+      child: toast,
+      gravity: gravity,
+      toastDuration: duration,
+    );
   }
 
   static InterceptorsWrapper getLoggingInterceptor() {

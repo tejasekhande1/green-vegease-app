@@ -17,6 +17,7 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: kColorWhite,
       body: SafeArea(
         child: SingleChildScrollView(
@@ -32,11 +33,9 @@ class HomePage extends StatelessWidget {
                   Column(
                     children: [
                       SizedBox(
-                        height: 30.h,
-                        width: 26.w,
+                        height: 35.h,
+                        width: 35.h,
                         child: SvgPicture.asset(
-                          height: 30.h,
-                          width: 26.w,
                           Constants.kColoredCarrotIc,
                           fit: BoxFit.contain,
                         ),

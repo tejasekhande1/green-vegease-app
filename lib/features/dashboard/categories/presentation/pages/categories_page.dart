@@ -119,11 +119,11 @@ class _CategoriesPageState extends State<CategoriesPage> {
           }, listener: (context, state) {
             if (state is CategoryFailedState) {
               Utils.customSnackBar(context, state.error,
-                  isFloatingButton: true);
+                 );
             }
             if (state is CategoryExceptionState) {
               Utils.customSnackBar(context, "Something went wrong",
-                  isFloatingButton: true);
+                 );
             }
           })
         ],

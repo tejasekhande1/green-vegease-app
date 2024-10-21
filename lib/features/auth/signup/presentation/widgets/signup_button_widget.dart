@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:green_vegease/features/auth/signup/presentation/bloc/signup_bloc.dart';
@@ -33,47 +35,47 @@ class SignupButtonWidget extends StatelessWidget {
       builder: (context, state) {
         return GestureDetector(
           onTap: () {
-            if(signKey.currentState!.validate()){
-                          FocusScope.of(context).unfocus();
-            String mobile = mobileController.text.trim();
-            String username = usernameController.text.trim();
-            String password = passwordController.text.trim();
-            String email = emailController.text.trim();
-            String confirmPassword = confirmPasswordController.text
-                .trim(); // Make sure to create and assign this controller.
+            if (signKey.currentState!.validate()) {
+              FocusScope.of(context).unfocus();
+              String mobile = mobileController.text.trim();
+              String username = usernameController.text.trim();
+              String password = passwordController.text.trim();
+              String email = emailController.text.trim();
+              String confirmPassword = confirmPasswordController.text
+                  .trim(); // Make sure to create and assign this controller.
+              log("LOG");
+              // Confirm Password validation
+              if (password != confirmPassword) {
+                Utils.customSnackBar(
+                    context, "Password and Confirm Password do not match.",
+                    backgroundColor: kColorRed);
+                return;
+              }
 
-            // Confirm Password validation
-            if (password != confirmPassword) {
-              Utils.customSnackBar(
-                  context, "Password and Confirm Password do not match.",
-                  backgroundColor: kColorRed);
-              return;
-            }
-
-            // If all validations pass
-            if (email.isEmpty ||
-                password.isEmpty ||
-                username.isEmpty ||
-                confirmPassword.isEmpty) {
-              Utils.customSnackBar(context, "Enter valid data.",
-                  backgroundColor: kColorRed);
-              if (state.status == ConnectivityStatus.connected) {
-                context.read<SignUpBloc>().add(SignUpSubmitted(
-                    signUpData: {
+              // If all validations pass
+              if (email.isEmpty ||
+                  password.isEmpty ||
+                  username.isEmpty ||
+                  confirmPassword.isEmpty) {
+                Utils.customSnackBar(context, "Enter valid data.",
+                    backgroundColor: kColorRed);
+              } else {
+                if (state.status == ConnectivityStatus.connected) {
+                  context.read<SignUpBloc>().add(SignUpSubmitted(signUpData: {
                         "firstname": firstNameController.text,
                         "username": username,
                         "lastname": lastNameController.text,
                         "email": email,
                         "mobileNumber": mobile,
                         "password": password,
-                        "confirmedPassword": confirmPassword}));
-              } else {
-                Utils.customSnackBar(
-                    context, "Please check internet connectivity",
-                    backgroundColor: kColorRed);
+                        "confirmedPassword": confirmPassword
+                      }));
+                } else {
+                  Utils.customSnackBar(
+                      context, "Please check internet connectivity",
+                      backgroundColor: kColorRed);
+                }
               }
-            }
-  
 
               // Proceed with the sign-up logic
               // e.g., API call, etc.

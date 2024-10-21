@@ -26,16 +26,21 @@ class ProductCardWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Expanded(
-            child: Container(
-              height: 65.h,
-              width: 103.w,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(12),
-                image: const DecorationImage(
-                  image: AssetImage(Constants.kProductImg),
-                  fit: BoxFit.contain,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  height: 65.h,
+                  width: 103.w,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(12),
+                    image: const DecorationImage(
+                      image: AssetImage(Constants.kProductImg),
+                      fit: BoxFit.contain,
+                    ),
+                  ),
                 ),
-              ),
+              ],
             ),
           ),
           SizedBox(height: 8.h),
