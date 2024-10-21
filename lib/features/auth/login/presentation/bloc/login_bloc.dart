@@ -1,5 +1,4 @@
 import 'dart:developer';
-
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../../core/services/firebase_service/shared_preferences_service/share_prefrences_service.dart';
 import '../../../../init_dependancies.dart';
@@ -25,8 +24,9 @@ class LogInBloc extends Bloc<LogInEvent, LogInState> {
       if (data.success == false) {
         emit(LogInFailed(error: data.message!));
       } else {
+        log("In Else");
         await serviceLocator<SharedPreferencesService>()
-            .saveToken(data.user!.token!);
+            .saveToken(data.data!.token!);
         await serviceLocator<SharedPreferencesService>().saveLoginStatus(true);
         emit(LogInSuccess(response: data));
       }

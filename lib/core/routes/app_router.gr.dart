@@ -67,6 +67,25 @@ class CategoriesPageRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [CommonBottomNavigationPage]
+class CommonBottomNavigationPageRoute extends PageRouteInfo<void> {
+  const CommonBottomNavigationPageRoute({List<PageRouteInfo>? children})
+      : super(
+          CommonBottomNavigationPageRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'CommonBottomNavigationPageRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const CommonBottomNavigationPage();
+    },
+  );
+}
+
+/// generated route for
 /// [CustomersPage]
 class CustomersPageRoute extends PageRouteInfo<void> {
   const CustomersPageRoute({List<PageRouteInfo>? children})
@@ -191,6 +210,25 @@ class ForgotPasswordPageRoute extends PageRouteInfo<void> {
     name,
     builder: (data) {
       return const ForgotPasswordPage();
+    },
+  );
+}
+
+/// generated route for
+/// [HomePage]
+class HomePageRoute extends PageRouteInfo<void> {
+  const HomePageRoute({List<PageRouteInfo>? children})
+      : super(
+          HomePageRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'HomePageRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return HomePage();
     },
   );
 }

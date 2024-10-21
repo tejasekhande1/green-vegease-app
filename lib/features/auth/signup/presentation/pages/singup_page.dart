@@ -259,7 +259,6 @@ class _SingupPageState extends State<SingupPage> with ValidationMixin {
                         _buildLoginOption(),
                         SizedBox(
                           height: isKeyboardVisible ? 250.h : 1.h,
-                          
                         )
                       ],
                     ),
@@ -301,7 +300,7 @@ class _SingupPageState extends State<SingupPage> with ValidationMixin {
           child: SvgPicture.asset(
             "assets/images/colored_carrot.svg",
             height: 55.h,
-            fit: BoxFit.fill,
+            fit: BoxFit.contain,
             width: 48.w,
           ),
         ),

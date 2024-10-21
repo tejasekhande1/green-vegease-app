@@ -24,11 +24,15 @@ class _SplashPageState extends State<SplashPage> {
     super.initState();
     final isLogin =
         serviceLocator<SharedPreferencesService>().checkLoginStatus();
+    final isAdmin = serviceLocator<SharedPreferencesService>().isAdmin();
+
     Timer(
         const Duration(seconds: 2),
         () => Timer(const Duration(seconds: 2), () async {
               AutoRouter.of(context).replace(await isLogin
-                  ? const OrdersPageRoute()
+                  ? await isAdmin
+                      ? const OrdersPageRoute()
+                      : const CommonBottomNavigationPageRoute()
                   : const OnboardPageRoute());
             }));
   }

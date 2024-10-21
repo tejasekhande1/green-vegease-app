@@ -6,6 +6,7 @@ import 'package:green_vegease/features/dashboard/settings/about_us/presentation/
 import 'package:green_vegease/features/dashboard/settings/cancellation_policy/presentation/pages/cancellation_policy_page.dart';
 import 'package:green_vegease/features/onboarding/presentation/pages/onboard_page.dart';
 import 'package:green_vegease/features/splashscreen/presentation/pages/splash_page.dart';
+import '../../features/app_ui/home/presentation/pages/home_page.dart';
 import '../../features/auth/forgot_password/presentation/pages/forgot_password_page.dart';
 import '../../features/auth/login/presentation/pages/login_page.dart';
 import '../../features/auth/signup/presentation/pages/verification_page.dart';
@@ -22,6 +23,7 @@ import '../../features/dashboard/settings/presentation/settings_page.dart';
 import '../../features/dashboard/settings/privacy_policy/presentation/pages/privacy_policy_page.dart';
 import '../../features/dashboard/settings/refund_policy/presentation/pages/refund_policy_page.dart';
 import '../../features/dashboard/settings/terms_and_conditions/presentation/pages/terms_and_conditions_page.dart';
+import '../common/widgets/common_bottom_navigation_page.dart';
 // import '../../features/dashboard/settings/presentation/settings_page.dart';
 part 'app_router.gr.dart';
 
@@ -41,7 +43,7 @@ class AppRouter extends RootStackRouter {
         AutoRoute(page: VerificationPageRoute.page),
         AutoRoute(page: ProductPageRoute.page),
         AutoRoute(page: CategoriesPageRoute.page),
-         AutoRoute(page: UserPageRoute.page),
+        AutoRoute(page: UserPageRoute.page),
         // AutoRoute(page: SettingsPageRoute.page),
         AutoRoute(page: OrdersPageRoute.page),
         AutoRoute(page: AboutUsPageRoute.page),
@@ -51,10 +53,11 @@ class AppRouter extends RootStackRouter {
         AutoRoute(page: TermsAndConditionsPageRoute.page),
         AutoRoute(page: CustomersPageRoute.page),
         AutoRoute(page: ResetPasswordPageRoute.page),
-         AutoRoute(page: DeliveryRequestPageRoute.page),
-         AutoRoute(page: DeliveryPartnerPageRoute.page),
-         AutoRoute(page: UserDetailPageRoute.page),
-          AutoRoute(page: DeliveryPartnerDetailPageRoute.page),
+        AutoRoute(page: DeliveryRequestPageRoute.page),
+        AutoRoute(page: DeliveryPartnerPageRoute.page),
+        AutoRoute(page: UserDetailPageRoute.page),
+        AutoRoute(page: DeliveryPartnerDetailPageRoute.page),
+        AutoRoute(page: HomePageRoute.page),
+        AutoRoute(page: CommonBottomNavigationPageRoute.page)
       ];
-
 }
