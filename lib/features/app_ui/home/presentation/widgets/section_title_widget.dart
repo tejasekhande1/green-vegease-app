@@ -101,10 +101,7 @@ class SectionTitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(
-        left: 24.w,
-        right: 24.w,
-      ),
+      padding: EdgeInsets.only(left: 24.w, right: 24.w, top: 25.h),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
