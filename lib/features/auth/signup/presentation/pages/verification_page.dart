@@ -172,16 +172,22 @@ class _VerificationPageState extends State<VerificationPage> {
           if (otpController.text.trim().isNotEmpty &&
               otpController.text.trim().length == 4) {
             if (!widget.isResetPass) {
-              Utils.customSnackBar(context, "SignUp successful",
-                  backgroundColor: kColorPrimary, isFloatingButton: true);
+              Utils.customSnackBar(
+                context,
+                "SignUp successful",
+                backgroundColor: kColorPrimary,
+              );
             }
 
             if (widget.isResetPass) {
               AutoRouter.of(context).push(const ResetPasswordPageRoute());
             }
           } else {
-            Utils.customSnackBar(context, "Please enter valid otp",
-                backgroundColor: kColorRed, isFloatingButton: true);
+            Utils.customSnackBar(
+              context,
+              "Please enter valid otp",
+              backgroundColor: kColorRed,
+            );
           }
         },
         child: SizedBox(

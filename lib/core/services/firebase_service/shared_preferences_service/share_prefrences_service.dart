@@ -15,16 +15,27 @@ class SharedPreferencesService {
     return token;
   }
 
+  Future<bool> isAdmin() async {
+    return sharedPreferences.getBool('isAdmin') ?? false;
+  }
+
+  Future<void> setAdmin() async {
+    await sharedPreferences.setBool('isAdmin', true);
+  }
+
   Future<void> saveLoginStatus(bool isLoggedIn) async {
-    sharedPreferences.setBool('isLoggedIn', isLoggedIn); // Save the login status
+    sharedPreferences.setBool(
+        'isLoggedIn', isLoggedIn); // Save the login status
   }
 
   Future<bool> checkLoginStatus() async {
-    return sharedPreferences.getBool('isLoggedIn') ?? false; // Return false if not found
+    return sharedPreferences.getBool('isLoggedIn') ??
+        false; // Return false if not found
   }
 
   Future<void> logout() async {
     sharedPreferences.remove('isLoggedIn'); // Remove the login status
-    sharedPreferences.remove('userToken'); // Optionally, remove other stored data like token
+    sharedPreferences
+        .remove('userToken'); // Optionally, remove other stored data like token
   }
 }

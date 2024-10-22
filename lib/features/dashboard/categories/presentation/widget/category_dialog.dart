@@ -195,7 +195,7 @@ void showAddCategoryDialog(BuildContext context,
                               backgroundColor: kColorRed,
                               context,
                               "Please enter a category name",
-                              isFloatingButton: true);
+                             );
                         }
                       },
                       child: Container(

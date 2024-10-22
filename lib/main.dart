@@ -10,6 +10,7 @@ import 'package:green_vegease/features/dashboard/categories/presentation/bloc/bl
 import 'package:green_vegease/features/dashboard/categories/presentation/bloc/upload_photo_bloc/update_profile_bloc.dart';
 import 'package:green_vegease/firebase_options.dart';
 
+import 'core/common/bloc/internet_bloc/bottom_nav_bloc/bottom_nav_bloc.dart';
 import 'core/common/bloc/internet_bloc/internet_bloc.dart';
 import 'core/constants/constants.dart';
 import 'core/routes/app_router.dart';
@@ -79,7 +80,8 @@ class MainApp extends StatelessWidget {
               BlocProvider(
                 create: (context) => UpdateProfileBloc(),
                 child: Container(),
-              )
+              ),
+              BlocProvider(create: (context) => BottomNavBloc())
             ],
             child: MaterialApp.router(
               debugShowCheckedModeBanner: false,
