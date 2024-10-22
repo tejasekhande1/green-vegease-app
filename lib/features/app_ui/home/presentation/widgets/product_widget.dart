@@ -14,14 +14,21 @@ class ProductWidget extends StatelessWidget {
         SectionTitle(title: title, onSeeAll: () {}),
         Container(
           height: 300.h,
-          padding: EdgeInsets.symmetric(horizontal: 24.0.w),
+          // padding: EdgeInsets.symmetric(horizontal: 24.0.w),
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
             shrinkWrap: true,
             physics: const ScrollPhysics(),
             itemCount: 4,
             itemBuilder: (context, index) {
-              return const ProductCardWidget();
+              return Row(
+                children: [
+                  SizedBox(
+                    width: index == 0 ? 24.w : 0,
+                  ),
+                  const ProductCardWidget(),
+                ],
+              );
             },
           ),
         ),

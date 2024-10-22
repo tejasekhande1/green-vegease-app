@@ -33,7 +33,7 @@ class _BannerWidgetState extends State<BannerWidget> {
               items: banners.map((banner) => _buildBanner(banner)).toList(),
               options: CarouselOptions(
                 height: 115.h,
-                viewportFraction: 0.9,
+                viewportFraction: 1,
                 autoPlay: true,
                 enlargeCenterPage: true,
                 onPageChanged: (index, reason) {
@@ -72,7 +72,9 @@ class _BannerWidgetState extends State<BannerWidget> {
   // Helper method to build each banner
   Widget _buildBanner(String assetPath) {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 5.w),
+      margin: EdgeInsets.symmetric(
+        horizontal: 24.w,
+      ),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(16),
         image: DecorationImage(
