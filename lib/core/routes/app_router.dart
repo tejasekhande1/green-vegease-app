@@ -7,6 +7,7 @@ import 'package:green_vegease/features/dashboard/settings/cancellation_policy/pr
 import 'package:green_vegease/features/onboarding/presentation/pages/onboard_page.dart';
 import 'package:green_vegease/features/splashscreen/presentation/pages/splash_page.dart';
 import '../../features/app_ui/home/presentation/pages/home_page.dart';
+import '../../features/app_ui/product_detail/presentation/pages/product_detail_pages.dart';
 import '../../features/auth/forgot_password/presentation/pages/forgot_password_page.dart';
 import '../../features/auth/login/presentation/pages/login_page.dart';
 import '../../features/auth/signup/presentation/pages/verification_page.dart';
@@ -58,6 +59,7 @@ class AppRouter extends RootStackRouter {
         AutoRoute(page: UserDetailPageRoute.page),
         AutoRoute(page: DeliveryPartnerDetailPageRoute.page),
         AutoRoute(page: HomePageRoute.page),
-        AutoRoute(page: CommonBottomNavigationPageRoute.page)
+        AutoRoute(page: CommonBottomNavigationPageRoute.page),
+        AutoRoute(page: ProductDetailPageRoute.page),
       ];
 }

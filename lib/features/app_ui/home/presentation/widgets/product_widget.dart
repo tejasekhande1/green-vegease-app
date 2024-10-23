@@ -1,5 +1,7 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:green_vegease/core/routes/app_router.dart';
 import 'package:green_vegease/features/app_ui/home/presentation/widgets/product_card_widget.dart';
 import 'section_title_widget.dart';
 
@@ -26,7 +28,12 @@ class ProductWidget extends StatelessWidget {
                   SizedBox(
                     width: index == 0 ? 24.w : 0,
                   ),
-                  const ProductCardWidget(),
+                  GestureDetector(
+                      onTap: () {
+                        AutoRouter.of(context)
+                            .push(const ProductDetailPageRoute());
+                      },
+                      child: const ProductCardWidget()),
                 ],
               );
             },

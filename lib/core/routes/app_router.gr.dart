@@ -228,7 +228,7 @@ class HomePageRoute extends PageRouteInfo<void> {
   static PageInfo page = PageInfo(
     name,
     builder: (data) {
-      return HomePage();
+      return const HomePage();
     },
   );
 }
@@ -305,6 +305,25 @@ class PrivacyPolicyPageRoute extends PageRouteInfo<void> {
     name,
     builder: (data) {
       return const PrivacyPolicyPage();
+    },
+  );
+}
+
+/// generated route for
+/// [ProductDetailPage]
+class ProductDetailPageRoute extends PageRouteInfo<void> {
+  const ProductDetailPageRoute({List<PageRouteInfo>? children})
+      : super(
+          ProductDetailPageRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'ProductDetailPageRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const ProductDetailPage();
     },
   );
 }
